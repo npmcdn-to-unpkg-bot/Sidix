@@ -1,0 +1,38 @@
+﻿
+CORTO PLAZO
+
+- Cargar informacion actualizada del Plan Maestro y Subdivisiones Legales
+- Afinar cálculos de cobros unitarios de inversiones
+
+- Sistema para actualizar fracciones legales
+- Corregir errores que pudieran surgir al comparar fracciones
+- Requerir autorizacion de administradores para hacer cambios a planos
+- Determinar protocolos para actualizar, cargar y autorizar cambios al PM
+
+- Crear mapa interactivo para los diferentes temas a revisar (plan maestro, estatus legal, etc.)
+- Implementar forma para ver fracciones individuales en el mapa
+- Implementar filtros para el mapa
+
+- Configurar permisos para roles / usuarios
+
+- Sistema para revision de progreso / estatus de tareas
+- Llevar control de proceso de compra-venta en cada una de sus etapas
+
+- Terminar tabla dinamica de fracciones
+
+
+LARGO PLAZO
+- Sistema para conciliacion de datos entre las diferentes partes del sistema (Alertar al usuario cuando, debido a un cambio, exista una incongruencia)
+- Posibilidad de ver version historica de fracciones
+- Subir escrituras
+- Mecanismo de revision de archivos y documentos digitalizados
+- Poder comprobar que mapa legal y claves catastrales coinciden con informacion de "Nogalessonora.gob.mx"
+- Permitir que personas que no son usuarios aparezcan en juntas
+
+
+PREGUNTAS:
+
+- Falta definir si viviendas / habitantes se redondean para arriba o abajo (en el excel no se hace ni una de las dos)
+- Si una fraccion tiene calculo especial de energia, agua, etc. No se considera para distribucion de costos de MVAs por Ha, etc? O necesita tener calculo especial && precio especial? O pongo un campo especial? O que pez?
+- Quieren poder ver los proyectos de inversion de fracciones ya vendidas?
+

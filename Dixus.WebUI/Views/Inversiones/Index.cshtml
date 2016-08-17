@@ -1,0 +1,80 @@
+﻿@model Dixus.WebUI.Models.InversionesIndexModel
+
+@{
+    ViewBag.Title = "Inversiones";
+}
+
+@Html.Partial("PageTitle", "Inversiones")
+
+<div id="concentrado-de-inversiones" class="content-padder-xs">
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal dl-equal-sides">
+                <dt>Energía Eléctrica</dt>
+                <dd id="energia">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnEnergia)</dd>
+
+                <dt>Agua Potable</dt>
+                <dd id="agua">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnAguaPotable)</dd>
+
+                <dt>Saneamiento</dt>
+                <dd id="saneamiento">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnSaneamiento)</dd>
+
+                <dt>Vialidades</dt>
+                <dd id="vialidades">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnVialidades)</dd>
+
+                <dt>Red Digital</dt>
+                <dd id="red-digital">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnRedDigital)</dd>
+
+                <dt>Gas Natural</dt>
+                <dd id="gas-natural">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnGasNatural)</dd>
+
+                <dt>Movimiento de Tierra</dt>
+                <dd id="movimiento-de-tierra">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnMovimientoDeTierra)</dd>
+
+                <dt>Obras Especiales</dt>
+                <dd id="obras-especiales">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnObrasEspeciales)</dd>
+
+                <dt></dt>
+                <dd class="subtotal">@Html.DisplayFor(model => model.TotalesDeInversiones.TotalInversionesEnInfraestructura)</dd>
+
+                <dt>Estudios y Proyectos</dt>
+                <dd id="estudios-y-proyectos">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnEstudiosYProyectos)</dd>
+
+                <dt>Post Venta</dt>
+                <dd id="post-venta">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnPostVenta)</dd>
+
+                <dt>Costos Indirectos de Obra</dt>
+                <dd id="costos-indirectos">@Html.DisplayFor(model => model.TotalesDeInversiones.InversionEnCostosIndirectosDeObra)</dd>
+
+                <dt></dt>
+                <dd class="subtotal">@Html.DisplayFor(model => model.TotalesDeInversiones.TotalInversionesEnAdministracion)</dd>
+
+                <dt>TOTAL</dt>
+                <dd class="total">@Html.DisplayFor(model => model.TotalesDeInversiones.TotalInversiones)</dd>
+            </dl>
+        </div>
+       
+    </div>
+
+</div>
+
+@section jsCode{
+
+    $(document).ready(function(){
+
+    $("#energia").click(function(){ location.href = "@Url.Action("energiaelectrica")"; })
+    $("#agua").click(function(){ location.href = "@Url.Action("aguapotable")"; })
+    $("#saneamiento").click(function(){ location.href = "@Url.Action("saneamiento")"; })
+    $("#vialidades").click(function(){ location.href = "@Url.Action("vialidades")"; })
+    $("#red-digital").click(function(){ location.href = "@Url.Action("reddigital")"; })
+    $("#gas-natural").click(function(){ location.href = "@Url.Action("gasnatural")"; })
+    $("#movimiento-de-tierra").click(function(){ location.href = "@Url.Action("movimientosdetierra")"; })
+    $("#obras-especiales").click(function(){ location.href = "@Url.Action("obrasespeciales")"; })
+    $("#estudios-y-proyectos").click(function(){ location.href = "@Url.Action("estudiosyproyectos")"; })
+    $("#post-venta").click(function(){ location.href = "@Url.Action("postventa")"; })
+    $("#costos-indirectos").click(function(){ location.href = "@Url.Action("costos-indirectos")"; })
+
+    });
+
+}

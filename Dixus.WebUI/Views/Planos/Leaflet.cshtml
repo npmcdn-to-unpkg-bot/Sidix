@@ -1,0 +1,223 @@
+﻿
+@{ 
+    ViewBag.Title = "Leaflet";
+}
+
+<div id="map">
+
+</div>
+
+
+
+
+@section header{
+    <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
+    <link href="~/Content/Leaflet-search/leaflet-search.min.css" rel="stylesheet" />    
+    <style>
+        #sidebar {
+            display: none;
+        }
+
+        .body-content {
+            padding-left: 0;
+        }
+        .map-info-control {
+            padding: 16px 12px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            width:287px;
+        }
+    </style>
+}
+
+@section scripts{
+    @*<script src="~/scripts/dist/mapa-anza.js"></script> @*Info geojson*@
+    @*<script src="~/Content/leaflet-src.js"></script>*@
+    <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="~/Content/proj4.js"></script>
+    <script src="~/Content/proj4leaflet.js"></script>
+    <script src="~/Content/Leaflet-search/leaflet-search.min.js"></script>
+}
+
+
+@section jsCode{
+    
+    @* Crear mapa *@
+    var mymap = L.map( 'map',{
+        center: L.latLng(31.3155908, -110.8943125),
+        minZoom:14,
+        maxZoom:18,
+        zoom: 15,
+        maxBounds: [[31.27711, -111],[31.36023,-110.80626]],
+        zoomDelta: 0.2
+    });
+    mymap.zoomControl.setPosition('topright');
+
+    @* Tile Layers*@
+    var ningunTileLayer = L.tileLayer('');
+    var openStreetMapsLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    maxZoom: 19,
+        minZoom: 13,
+        continuousWorld: true,
+	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+    var mapBoxUrl = "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaXJpYXJ0ZSIsImEiOiJjaXJneXc4bW0wMDJvamNtNXdoNGR3dXV4In0.iXHqfCAD0gIzGtk-psrmiw";
+    var mapBoxStreetsLayer = L.tileLayer(mapBoxUrl, { id: 'mapbox.streets' });
+    var mapBoxGrayScaleLayer = L.tileLayer(mapBoxUrl, { id: 'mapbox.light' });
+
+    @* Capa Fracciones y Vialidades (Via Ajax) *@
+    proj4.defs("EPSG:32612", "+proj=utm +zone=12 +datum=WGS84 +units=m +no_defs");
+    var fraccionesLayer;
+    var vialidadesLayer;
+    var fraccionesGeoJsonRequest = $.ajax('/api/FraccionesGeoJson');
+    var vialidadesGeoJsonRequest = $.ajax( '/api/VialidadesGeoJson');
+
+    $.when( fraccionesGeoJsonRequest, vialidadesGeoJsonRequest).done( function(fracciones, vialidades){
+        fraccionesLayer = L.Proj.geoJson(fracciones, {
+            style: fraccionesInitialStyle,
+            onEachFeature: onEachFraccion
+        }).addTo(mymap);
+
+        vialidadesLayer = L.Proj.geoJson(vialidades, {
+            style: vialidadesInitialStyle,
+            @*onEachFeature: onEachFraccion*@
+        }).addTo(mymap);
+
+        @* CREAR CONTROLES *@
+        var baseLayers = {
+            "Ninguna": ningunTileLayer,
+            "Open Street Map": openStreetMapsLayer,
+            "MapBox Streets": mapBoxStreetsLayer,
+            "MapBox Grayscale" : mapBoxGrayScaleLayer,
+        };
+        var overlays = {
+            "Fracciones" : fraccionesLayer,
+            "Vialidades" : vialidadesLayer
+        };
+        L.control.layers( baseLayers, overlays).addTo(mymap);
+        L.control.scale({ position : "bottomleft" }).addTo(mymap);
+        mymap.fitBounds(fraccionesLayer.getBounds());
+        L.control.search({ 
+            layer: fraccionesLayer, 
+            propertyName: "Nombre", 
+            textPlaceholder: "Nombre de fracción",
+            hideMarkerOnCollapse: true,
+            autoCollapse: true,
+            autoCollapseTime: 2000
+        }).addTo(mymap);
+    });
+   
+   
+    function onEachFraccion(fraccion, layer){
+        layer.on({
+            mouseover: fraccionMouseOver,
+            mouseout: fraccionMouseOut,
+            popupopen: fraccionPopupOpen,
+            popupclose: fraccionPopupClose
+        });
+        layer.bindPopup(fraccionPopup(fraccion));
+        layer.bindTooltip(fraccion.properties.Nombre);
+    }
+
+    function fraccionMouseOver(){
+        this.setStyle({
+            fillOpacity:1
+        });
+        if ( ! this.isPopupOpen() ){
+            this.setStyle({
+                weight:2
+            });
+        }
+        infoControl.update(this.feature);
+    }
+
+    function fraccionMouseOut(){
+        if ( ! this.isPopupOpen() ){
+            fraccionesLayer.resetStyle(this);
+        }
+    }
+
+    function fraccionPopupOpen(){
+        mymap.fitBounds(this.getBounds());
+        this.setStyle({
+            color: "#0000cc",
+            fillOpacity: 1,
+            weight:5
+        });
+    }
+
+    function fraccionPopupClose(){
+        fraccionesLayer.resetStyle(this);
+    }
+
+    function fraccionPopup(fraccion){
+        var linkFraccion = '@Url.Action("Details", "Fracciones")/'+fraccion.properties.Id;
+        var linkUsoDeSuelo = '@Url.Action("Details", "TiposDeSuelo")/'+fraccion.properties.UsoDeSueloId;
+        return  "<dl class='dl-horizontal'>"+
+                "<dt>Nombre: </dt>" + 
+                "<dd><a href='"+linkFraccion+"'> " + fraccion.properties.Nombre + "</a> </dd>" +
+                "<dt>Area: </dt>" + 
+                "<dd>" + (Math.round(fraccion.properties.Area * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " m<sup>2</sup></dd>" +
+                "<dt>Uso: </dt>" + 
+                "<dd><a href='"+linkUsoDeSuelo+"'> " + fraccion.properties.UsoDeSuelo + "</a> </dd>" +
+                "<dt>Estatus: </dt>" +
+                "<dd>" + fraccion.properties.Estatus + "</dd>" +
+                "<dt>Manzana: </dt>" +
+                "<dd>" + fraccion.properties.Manzana + "</dd>" +
+                "<dt>Lote: </dt>" +
+                "<dd>" + fraccion.properties.Lote + "</dd>" +
+            "</dl>";
+    }
+
+    function fraccionesInitialStyle(fraccion){
+        return {
+            fillOpacity: 0.5,
+            opacity: .75,
+            weight: 1,
+            className: "fraccion",
+            color:"#333",
+            fillColor: fraccion.properties.Color
+        };
+    }
+
+    function vialidadesInitialStyle(fraccion){
+        return {
+            fillOpacity: 0.5,
+            fillColor:"#e5e5e5",
+            opacity: .75,
+            weight: 1,
+            className: "fraccion",
+            color:"#333",
+        };
+    }
+
+    L.Control.InfoFraccion = L.Control.extend({
+    
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (mymap) {
+            this._div = L.DomUtil.create('div', 'map-info-control');
+            this.update();
+            return this._div;
+        },
+
+        update: function (fraccion) {
+            this._div.innerHTML = fraccion ? fraccionPopup(fraccion) : 'Plan Maestro';
+        },
+
+        initialize: function (foo, options) {
+            L.Util.setOptions(this, options);
+        }
+
+    });
+
+    var infoControl = new L.Control.InfoFraccion('infocontrol',{ position:'topleft' })
+    mymap.addControl(infoControl);
+
+
+}

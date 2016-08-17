@@ -1,0 +1,340 @@
+﻿@model Dixus.WebUI.Models.AdminOpcionesViewModel
+
+@{
+    ViewBag.Title = "Opciones";
+}
+<div id="pagina-opciones">
+    <h3 class="page-title">Opciones</h3>
+    <hr class="green-stripe" />
+    <hr class="not-to-top" />
+
+    @using (@Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="content-padder"> @Html.ValidationSummary(false, "", new { @class = "alert alert-danger content-padder" }, "ul")</div>
+
+        <div class="content-padder">
+
+            <h4 class="section-title">General</h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Numero de etapas del proyecto</label>
+                        <div>
+                            @Html.DropDownList("NumeroDeEtapas", null, "Selecciona un número..", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NumeroDeEtapas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="section-title">Autocad</h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(x => x.ValidarSuperficieTotal)
+                            <label for="ValidarSuperficieTotal">Validar que area total esté exacta </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(x => x.ValidarQuePoligonosNoSeSobrepongan)
+                            <label for="ValidarQuePoligonosNoSeSobrepongan">Validar que los poligonos no se sobrepongan</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(x => x.ValidarQueTodasLasGeometriasSeanPoligonos)
+                            <label for="ValidarQueTodasLasGeometriasSeanPoligonos">Validar que todas las geometrias sean poligonos </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(x => x.ValidarQuePoligonosSeanValidos)
+                            <label for="ValidarQuePoligonosSeanValidos">Validar que poligonos sean validos </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(x => x.ValidarQuePoligonosEstenCerrados)
+                            <label for="ValidarQuePoligonosEstenCerrados">Validar que poligonos estén cerrados </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(x => x.ValidarQueFraccionesNoSeanInmodificables)
+                            <label for="ValidarQueFraccionesNoSeanInmodificables">Validar que fracciones sean modificables <span class="superscript-info" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Las fracciones inmodificables son aquellas que ya estan ligadas a un terreno legal que no esté libre: ya sea donado, en garantía, vendido, comprometido, etc.">?</span> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Area total del proyecto</label>
+                        <div>
+                            @Html.EditorFor(model => model.AreaTotalDelProyectoEnMetros, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AreaTotalDelProyectoEnMetros, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Margen de error total del proyecto</label>
+                        <div>
+                            @Html.EditorFor(model => model.ToleranciaEnM2ParaProyecto, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ToleranciaEnM2ParaProyecto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Tamaño máximo de sobreposiciones</label>
+                        <div>
+                            @Html.EditorFor(model => model.TamañoMaximoDeSobreposiciones, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TamañoMaximoDeSobreposiciones, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h4 class="section-title">Proyectos de Inversion <small>(Cantidades cargadas por M<sup>2</sup>)</small></h4>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Proyecto plan maestro</label>
+                        <div>
+                            @Html.EditorFor(model => model.ProyectoPlanMaestroPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProyectoPlanMaestroPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pago presupuesto urbanizacion</label>
+                        <div>
+                            @Html.EditorFor(model => model.PresupuestoYUrbanizacionPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PresupuestoYUrbanizacionPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Impacto ambiental</label>
+                        <div>
+                            @Html.EditorFor(model => model.ImpactoAmbientalPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ImpactoAmbientalPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Autorizacion impacto ambiental</label>
+                        <div>
+                            @Html.EditorFor(model => model.AutorizacionImpactoAmbientalPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AutorizacionImpactoAmbientalPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Proyecto de rasantes agua potable y drenaje</label>
+                        <div>
+                            @Html.EditorFor(model => model.RasantesAguaPotableYDrenajePorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.RasantesAguaPotableYDrenajePorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Licencia uso de suelo</label>
+                        <div>
+                            @Html.EditorFor(model => model.LicenciaUsoDeSueloPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LicenciaUsoDeSueloPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Deslinde del terreno</label>
+                        <div>
+                            @Html.EditorFor(model => model.DeslindeDeTerrenoPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DeslindeDeTerrenoPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Estudio topografico</label>
+                        <div>
+                            @Html.EditorFor(model => model.EstudioTopograficoPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EstudioTopograficoPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estudio de inundabilidad</label>
+                        <div>
+                            @Html.EditorFor(model => model.EstudioInundabilidadPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EstudioInundabilidadPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mecanica de suelos</label>
+                        <div>
+                            @Html.EditorFor(model => model.MecanicaDeSuelosPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MecanicaDeSuelosPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Autorizacion</label>
+                        <div>
+                            @Html.EditorFor(model => model.AutorizacionPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AutorizacionPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Prediales</label>
+                        <div>
+                            @Html.EditorFor(model => model.PredialesPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PredialesPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Urbanizacion</label>
+                        <div>
+                            @Html.EditorFor(model => model.UrbanizacionPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UrbanizacionPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Kilo</label>
+                        <div>
+                            @Html.EditorFor(model => model.KiloPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.KiloPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Parque</label>
+                        <div>
+                            @Html.EditorFor(model => model.ParquePorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ParquePorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Arborizacion de kilo y parque</label>
+                        <div>
+                            @Html.EditorFor(model => model.ArborizacionPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ArborizacionPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Barda perimetral</label>
+                        <div>
+                            @Html.EditorFor(model => model.BardaPerimetralPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BardaPerimetralPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Barda decorativa</label>
+                        <div>
+                            @Html.EditorFor(model => model.BardaDecorativaPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BardaDecorativaPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Muros de contencion</label>
+                        <div>
+                            @Html.EditorFor(model => model.MurosDeContencionPorM2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MurosDeContencionPorM2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h4 class="section-title">Proyectos de Inversión <small>(Porcentajes de T.U.)</small></h4>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Tierra</label>
+                        <div>
+                            @Html.EditorFor(model => model.PorcentajedeTUPertenecienteATierra, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PorcentajedeTUPertenecienteATierra, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Obras Especiales</label>
+                        <div>
+                            @Html.EditorFor(model => model.PorcentajedeTUPertenecienteAObrasEspeciales, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PorcentajedeTUPertenecienteAObrasEspeciales, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Gastos por fraccionar</label>
+                        <div>
+                            @Html.EditorFor(model => model.PorcentajedeTUPertenecienteAGastosPorFraccionar, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PorcentajedeTUPertenecienteAGastosPorFraccionar, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Urbanizacion</label>
+                        <div>
+                            @Html.EditorFor(model => model.PorcentajedeTUPertenecienteAUrbanizacion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PorcentajedeTUPertenecienteAUrbanizacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Infraestructura</label>
+                        <div>
+                            @Html.EditorFor(model => model.PorcentajedeTUPertenecienteAInfraestructura, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PorcentajedeTUPertenecienteAInfraestructura, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Post Venta</label>
+                        <div>
+                            @Html.EditorFor(model => model.PorcentajedeTUPertenecienteAPostVenta, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PorcentajedeTUPertenecienteAPostVenta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+            <hr class="not-to-top" />
+
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Guardar cambios" class="btn btn-verde" />
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

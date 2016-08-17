@@ -1,0 +1,91 @@
+﻿@model Dixus.WebUI.Models.AdminOpcionesViewModel
+
+@{
+    ViewBag.Title = "Administrador";
+}
+
+
+
+<div id="pagina-admin">
+    @Html.Partial("PageTitle","Administrador")
+    
+    <div class="content-padder">
+
+       
+            <a href="@Url.Action("Opciones","Admin")" class="btn btn-verde btn-fixed-width">Opciones</a>
+            <a href="@Url.Action("Usuarios","Admin")" class="btn btn-verde btn-fixed-width">Usuarios</a>
+            <a href="@Url.Action("Procesos","Admin")" class="btn btn-verde btn-fixed-width">Procesos</a>
+       
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* MENU PARA ACTIVAR UN TAB ESPECIFICO
+    
+    <div id="opciones-menu">
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" class="active"><a href="#opciones" aria-controls="opciones" role="tab" data-toggle="tab">Opciones</a></li>
+        <li role="presentation"><a href="#usuarios" aria-controls="usuarios" role="tab" data-toggle="tab">Usuarios</a></li>
+        <li role="presentation"><a href="#juntas" aria-controls="juntas" role="tab" data-toggle="tab">Juntas y Tareas</a></li>
+    </ul>
+</div>*@
+
+@* JAVASCRIPT NECESARIO PARA QUE FUNCIONEN LOS TABS
+    
+    @section jsCode{
+    $('.nav-pills a[href="#usuarios"]').on('show.bs.tab', function(){
+    var $usuariosPane = $("#usuarios");
+    $usuariosPane.load('@Url.Action("Usuarios", "Admin")', function(){
+    $('.body-wrapper').scrollTop(0);
+    });
+    });
+
+    $('.nav-pills a[href="#juntas"]').on('show.bs.tab', function(){
+    var $juntasPane = $("#juntas");
+    $juntasPane.load('@Url.Action("Operacion", "Admin", new { NumDeJuntas = 10, NumDeTareas = 5, NumDeAcuerdos = 5 })', function(){
+    $('.body-wrapper').scrollTop(0);
+    $('[data-toggle="tooltip"]').tooltip();
+
+    });
+    });
+
+    var url = document.location.toString();
+    if (url.match('#')) {
+    $('.nav-pills a[href=#'+url.split('#')[1]+']').tab('show') ;
+    }
+
+    // Change hash for page-reload
+    $('.nav-pills a').on('shown.bs.tab', function (e) {
+    window.location.hash = e.target.hash;
+    });
+}*@
+
+@* AQUI VA EL CONTENIDO DE LOS TABS
+    
+    <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="opciones">
+
+    </div>
+    <div id="usuarios" role="tabpanel" class="tab-pane">
+        <div class="well">Cargando información de usuarios...</div>
+    </div>
+    <div id="juntas" class="tab-pane">
+        <div class="well">Cargando información de juntas...</div>
+    </div>
+</div>*@

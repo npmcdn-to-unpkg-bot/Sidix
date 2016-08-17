@@ -1,0 +1,98 @@
+﻿@model Dixus.Entidades.Fraccion
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section jsCode{
+    $(document).ready(function(){
+    
+        $("#btnBorrar").click(function(){
+            if (!confirm("Segurisisisisisimo?")){
+                return false;
+            }
+        });
+    });    
+}
+
+<div class="content-padder">
+    <h3>@Model.Nombre</h3>
+
+    <h3>Estás seguro que deseas elimiar esta fracción?</h3>
+    <div>
+    <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt>
+                Tipo de suelo
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TipoDeSuelo.Nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MetrosCuadrados)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MetrosCuadrados)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Etapa)
+            </dt>
+
+            <dd>
+                @if (Model.Etapa.HasValue)
+                {
+                    @Html.DisplayFor(model => model.Etapa)
+                }
+                else {
+                    @:Sin definir
+                }
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FactorTopografico)
+            </dt>
+
+            <dd>
+                @if (Model.FactorTopografico.HasValue)
+                {
+                    @Html.DisplayFor(model => model.FactorTopografico)
+                }
+                else {
+                    @:Sin definir
+                }
+
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.InversionesCalculadasDiferente)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.InversionesCalculadasDiferente)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Sí, borrar" id="btnBorrar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" />
+                @Html.ActionLink("Volver a fracciones", "Index", null, new { @class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" })
+            </div>
+        }
+    </div>
+</div>

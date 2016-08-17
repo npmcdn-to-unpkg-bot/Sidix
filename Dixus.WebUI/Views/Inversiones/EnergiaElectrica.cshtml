@@ -1,0 +1,65 @@
+﻿
+@model Dixus.WebUI.Models.EnergiaElectricaViewModel
+
+@{
+    ViewBag.Title = "Energia Electica";
+}
+
+@Html.Partial("PageTitle", "Desglose de Energía Eléctrica")
+
+@*<p>MVAS Totales disponibles: <strong>@Model.TotalDeMvasDisponibles</strong> </p>
+
+<p>MVAS usados/destinados a fracciones</p>*@
+<div class="content-padder">
+    <h4 class="section-title">Cantidad de MVAs por uso de suelo</h4>
+</div><dl class="dl-horizontal">
+
+    <dt>Vivivenda Economica</dt>
+    <dd>@Html.DisplayFor(model => model.MVasPorViviendaEconomica)</dd>
+
+    <dt>Vivivenda Social</dt>
+    <dd>@Model.MVasPorViviendaSocial </dd>
+
+    <dt>Vivivenda Media</dt>
+    <dd>@Model.MVasPorViviendaMedia</dd>
+
+    <dt>Vivivenda Popular</dt>
+    <dd>@Model.MVasPorViviendaPopular</dd>
+
+    <dt>Vivivenda Residencial</dt>
+    <dd>@Model.MVasPorViviendaResidencial</dd>
+
+    <dt>Comercial</dt>
+    <dd>@Model.MVasPorComerciales</dd>
+
+    <dt>Comercio y Servicios</dt>
+    <dd>@Model.MVasPorComercioYServicios</dd>
+
+    <dt>Industrial</dt>
+    <dd>@Model.MVasPorIndustrial</dd>
+
+    <dt>Servicios Especiales</dt>
+    <dd>@Model.MVasPorServiciosEspeciales</dd>
+
+    <dt>Parque Tecnologia</dt>
+    <dd>@Model.MVasPorParqueTecnologico</dd>
+
+    <dt>Vialidades</dt>
+    <dd>@Model.MVasPorVialidades</dd>
+
+    <dt>Area de Conservacion</dt>
+    <dd>@Model.MVasPorAreasDeConservacion</dd>
+
+    <dt>Reserva Estrategica</dt>
+    <dd>@Model.MVasPorReservaEstrategica</dd>
+
+    <dt>Equipamiento Urbano</dt>
+    <dd>@Model.MVasPorEquipamiento</dd>
+
+    <dt>Donaciones</dt>
+    <dd>@Model.MVasPorDonaciones</dd>
+
+    <dt>TOTAL</dt>
+    <dd class="total">@Model.TOtalDeMvasUsados</dd>
+
+</dl>

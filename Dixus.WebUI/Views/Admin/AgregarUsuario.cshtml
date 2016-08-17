@@ -1,0 +1,89 @@
+﻿@model Dixus.WebUI.Models.AgregarUsuarioViewModel
+@{
+    ViewBag.Title = "Agregar usuario";
+}
+
+@Html.Partial("PageTitle", "Agregar un usuario")
+
+
+<div class="content-padder">
+    <div>
+
+        @using (@Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-8 col-lg-7">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control focus" })
+                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Apellidos, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Apellidos, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Puesto, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Puesto, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Puesto, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-5">
+                    
+                    <div class="form-group">
+                        <label class="control-label">Roles</label>
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(model => model.Roles.EsAdministrador)<label for="Roles_EsAdministrador">Administrador</label> <br />
+                        </div>
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(model => model.Roles.EsLegal)<label for="Roles_EsLegal">Legal</label> <br />
+                        </div>
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(model => model.Roles.EsVentas)<label for="Roles_EsVentas">Ventas</label> <br />
+                        </div>
+                        <div class="checkbox checkbox-success">
+                            @Html.CheckBoxFor(model => model.Roles.EsTecnico)<label for="Roles_EsTecnico">Técnico</label> <br />
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Agregar" class="btn btn-verde" />
+                        <a class="btn btn-verde" href="@Url.Action("index","admin")">Volver a usuarios</a>
+                    </div>
+                </div>
+            </div>
+            
+
+            
+        }
+    </div>
+</div>
+
+@section jsCode{
+    
+    $(document).ready(function(){  $(".focus").focus();  })
+
+}

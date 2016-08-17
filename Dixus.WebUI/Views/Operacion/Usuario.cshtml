@@ -1,0 +1,189 @@
+﻿@model Dixus.WebUI.Models.SingleUserViewModel
+
+@{
+    ViewBag.Title = "Usuario";
+    int NumDeTareasPorCompletar = Model.Usuario.NumDeTareasPorCompletar();
+    int NumDeTareasCompletadas = Model.Usuario.NumDeTareasCompletadas();
+    int NumDeJuntasAsistidas = Model.Usuario.NumDeJuntasAsistidas();
+}
+<div id="pagina-usuario">
+    <h3 class="page-title">Usuario: <small>@Model.Usuario.UserName</small></h3>
+    <hr class="green-stripe" />
+    <hr class="not-to-top" />
+
+    <div class="content-padder">
+
+
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <dl class="dl-horizontal dl-bordered detalles-fraccion-info @*dl-equal-sides*@">
+
+                    <dt>Usuario</dt>
+                    <dd>@Model.Usuario.UserName</dd>
+
+                    <dt>Nombre</dt>
+                    <dd>@Model.Usuario.NombreCompleto</dd>
+
+                    <dt>Correo</dt>
+                    <dd>@Model.Usuario.Email</dd>
+                </dl>
+
+                @*Tabla de ultimas juntas asistidas*@
+                <div id="juntas-asistidas-por-usuario">
+                    <h4 class="section-title"> Ultimas juntas asistidas</h4>
+
+                    @if (NumDeJuntasAsistidas > 0)
+                    {
+                        <div class="table-wrapper">
+                            <table id="tabla-juntas" class="@Html.tableClasses("left")">
+                                <thead>
+                                    <tr>
+                                        <th>Titulo</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var junta in Model.Usuario.UltimasJuntasAsistidas(10))
+                                    {
+                                        <tr>
+                                            <td @*class="cell-fixed-width"*@ title="@junta.Objetivo" data-toggle="tooltip" data-container="body" data-placement="bottom"><a href="@Url.Action("Junta","Operacion",new { id = junta.JuntaDeConsejoId })">@junta.Titulo</a></td>
+                                            <td>@Html.DisplayFor(model => junta.Fecha)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                @if (NumDeJuntasAsistidas > 10)
+                                {
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4"><a href="#" class="btn btn-verde">Ver más...</a></td>
+                                        </tr>
+                                    </tfoot>
+                                }
+                                
+                            </table>
+
+                        </div>
+                    }
+                    else
+                    {
+                    <div class="alert alert-danger" role="alert">Este usuario no a asistido a ninguna junta aún.</div>
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                @*Tabla de tareas pendientes*@
+                <div id="tareas-pendientes-de-usuario">
+                    <h4 class="section-title not-to-top"> Ultimas tareas pendientes</h4>
+
+                    @if (NumDeTareasPorCompletar > 0)
+                    {
+                        <div class="table-wrapper">
+                            <table id="tabla-tareas" class="@Html.tableClasses("left")">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Junta</th>
+                                        <th class="text-center">Completada</th>
+                                        <th class="text-center">Porcentaje</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tarea in Model.Usuario.TareasPorCompletar(5))
+                                    {
+                                        <tr>
+                                            <td class="btn-fixed-width" style="width:200px;" title="@tarea.Descripcion"><a href="@Url.Action("Tarea","Operacion",new { id = tarea.TareaId })">@tarea.Nombre</a></td>
+                                            <td>@tarea.JuntaDeConsejo.Titulo</td>
+                                            <td class="text-center">
+                                                <div class="checkbox checkbox-success">
+                                                    <input type="checkbox" @( tarea.ChecarSiEstaCompletada() ? "checked" : "") disabled /><label></label>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                @String.Format("{0:#0.##%}", tarea.ObtenerPorcentajeDeProgreso())
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                @if (NumDeTareasPorCompletar > 5)
+                                {
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4"><a href="#" class="btn btn-verde">Ver más...</a></td>
+                                        </tr>
+                                    </tfoot>
+                                }
+                                
+                            </table>
+
+                        </div>
+                    }
+                    else
+                    {
+                    <div class="alert alert-danger" role="alert"><i class="fa fa-check" style="color:#00b517"></i> Este usuario no tiene ninguna tarea pendiente</div>
+                    }
+
+                </div>
+
+                @*Tabla de tareas pendientes*@
+                <div id="tareas-completadas-de-usuario">
+                    <h4 class="section-title">Ultimas tareas completadas</h4>
+
+                    @if (NumDeTareasCompletadas > 0)
+                    {
+                        <div class="table-wrapper">
+                            <table id="tabla-tareas" class="@Html.tableClasses("left")">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Junta</th>
+                                        <th class="text-center">Completada</th>
+                                        <th class="text-center">Porcentaje</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tarea in Model.Usuario.TareasCompletadas(5))
+                                    {
+                                        <tr>
+                                            <td class="btn-fixed-width" style="width:260px;" title="@tarea.Descripcion"><a href="@Url.Action("Tarea","Operacion",new { id = tarea.TareaId })">@tarea.Nombre</a></td>
+                                            <td>@Html.ActionLink(@tarea.JuntaDeConsejo.Titulo, "Junta", "Operacion", new { id = tarea.JuntaDeConsejo.JuntaDeConsejoId }, null)</td>
+                                            <td class="text-center">
+                                                <div class="checkbox checkbox-success">
+                                                    <input type="checkbox" @( tarea.ChecarSiEstaCompletada() ? "checked" : "" ) disabled /><label></label>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                @(tarea.ObtenerPorcentajeDeProgreso() == 0 ? "0%" : String.Format("{0:##.##%}", tarea.ObtenerPorcentajeDeProgreso()) )
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                @if (NumDeTareasCompletadas > 5)
+                                {
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4"><a href="#" class="btn btn-verde">Ver más...</a></td>
+                                        </tr>
+                                    </tfoot>
+                                }
+                                
+                            </table>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger" role="alert">Este usuario jamás a completado una tarea del sistema.</div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

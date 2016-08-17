@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dixus.Domain", "Dixus.Domain\Dixus.Domain.csproj", "{B135BEDA-7A83-493B-9A58-403B6182EBC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dixus.WebUI", "Dixus.WebUI\Dixus.WebUI.csproj", "{5EDE9339-3EB7-4D8C-8CFD-482A1078A2E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dixus.Tests", "Dixus.Tests\Dixus.Tests.csproj", "{DD08A2CB-8980-4BD0-8E49-D5F117432370}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10. Aplicacion", "10. Aplicacion", "{A1BF0DE8-AB46-4846-A313-A9C7A8CB8506}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20. Business", "20. Business", "{3CC738D3-226F-4586-A1D8-E2BCB01D5716}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "30. Dominio", "30. Dominio", "{7051F9ED-DC7C-48A7-9319-289897740DCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "40. Datos", "40. Datos", "{4703154C-B371-41C4-A398-E2C27DE7B6AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50. Tests", "50. Tests", "{7B194DB1-47CC-4988-929E-2F8C795C4F76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dixus.Entidades", "Dixus.Entidades\Dixus.Entidades.csproj", "{B6E6DEED-AEE6-4D3A-A11E-A3AC3BA76AF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dixus.Repositorios", "Repositorios\Dixus.Repositorios.csproj", "{E2D77123-2948-4BCE-9FEA-5BFB3B638D91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dixus.BusinessRules", "Dixus.BusinessRules\Dixus.BusinessRules.csproj", "{909BCFAC-10EB-4362-A137-98C456D3B6FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B135BEDA-7A83-493B-9A58-403B6182EBC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B135BEDA-7A83-493B-9A58-403B6182EBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B135BEDA-7A83-493B-9A58-403B6182EBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B135BEDA-7A83-493B-9A58-403B6182EBC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EDE9339-3EB7-4D8C-8CFD-482A1078A2E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDE9339-3EB7-4D8C-8CFD-482A1078A2E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDE9339-3EB7-4D8C-8CFD-482A1078A2E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDE9339-3EB7-4D8C-8CFD-482A1078A2E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD08A2CB-8980-4BD0-8E49-D5F117432370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD08A2CB-8980-4BD0-8E49-D5F117432370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD08A2CB-8980-4BD0-8E49-D5F117432370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD08A2CB-8980-4BD0-8E49-D5F117432370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6E6DEED-AEE6-4D3A-A11E-A3AC3BA76AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E6DEED-AEE6-4D3A-A11E-A3AC3BA76AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E6DEED-AEE6-4D3A-A11E-A3AC3BA76AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E6DEED-AEE6-4D3A-A11E-A3AC3BA76AF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2D77123-2948-4BCE-9FEA-5BFB3B638D91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2D77123-2948-4BCE-9FEA-5BFB3B638D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2D77123-2948-4BCE-9FEA-5BFB3B638D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D77123-2948-4BCE-9FEA-5BFB3B638D91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{909BCFAC-10EB-4362-A137-98C456D3B6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{909BCFAC-10EB-4362-A137-98C456D3B6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{909BCFAC-10EB-4362-A137-98C456D3B6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{909BCFAC-10EB-4362-A137-98C456D3B6FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B135BEDA-7A83-493B-9A58-403B6182EBC9} = {4703154C-B371-41C4-A398-E2C27DE7B6AC}
+		{5EDE9339-3EB7-4D8C-8CFD-482A1078A2E9} = {A1BF0DE8-AB46-4846-A313-A9C7A8CB8506}
+		{DD08A2CB-8980-4BD0-8E49-D5F117432370} = {7B194DB1-47CC-4988-929E-2F8C795C4F76}
+		{B6E6DEED-AEE6-4D3A-A11E-A3AC3BA76AF9} = {4703154C-B371-41C4-A398-E2C27DE7B6AC}
+		{E2D77123-2948-4BCE-9FEA-5BFB3B638D91} = {7051F9ED-DC7C-48A7-9319-289897740DCD}
+		{909BCFAC-10EB-4362-A137-98C456D3B6FC} = {3CC738D3-226F-4586-A1D8-E2BCB01D5716}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal

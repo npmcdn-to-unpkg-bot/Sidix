@@ -1,0 +1,73 @@
+﻿@model Dixus.Entidades.Cliente
+
+@{
+    ViewBag.Title = Model.Nombre;
+}
+
+<h3 class="page-title">@Model.Nombre</h3>
+
+<div>
+    <dl class="dl-horizontal">
+
+        <dt> @Html.DisplayNameFor(model => model.Nombre)</dt>
+        <dd> @Html.DisplayFor(model => model.Nombre)</dd>
+
+        <dt>Num. de fracciones </dt>
+        <dd>@Model.Subdivisiones.Where(x => x.Descontinuada == false).Count()</dd>
+
+    </dl>
+</div>
+<hr class="not-to-top" />
+
+
+<div class="content-padder">
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.ClienteId }, new { @class = "btn btn-verde" })
+        @Html.ActionLink("Volver a empresas", "Index", null, new { @class = "btn btn-verde" })
+    </p>
+</div>
+    <hr class="not-to-bottom" />
+
+
+@Html.Action("TablaFracciones", "Fracciones", new { fracciones = Model.Subdivisiones.SelectMany( sub => sub.FraccionesPlanMaestro ) })
+
+
+
+
+@section header{
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.theme.min.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/scripts/dist/koViewModels.min.js"></script>
+    <script src="~/scripts/jquery-ui.min.js"></script>
+}
+
+@section jsCode{
+    var model = new dixus.viewModels.TablaFracciones();
+    ko.applyBindings( model , document.getElementById('table-wrapper') );
+    $( "#m2-slider" ).slider({
+    range: true,
+    min: 0,
+    max: 1032,
+    values: [ 0, 1032],
+    slide: function( event, ui ) {
+    $( "#metros-cuadrados-filtro" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+    }
+    });
+    $( "#metros-cuadrados-filtro" ).val( $( "#m2-slider" ).slider( "values", 0 ) + " - " + $( "#m2-slider" ).slider( "values", 1 )  );
+
+    $( "#factor-slider" ).slider({
+    range: true,
+    min: 0,
+    max: 1,
+    values: [ 0, 1],
+    step: 0.01,
+    slide: function( event, ui ) {
+    $( "#factor-topografico-filtro" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+    }
+    });
+
+    $( "#factor-topografico-filtro" ).val( $( "#factor-slider" ).slider( "values", 0 ) + " - " + $( "#factor-slider" ).slider( "values", 1 )  );
+}

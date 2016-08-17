@@ -1,0 +1,84 @@
+﻿@model Dixus.Entidades.FraccionLegal
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+
+<h3 class="page-title">
+    Subdivisión @Model.Nombre <small>Detalles</small>
+    <a href="@Url.Action("Edit",new { id = Model.FraccionLegalId })" data-toggle="tooltip" data-placement="right" title="Editar"><i class="fa fa-pencil"></i></a>
+</h3>
+<hr class="green-stripe" />
+<hr class="not-to-top" />
+<div class="content-padder-xs">
+    <div class="row">
+       
+        <div class="col-lg-6 col-md-4 col-md-push-8 col-lg-push-6">
+            <div id="menu-acciones-fraccion">
+                <a href="/mapa/anza" class="btn btn-verde btn-fixed-width medium btn-con-icono">
+                    <i class="fa fa-map fa-fw fa-2x"></i><br />
+                    Ver en planos
+                </a><br />
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-8 col-md-pull-4 col-lg-pull-6">
+            <div class="enclosed-title">Información general</div>
+            <dl class="dl-horizontal dl-bordered">
+                <dt> Nombre  </dt>
+                <dd> @Html.DisplayFor(model => model.Nombre)  </dd>
+
+                <dt>Estatus</dt>
+                <dd>@Model.Estatus</dd>
+
+                @if (Model.Clientes.Count > 0)
+                {
+                    <dt> Propietario(s) </dt>
+                    <dd>
+                        @foreach (var cliente in Model.Clientes)
+                {
+                            @Html.ActionLink(cliente.Nombre, "Details", "Clientes", new { id = cliente.ClienteId }, null)
+                        }
+                    </dd>
+                }
+
+                <dt>  Clave catastral </dt>
+                <dd>  @Html.DisplayFor(model => model.ClaveCatastral)  </dd>
+
+                <dt> Superficie </dt>
+                <dd> @Html.DisplayFor(model => model.Superficie) </dd>
+
+                @if (Model.EscrituraDeSubdivision != null)
+                {
+                    <dt> Num. de subdivisión </dt>
+                    <dd> @Html.ActionLink(Model.EscrituraDeSubdivision.NumDeSubdivision.ToString(), "subdivision", "escrituras", new { id = Model.EscrituraSubdivisionId }, null) </dd>
+                }
+
+                <dt> Volumen de subdivisión </dt>
+                <dd>  @Html.DisplayFor(model => model.VolumenSubdivision) </dd>
+
+                <dt> Numero de RPP</dt>
+                <dd> @Html.DisplayFor(model => model.NumeroDeRPP) </dd>
+
+                <dt> Volumen RPP</dt>
+                <dd> @Html.DisplayFor(model => model.VolumenRPP) </dd>
+
+                @*<dt> @Html.DisplayNameFor(model => model.EmpresaId)   </dt>
+                <dd>  @Html.DisplayFor(model => model.EmpresaId)  </dd>*@
+
+                <dt>Fecha de otorgamiento  </dt>
+                <dd> @(Model.FechaDeOtorgamiento.HasValue ? Html.DisplayFor(model => model.FechaDeOtorgamiento).ToString() : "-" ) </dd>
+
+                <dt>Fecha de inscripción </dt>
+                <dd> @(Model.FechaDeInscripcion.HasValue ? Html.DisplayFor(model => model.FechaDeInscripcion).ToString() : "-" ) </dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Observaciones) </dt>
+                <dd> @(String.IsNullOrEmpty(Model.Observaciones) ? "-" : Model.Observaciones )</dd>
+
+            </dl>
+        </div>
+    </div>
+
+
+
+</div>

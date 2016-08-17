@@ -1,0 +1,308 @@
+﻿@model Dixus.WebUI.Models.CrearFraccionViewModel
+
+@section jsCode{
+    $(document).ready(function () {
+    $tipoDeSueloDDL = $("#TipoDeSueloId");
+    $seCalculaDiferente = $("#InversionesCalculadasDiferente");
+
+    function updateForm() {
+    $("#PrefixFraccionNombre").html(fracciones.generarPrefijo($tipoDeSueloDDL.val()));
+    };
+
+    updateForm();
+    $tipoDeSueloDDL.change(updateForm);
+    });
+
+
+    function ViewModel(){
+
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        @*//Parte obligatoria basica*@
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="TipoDeSueloId">Tipo de Suelo</label>
+            <div class="col-md-10">
+                @Html.DropDownList("TipoDeSueloId", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon" id="PrefixFraccionNombre"></span>
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">M2</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MetrosCuadrados, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MetrosCuadrados, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Etapa (opcional)</label>
+            <div class="col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="checkbox" aria-label="...">
+                    </span>
+                    @Html.EditorFor(model => model.Etapa, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.Etapa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">F. Topográfico (opcional)</label>
+            <div class="col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="checkbox" aria-label="...">
+                    </span>
+                    @Html.EditorFor(model => model.FactorTopografico, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.FactorTopografico, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Partes opcionales / dinamicas *@
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Está vendida?</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Vendida)
+                    @Html.ValidationMessageFor(model => model.Vendida, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">AñoVenta</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AñoVenta, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AñoVenta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Cliente</label>
+            <div class="col-md-10">
+                @Html.DropDownList("ClienteId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Tipo de Comercio</label>
+            <div class="col-md-10">
+                @Html.DropDownList("TipoDeComercioId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TipoDeComercioId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Producto producido</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductoProducido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductoProducido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Viviendas desarrolladas</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ViviendasDesarrolladas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ViviendasDesarrolladas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Viviendas en proceso</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ViviendasEnProceso, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ViviendasEnProceso, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Viviendas por desarrollar</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ViviendasPorDesarrollar, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ViviendasPorDesarrollar, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Distancia</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Distancia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Distancia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Ancho del carril</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AnchoDelCarril, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AnchoDelCarril, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Numero de carriles</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumeroDeCarriles, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumeroDeCarriles, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*//Parte obligatoria opcionales para casos especiales*@
+
+        <div class="form-group">
+            <label class="control-label col-md-2">¿Se calcula diferente?</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.InversionesCalculadasDiferente)
+                    @Html.ValidationMessageFor(model => model.InversionesCalculadasDiferente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="casos-especiales">
+            <div class="form-group">
+                <label class="control-label col-md-2">Exento de uso de energia</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoOcupaEnergia)
+                        @Html.ValidationMessageFor(model => model.NoOcupaEnergia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoUsaEnergiaStandard, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoUsaEnergiaStandard)
+                        @Html.ValidationMessageFor(model => model.NoUsaEnergiaStandard, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FactorDeUsoEnergia, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FactorDeUsoEnergia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FactorDeUsoEnergia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CantidadEnergia, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CantidadEnergia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CantidadEnergia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoSeLeCobraEnergia, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoSeLeCobraEnergia)
+                        @Html.ValidationMessageFor(model => model.NoSeLeCobraEnergia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoPagaLoMismoEnEnergia, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoPagaLoMismoEnEnergia)
+                        @Html.ValidationMessageFor(model => model.NoPagaLoMismoEnEnergia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PrecioEnergia, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PrecioEnergia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PrecioEnergia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoOcupaAgua, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoOcupaAgua)
+                        @Html.ValidationMessageFor(model => model.NoOcupaAgua, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FactorDeUsoAgua, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FactorDeUsoAgua, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FactorDeUsoAgua, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoSeLeCobraAgua, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoSeLeCobraAgua)
+                        @Html.ValidationMessageFor(model => model.NoSeLeCobraAgua, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoPagaLoMismoEnAgua, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.NoPagaLoMismoEnAgua)
+                        @Html.ValidationMessageFor(model => model.NoPagaLoMismoEnAgua, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PrecioEspecialAgua, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PrecioEspecialAgua, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PrecioEspecialAgua, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SeExcluyeDeCobroDeInversiones, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.SeExcluyeDeCobroDeInversiones)
+                        @Html.ValidationMessageFor(model => model.SeExcluyeDeCobroDeInversiones, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+
+}

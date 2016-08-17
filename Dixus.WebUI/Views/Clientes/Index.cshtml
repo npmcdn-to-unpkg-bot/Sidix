@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Dixus.Entidades.Cliente>
+
+@{
+    ViewBag.Title = "Empresas";
+    int counter = 0;
+}
+
+<h3 class="page-title">Clientes</h3>
+
+  
+<div class="btn-group btn-group-justified">
+    <a class="btn btn-verde" href="@Url.Action("create")">
+        Nueva empresa
+    </a>
+</div>
+
+<table class="@Html.tableClasses("left")">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="text-left">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                Núm de terrenos
+            </th>
+            <th>Area poseída (m<sup>2</sup>)</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        counter = counter + 1;
+        <tr>
+            <td class="button-cell text-center">@counter</td>
+            <td class="text-left">
+                @Html.ActionLink(item.Nombre, "Details", new { id = item.ClienteId })
+            </td>
+            <td>
+                @item.Subdivisiones.Where(x=>x.Descontinuada == false).Count()
+            </td>
+            <td>
+                @String.Format("{0:N}", item.Subdivisiones.Where(subdiv => subdiv.Descontinuada == false).Sum(subdiv => subdiv.Superficie)) 
+            </td>
+            <td class="button-cell">
+                <a href="@Url.Action("Edit", new {id = item.ClienteId})"><i data-toggle="tooltip" data-placement="left" title="Editar Cliente" class="fa fa-pencil"></i> </a>
+            </td>
+            <td class="button-cell">
+                <a href="@Url.Action("Delete", new {id = item.ClienteId})"><i data-toggle="tooltip" data-placement="left" title="Borrar cliente" class="fa fa-times"></i> </a>
+            </td>
+        </tr>
+    }
+
+    <tfoot>
+        <tr>
+            <td></td>
+            <td class="text-left">Totales</td>
+            <td>@Model.Sum(emp=>emp.Subdivisiones.Where(subdiv=> subdiv.Descontinuada== false).Count())</td>
+            <td>@String.Format("{0:N}", @Model.Sum(emp => emp.Subdivisiones.Where(subdiv => subdiv.Descontinuada == false).Sum(x => x.Superficie))) m<sup>2</sup></td>
+            <td colspan="2"></td>
+        </tr>
+    </tfoot>
+
+</table>
+
+
+

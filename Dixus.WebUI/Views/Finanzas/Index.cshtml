@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Finanzas";
+}
+
+
+<h3 class="page-title">Finanzas</h3>
+<hr class="green-stripe" />
+<hr class="not-to-top"/>
+<div class="content-padder">
+
+    @Html.ActionLink("Ver Ingresos", "TablaIngresos", "Transacciones", null, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Ver Inversiones", "TablaInversiones", "Transacciones", null, new { @class = "btn btn-primary" })
+
+
+</div>

@@ -1,0 +1,108 @@
+﻿@model Dixus.WebUI.Models.ErroresDeValidacionViewModel
+
+@{ 
+    ViewBag.Title = "Falló la validación";
+}
+
+@Html.PageTitle("Errores de validación")
+<div id="pagina-errores-de-validacion">
+    <div class="content-padder">
+
+        <p class="well">Al parecer hay algunos errores en el modelo de autocad. Para poder registrar algún cambio se necesita que los siguientes errores desaparezcan: (Es posible activar y desactivar estos filtros desde la sección de "opciones" del sistema, así como manejar margenes de error)</p>
+
+        @if (!Model.SumaTotalEsValida)
+        {
+            <h4 class="section-title">Area del proyecto:</h4>
+            <ul>
+                <li>El area total del proyecto no da es válida. Verifica que se encuentre dentro del rango permitido.</li>
+            </ul>
+        }
+
+        @if (!Model.GeometriasQueNoSonPoligonos.EstaVacio)
+        {
+            <h4 class="section-title">Geometrias que no son poligonos:</h4>
+            <ul>
+                @if (Model.GeometriasQueNoSonPoligonos.Fracciones.Count() > 0)
+                {
+                    foreach (var fracc in Model.GeometriasQueNoSonPoligonos.Fracciones)
+                    {
+                        <li>Fracción @fracc.Nombre</li>
+                    }
+                }
+                @if (Model.GeometriasQueNoSonPoligonos.Vialidades.Count() > 0)
+                {
+                    foreach (var vial in Model.GeometriasQueNoSonPoligonos.Vialidades)
+                    {
+                        <li>Vialidad @vial.ViaNombre</li>
+                    }
+                }
+            </ul>
+        }
+
+        @if (!Model.PoligonosInvalidos.EstaVacio)
+        {
+            <h4 class="section-title">Poligonos inválidos:</h4>
+            <ul>
+                @if (Model.PoligonosInvalidos.Fracciones.Count() > 0)
+                {
+                    foreach (var fracc in Model.PoligonosInvalidos.Fracciones)
+                    {
+                        <li>Fracción @fracc.Nombre</li>
+                    }
+                }
+                @if (Model.PoligonosInvalidos.Vialidades.Count() > 0)
+                {
+                    foreach (var vial in Model.PoligonosInvalidos.Vialidades)
+                    {
+                        <li>Vialidad @vial.ViaNombre</li>
+                    }
+                }
+            </ul>
+        }
+
+        @if (!Model.PoligonosNoCerrados.EstaVacio)
+        {
+            <h4 class="section-title">Poligonos que no están cerrados:</h4>
+            <ul>
+                @if (Model.PoligonosNoCerrados.Fracciones.Count() > 0)
+                {
+                    foreach (var fracc in Model.PoligonosNoCerrados.Fracciones)
+                    {
+                        <li>Fracción @fracc.Nombre</li>
+                    }
+                }
+                @if (Model.PoligonosNoCerrados.Vialidades.Count() > 0)
+                {
+                    foreach (var vial in Model.PoligonosNoCerrados.Vialidades)
+                    {
+                        <li>Vialidad @vial.ViaNombre</li>
+                    }
+                }
+            </ul>
+        }
+
+        @if (Model.GeometriasSobrepuestas != null && Model.GeometriasSobrepuestas.Count() > 0)
+        {
+            <h4 class="section-title">Geometrias sobrepuestas:</h4>
+            <ul>
+                @foreach (var geom in Model.GeometriasSobrepuestas)
+                {
+                    <li>La fracción/vialidad @geom.InfoPoligono1.Nombre se sobrepone con la fracción/vialidad @geom.InfoPoligono2.Nombre en un área de <strong>@String.Format("{0:N}", geom.Geom.Area) m<sup>2</sup></strong>, la cual es mayor a la permitida por el sistema.</li>
+                }
+            </ul>
+        }
+
+        @if (Model.FraccionesModificadasQueNoSeDebenModificar != null && Model.FraccionesModificadasQueNoSeDebenModificar.Count() > 0)
+        {
+            <h4 class="section-title">Fracciones que cambiaron y no pueden cambiar debido a su estatus: </h4>
+            <ul>
+                @foreach (var fracc in Model.FraccionesModificadasQueNoSeDebenModificar)
+                {
+                    <li>Fracción @fracc.Nombre</li>
+                }
+            </ul>
+        }
+
+    </div>
+
+</div>

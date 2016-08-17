@@ -1,0 +1,4 @@
+﻿@model decimal
+
+@( Model % 1 == 0 ? Model.ToString("C0") : Model.ToString("C") )
+

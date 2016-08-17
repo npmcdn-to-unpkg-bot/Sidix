@@ -1,0 +1,171 @@
+﻿@model Dixus.WebUI.Models.JuntaViewModel
+
+@{
+    ViewBag.Title = Model.Junta.Titulo;
+    double NumDeAsistentes = Model.Junta.NumDeUsuariosPresentes();
+    double NumDeTareasAsignadas = Model.Junta.NumDeTareasAsignadas();
+    double NumDeTareaCompletadas = Model.Junta.NumDeTareasCompletadas();
+    double NumDeTareaPendientes = Model.Junta.NumDeTareasPendientes();
+    double NumDeAcuerdosGenerados = Model.Junta.NumDeAcuerdosAlcanzados();
+}
+
+@Html.PageTitle("Minuta:", Model.Junta.Titulo)
+
+<div id="pagina-junta">
+
+    <div class="content-padder">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+
+                <div id="fecha-de-junta">
+                    <h4 class="section-title">Fecha</h4>
+                    <div class="well">@Html.DisplayFor(model => model.Junta.Fecha)</div>
+                </div>
+
+                <div id="objetivo-de-junta">
+                    <h4 class="section-title">Objetivo</h4>
+                    <div class="well">
+                        @if (!Model.Junta.Objetivo.IsEmpty())
+                        {
+                            <text>Model.Junta.Objetivo</text>
+                        }
+                        else
+                        {
+                            <div>No tiene un objetivo especificado. Para añadir uno, haz click @Html.ActionLink("aquí", "editarjunta", "operacion", new { id = Model.Junta.JuntaDeConsejoId} ,null)</div>
+                        }
+                    </div>
+                </div>
+
+                <div id="asistentes-de-junta">
+                    <h4 class="section-title">@NumDeAsistentes Asistente@(NumDeAsistentes > 1 ? "s" : ""):</h4>
+                    <ul>
+                        @foreach (var user in Model.Junta.UsuariosPresentes)
+                        {
+                            <li><a class="normal-color" href="@Url.Action("Usuario", new { id = user.Id })">@user.NombreCompleto</a></li>
+                        }
+                    </ul>
+                </div>
+
+                @if (!Model.Junta.Observaciones.IsEmpty())
+                {
+                    <div id="observaciones-de-junta">
+                        <h4 class="section-title">Observaciones</h4>
+                        <div class="well">
+                            @Model.Junta.Observaciones
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <div class="col-sm-12 col-md-8">
+
+                <div id="acuerdos-de-junta">
+                    <h4 class="section-title">@NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo generado" : "Acuerdos generados")</h4>
+                    @if (NumDeAcuerdosGenerados > 0)
+                    {
+                        <div class="table-wrapper">
+                            <table id="tabla-acuerdos" class="@Html.tableClasses("left")">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var acuerdo in Model.Junta.Acuerdos)
+                                    {
+                                        <tr>
+                                            <td class="cell-fixed-width" style="width:200px;">@acuerdo.Nombre</td>
+                                            <td class="cell-fixed-width cell-wrap" style="min-width:150px; max-width:300px;">@acuerdo.Descripcion</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info" role="alert">No se registró ningun acuerdo en esta junta</div>
+                    }
+                </div>
+
+                <div id="tareas-de-junta">
+                    <h4 class="section-title">@NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea asignada" : "Tareas asignadas") (@NumDeTareaPendientes pendientes)</h4>
+                    @if (NumDeTareasAsignadas > 0)
+                    {
+                        <div class="table-wrapper">
+                            <table id="tabla-tareas" class="@Html.tableClasses("left")">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th class="text-center">Completada</th>
+                                        <th class="text-center">Porcentaje</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tarea in Model.Junta.TareasPendientes(5))
+                                    {
+                                        <tr>
+                                            <td title="@tarea.Descripcion"><a href="@Url.Action("Tarea","Operacion",new { id = tarea.TareaId })">@tarea.Nombre</a></td>
+                                            <td class="text-center">
+                                                <div class="checkbox checkbox-success">
+                                                    <input type="checkbox" @( tarea.ChecarSiEstaCompletada() ? "checked" : "") disabled /><label></label>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                @String.Format("{0:#0.##%}", tarea.ObtenerPorcentajeDeProgreso())
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info" role="alert">No se asignó ninguna tarea en esta junta</div>
+                    }
+                </div>
+
+
+
+                @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    @NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo generado" : "Acuerdos generados")
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    @NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea asignada" : "Tareas asignadas") (@NumDeTareaPendientes pendientes)
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

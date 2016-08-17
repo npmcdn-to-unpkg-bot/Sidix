@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Dixus.Entidades.FraccionLegal>
+
+@{ 
+    Layout = null;
+    int counter = 0;
+}
+
+@if (Model.Count() > 0)
+{
+    <div class="table-wrapper">
+        <hr class="green-stripe">
+        <table class="@Html.tableClasses("left")" style="width:100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Superficie</th>
+                    <th>Num. Subdivision</th>
+                    <th>Volumen</th>
+                    @*<th class="columna-propietario">Propietario</th>*@
+                    <th>Clave Catastral</th>
+                    @*<th>Numero de RPP</th>
+                    <th>Volumen de RPP</th>*@
+                    <th>Fecha Otorgamiento</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var subdivision in Model)
+                {
+                    counter = counter + 1;
+                    <tr>
+                        <td class="button-cell">@counter</td>
+                        <td>@Html.ActionLink(subdivision.Nombre, "detalles", new { id = subdivision.FraccionLegalId })</td>
+                        <td>@Html.DisplayFor(model => subdivision.Superficie)</td>
+                        <td>@Html.ActionLink(subdivision.EscrituraDeSubdivision.NumDeSubdivision.ToString(), "subdivision", "escrituras", new { id = subdivision.EscrituraSubdivisionId }, null)</td>
+                        <td>@subdivision.VolumenSubdivision</td>
+                        @*<td class="columna-propietario">@Html.ActionLink(subdivision.Propietario.Nombre, "Details", "Empresas", new { id = subdivision.PropietarioId }, null)</td>*@
+                        <td>@subdivision.ClaveCatastral</td>
+                        @*<td>@subdivision.NumeroDeRPP</td>
+                        <td>@subdivision.VolumenRPP</td>*@
+                        <td> @(subdivision.FechaDeOtorgamiento.HasValue ? Html.DisplayFor(model => subdivision.FechaDeOtorgamiento.Value).ToString() : "-" ) </td>
+                        <td class="button-cell">
+                            <a href="@Url.Action("Edit", new {id = subdivision.FraccionLegalId})" data-toggle="tooltip" data-placement="left" title="Editar @subdivision.Nombre"><i class="fa fa-pencil"></i> </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot>
+                <tr class="table-row-totales">
+                    <td></td>
+                    <td>Total</td>
+                    <td>@String.Format("{0:N}", Model.Sum(x => x.Superficie))</td>
+                    <td></td>
+                    <td></td>
+                    @*<td class="columna-propietario"></td>*@
+                    <td></td>
+                    @*<td></td>
+                    <td></td>*@
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+    </div>
+}
+else
+{
+    <div class="text-center alert alert-info">
+        No hay subdivisiones legales
+    </div>
+}
+

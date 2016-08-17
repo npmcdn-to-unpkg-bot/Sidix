@@ -1,0 +1,236 @@
+﻿@model Dixus.WebUI.Models.TablaFraccionesViewModel
+
+@{
+    int counter = 0;
+}
+
+@if (Model.Fracciones.Count() > 0)
+{
+    
+    <div class="btn-group btn-group-justified" data-toggle="buttons">
+        <label class="btn btn-verde">
+            <input type="radio" name="columnas" value="terreno" data-bind="bsChecked: columnas" /> Terreno
+        </label>
+        <label class="btn btn-verde">
+            <input type="radio" name="columnas" value="planeacion" data-bind="bsChecked: columnas" /> Planeacion
+        </label>
+        <label class="btn btn-verde">
+            <input type="radio" name="columnas" value="finanzas" data-bind="bsChecked: columnas" /> Finanzas
+        </label>
+    </div>
+
+    <div id="tabla-fracciones-filtros" data-bind="slideIn: filtrosVisibles">
+        <hr class="not-to-top" />
+        <div class="content-padder">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <span class="filter-section-title">Nombre</span>
+                    <input type="text" value="" placeholder="Nombre" class="form-control" />
+                    <span class="filter-section-title"> Uso de suelo</span>
+                    <select class="form-control">
+                        <option disabled selected> Selecciona una.. </option>
+                        <optgroup label="Vivienda">
+                            <option>Vivienda Economica</option>
+                            <option>Vivienda Social</option>
+                            <option>Vivienda Media</option>
+                            <option>Vivienda Popular</option>
+                            <option>Vivienda Residencial</option>
+                        </optgroup>
+                       <optgroup label="Empresariales">
+                           <option>Comercial</option>
+                           <option>Comercio y Servicios</option>
+                           <option>Industrial</option>
+                           <option>Parque Alta Tecnologia</option>
+                           <option>Servicios Especiales</option>
+                           <option>Reserva Estrategica</option>
+                           <option>Areas de Conservacion</option>
+                       </optgroup>
+                       <optgroup label="No Vendibles">
+                           <option>Equipamiento Urbano</option>
+                           <option>Donaciones</option>
+                           <option>Vialidades</option>
+                       </optgroup>
+                    </select>
+
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <span class="filter-section-title">Numero de entradas</span>
+                    <input type="number" value="" placeholder="Cantidad" class="form-control" />
+
+                    <span class="filter-section-title"> Ordenar por</span>
+                    <select class="form-control">
+                        <option disabled selected> Selecciona una.. </option>
+                        <optgroup label="General">
+                            <option>Nombre
+                            <option>Uso de suelo</option>
+                            <option>Estatus</option>
+                            <option>Etapa</option>
+                        </optgroup>
+                        <optgroup label="Terreno">
+                            <option>Metros Cuadrados</option>
+                            <option>Metros Aprovechables</option>
+                        </optgroup>
+                        <optgroup label="Infraestructura">
+                            <option>MVAs Requeridos</option>
+                            <option>LPS Requeridos</option>
+                            <option>LPS San. Requeridos</option>
+                        </optgroup>
+                        <optgroup label="Finanzas">
+                            <option>Precio por M2</option>
+                            <option>Precio total</option>
+                            <option>Margen de Utilidad</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <span class="filter-section-title">Estatus</span>
+                            <div id="estatus-checkboxes">
+                                <div class="checkbox checkbox-success">
+                                    <input id="libres-checkbox" type="checkbox" checked /> <label for="libres-checkbox">Libres </label>       <br />
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input id="vendidas-checkbox" type="checkbox" checked /> <label for="vendidas-checkbox">Vendidas</label>      <br />
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input id="garantia-checkbox" type="checkbox" checked /> <label for="garantia-checkbox">En Garantía</label>   <br />
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input id="comprometidas-checkbox" type="checkbox" checked /> <label for="comprometidas-checkbox">Comprometidas</label> <br />
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input id="donadas-checkbox" type="checkbox" checked /> <label for="donadas-checkbox">Donadas</label> <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <span class="filter-section-title">Etapa</span>
+                            <div id="etapas-checkboxes">
+                                <div class="checkbox checkbox-success">
+                                    <input id="etapa-uno-checkbox" type="checkbox" checked /> <label for="etapa-uno-checkbox">1</label>  <br />
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input id="etapa-dos-checkbox" type="checkbox" checked /> <label for="etapa-dos-checkbox">2</label>  <br />
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input id="etapa-tres-checkbox" type="checkbox" checked /> <label for="etapa-tres-checkbox">3</label>  <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="filter-section-title">
+                        <label for="metros-cuadrados-filtro">Hectareas:</label> <input type="text" readonly id="metros-cuadrados-filtro" style="border:0; color:#f6931f; font-weight:bold; background-color:transparent;"/>
+                    </div>
+                    <div id="m2-slider"></div>
+                    <div class="filter-section-title">
+                        <label for="factor-topografico-filtro">Factor Topográfico:</label> <input type="text" readonly id="factor-topografico-filtro" style="border:0; color:#f6931f; font-weight:bold; background-color:transparent;" />
+                    </div>
+                    <div id="factor-slider"></div>
+                </div>
+            </div>
+        </div>
+        <hr class="not-to-bottom" />
+    </div>
+
+    <div class="table-wrapper">
+
+        <table id="tabla-fracciones" class="mdl-data-table mdl-js-data-table data-table tabla-extendida">
+            <thead>
+                <tr>
+                    <th data-bind="click: toggleFiltros, css: { activado: filtrosVisibles() }" class="filtrar-info" colspan="2"><i class="fa fa-filter"></i></th>
+                    <th class="mdl-data-table__header--sorted-ascending" style="width:130px" id="prueba-chato">  Fracción </th>
+                    <th> Tipo de Suelo </th>
+                    <th style="width:120px">Estatus</th>
+                    <th data-bind="visible: terrenoElegido"> M<sup>2</sup> </th>
+                    <th data-bind="visible: terrenoElegido">Hectareas</th>
+                    <th data-bind="visible: terrenoElegido"> F. Topografico </th>
+                    <th data-bind="visible: terrenoElegido"> M<sup>2</sup> Aprov.</th>
+                    <th data-bind="visible: vendiblesElegido"> Etapa </th>
+                    <th data-bind="visible: vendiblesElegido">MVA's</th>
+                    <th data-bind="visible: vendiblesElegido">LPS</th>
+                    <th data-bind="visible: vendiblesElegido">LPS Saneam.</th>
+                    <th data-bind="visible: finanzasElegido">Precio por M<sup>2</sup></th>
+                    <th data-bind="visible: finanzasElegido">Precio de Venta</th>
+                    <th data-bind="visible: finanzasElegido">Margen Utilidad</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Fracciones)
+                {
+                    counter = counter + 1;
+                    <tr>
+                        <td class="button-cell">@counter</td>
+                        <td style="width:15px">@Html.indicadorDeSuelo(item.TipoDeSuelo.Color) </td>
+                        <td>@Html.ActionLink(item.Nombre, "details", new { id = item.FraccionId }) </td>
+                        <td style="width:270px;"><a href="@Url.Action("Details", "TiposDeSuelo", new {id = item.TipoDeSueloId})">@item.TipoDeSuelo.Nombre</a> </td>
+                        <td>  @(item.ObtenerEstatus()) </td>
+                        <td data-bind="visible: terrenoElegido">  @Html.DisplayFor(modelItem => item.MetrosCuadrados)</td>
+                        <td data-bind="visible: terrenoElegido">  @Html.DisplayFor(modelitem => item.Hectareas)</td>
+                        <td data-bind="visible: terrenoElegido"> @( item.FactorTopografico.HasValue ? item.FactorTopografico.Value.ToString("##.##%") : "-" ) </td>
+                        <td data-bind="visible: terrenoElegido">  @Html.DisplayFor(modelItem => item.MetrosCuadradosAprovechables) </td>
+                        <td data-bind="visible: vendiblesElegido"> @( item.Etapa.HasValue ? @Html.DisplayFor(model => item.Etapa.Value).ToString() : "-" )</td>
+                        <td data-bind="visible: vendiblesElegido"> @( item.GetMvaRequeridos() > 0 ? item.GetMvaRequeridos().ToString("#,0.####") : "-" )</td>
+                        <td data-bind="visible: vendiblesElegido"> @( item.GetLpsMedioDiarioAgua() > 0 ? item.GetLpsMedioDiarioAgua().ToString("#,0.####") : "-") </td>
+                        <td data-bind="visible: vendiblesElegido"> @( item.GetLpsMedioDiarioSaneamiento() > 0 ? item.GetLpsMedioDiarioSaneamiento().ToString("#,0.####") : "-") </td>
+                        <td data-bind="visible: finanzasElegido"></td>
+                        <td data-bind="visible: finanzasElegido"></td>
+                        <td data-bind="visible: finanzasElegido"></td>
+                        @*@if (Model.SonPurasVialidades)
+                            {
+                                <td>@item.NumeroDeCarriles</td>
+                            }*@
+                        <td class="button-cell">
+                            <a @(item is Dixus.Entidades.FraccionNoVendibles ? "disabled" : "" ) href="@Url.Action("ver","proyectosdeinversion", new {id = item.FraccionId})" data-toggle="tooltip" data-placement="left" title="Ver proyectos de inversion"><i class="fa fa-bar-chart"></i> </a>
+                        </td>
+                        <td class="button-cell">
+                            <a href="@Url.Action("Leaflet","Planos", new {id = item.FraccionId})" data-toggle="tooltip" data-placement="left" title="Ver en planos"><i class="fa fa-map-marker"></i> </a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="table-row-totales">
+                    <td></td>
+                    <td></td>
+                    <td>Totales</td>
+                    <td></td>
+                    <td></td>
+                    <td data-bind="visible: terrenoElegido">@String.Format("{0:N}", Model.Fracciones.Sum(x => x.MetrosCuadrados)) M<sup>2</sup></td>
+                    <td data-bind="visible: terrenoElegido">@String.Format("{0:N}", Model.Fracciones.Sum(x => x.Hectareas)) HAs</td>
+                    <td data-bind="visible: terrenoElegido"></td>
+                    <td data-bind="visible: terrenoElegido">@String.Format("{0:N}", Model.Fracciones.Sum(x => x.MetrosCuadradosAprovechables)) M<sup>2</sup> aprov.</td>
+                    <td data-bind="visible: vendiblesElegido"></td>
+                    <td data-bind="visible: vendiblesElegido">@String.Format("{0:N}", Model.Fracciones.Sum(x => x.GetMvaRequeridos())) Mvas</td>
+                    <td data-bind="visible: vendiblesElegido">@String.Format("{0:N}", Model.Fracciones.Sum(x => x.GetLpsMedioDiarioAgua())) Lps. </td>
+                    <td data-bind="visible: vendiblesElegido">@String.Format("{0:N}", Model.Fracciones.Sum(x => x.GetLpsMedioDiarioSaneamiento())) Lps.San </td>
+                    <td data-bind="visible: finanzasElegido"></td>
+                    <td data-bind="visible: finanzasElegido"></td>
+                    <td data-bind="visible: finanzasElegido"></td>
+                    @*@if (Model.SonPurasVialidades)
+                        {
+                            <td></td>
+                        }*@
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+}
+
+else
+{
+    <div class="text-center alert alert-info">
+        No hay fracciones
+    </div>
+}
+

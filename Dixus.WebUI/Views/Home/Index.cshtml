@@ -1,0 +1,314 @@
+﻿@model Dixus.WebUI.Models.HomeViewModel
+@{
+    ViewBag.Title = "Inicio";
+    bool esAdmin = User.IsInRole("Administrador");
+    bool esTecnico = User.IsInRole("Técnico");
+    bool esVentas = User.IsInRole("Ventas");
+}
+
+@*<hr class="not-to-top"/>*@
+
+@*<div id="nombre-empresa">Dixus Inmobiliaria</div>*@
+
+<div id="home-screen" class="content-padder">
+
+    <div id="home-navigation">
+        <div class="row text-center">
+
+            <div class="col-sm-6 col-md-4">
+                <div class="panel panel-default">
+                    <h3 class="section-title">Técnico</h3>
+                    <hr class="not-to-top not-to-bottom" />
+                    <div class="panel-body">
+
+                        <div class="panel sub-panel">
+                            <div class="panel-body">
+                                <a href="/fracciones" class="btn btn-verde-obscuro col-xs-12">Fracciones</a>
+                                <div id="fracciones-dropdown-section" class="btn btn-verde-obscuro col-xs-12 no-chop">
+                                    @Html.DropDownList("FraccionesDropdown")
+                                </div>
+                                <div id="usos-de-suelo-dropdown-section" class="btn btn-verde-obscuro col-xs-12 no-chop">
+                                    @Html.DropDownList("TiposDeSueloDropdown")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel sub-panel">
+                            <div class="panel-body">
+                                <a href="/subdivisiones" class="btn btn-verde-obscuro col-xs-12">Subdivisiones Legales</a>
+                                <div id="subdivisiones-dropdown-section" class="btn no-chop btn-verde-obscuro col-xs-12">
+                                    @Html.DropDownList("SubdivisionesDropdown")
+                                </div>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("index","planos")" class="btn btn-verde-obscuro col-xs-12">Planos</a>
+                        @if (esAdmin)
+                        {
+                            <a href="@Url.Action("index","inversiones")" class="btn btn-verde-obscuro col-xs-12">Infraestructura</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Gastos por fraccionar</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Urbanizacion</a>
+                        }
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            @if (esAdmin)
+            {
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                        <h3 class="section-title">Administrativo</h3>
+                        <hr class="not-to-top not-to-bottom" />
+                        <div class="panel-body">
+                            <div id="proyectos-de-inversion-section" class="btn btn-verde-obscuro col-xs-12 no-chop">
+                                Proyectos de Inv.
+                                <br />@Html.DropDownList("FraccionesVendiblesDropdown")
+                            </div>
+                            @*<a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Juntas@(User.IsInRole("Administrador") ? ", acuerdos" : "") y tareas</a>*@
+                            <a href="@Url.Action("Procesos","Admin")" class="btn btn-verde-obscuro col-xs-12">Operación y Procesos</a>
+                            <a href="@Url.Action("Usuarios","Admin")" class="btn btn-verde-obscuro col-xs-12">Usuarios</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Proyección de flujos</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Estatus Legal</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (esAdmin || esVentas)
+            {
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                        <h3 class="section-title">Comercialización</h3>
+                        <hr class="not-to-top not-to-bottom" />
+                        <div class="panel-body">
+                            <div class="panel sub-panel">
+                                <div class="panel-body">
+                                    <a href="~/clientes" class="btn btn-verde-obscuro col-xs-12">Clientes</a>
+                                    <div id="empresas-dropdown-section" class="btn btn-verde-obscuro col-xs-12 no-chop">
+                                        @Html.DropDownList("EmpresasDropdown")
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Prospectos</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Proyeccion de ventas</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Urbanizacion</a>
+                            <a href="" class="btn btn-verde-obscuro col-xs-12" disabled>Post venta</a>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (esTecnico)
+            {
+        <div class="modal fade" id="modalCambiosAutocad" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Cambios autocad</h4>
+                    </div>
+                    <div id="modal-container-for-dynamic-view">
+                        <div class="modal-body">
+                            <div class="loading-status-section">
+                                <div class="loading-icon">
+                                    <i class="fa fa-spin fa-circle-o-notch"></i>
+                                </div>
+                                <p>Checando si modelo autocad ha sufrido cambios...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    }
+
+
+</div>
+
+
+
+@section header{
+    <link href="~/scripts/chosen/chosen.css" rel="stylesheet" />
+    <style>
+        #sidebar {
+            display: none;
+        }
+
+        .body-content {
+            padding-left: 0;
+        }
+
+        .body-wrapper {
+            background-color: #efefef;
+        }
+
+        .section-title {
+            color: #142808;
+            border-bottom: 1px solid white;
+            box-shadow: 0 2px 0 gainsboro;
+            padding: 5px;
+        }
+
+        .panel {
+            background-color: transparent;
+            box-shadow: none;
+        }
+        .modal-backdrop.fade.in{
+            opacity:.9;
+        }
+        .modal{
+            overflow:hidden;
+        }
+        @@media all and (min-width:1200px){
+            .navbar{
+                bottom:0;
+                right:auto;
+                margin-bottom:0;
+                width:220px;
+                text-align:center;
+            }
+            .body-content{
+                padding-left:220px;
+                padding-top:0;
+            }
+            .navbar-header{
+                margin:20px auto;
+                text-align:center;
+            }
+            .navbar-header, .navbar-brand{
+                float:none;
+            }
+
+            .navbar-brand{
+                border-bottom: 1px solid #6c6c6c;
+                width: 80%;
+                display: none;
+                margin: -21px auto;
+            }
+           
+             .navbar #navbar-info-addicional{
+                display:block;
+                margin-bottom:50px;
+             }
+
+            .navbar-title{
+                color:white;
+                font-size:18px;
+                text-transform:uppercase;
+                margin:30px auto;
+            }
+
+            .navbar-logo{
+                 background: url('/Content//Images//logo-puerta-de-anza2.png') no-repeat no-repeat;
+                 background-size: contain;
+                 width:130px;
+                 height:130px;
+                 margin:30px auto;
+             }
+        }
+    </style>
+}
+
+@section scripts{
+    <script src="~/scripts/chosen/chosen.jquery.js"></script>
+}
+
+
+@section jsCode{
+
+    $(document).ready(function(){
+
+    @if (esTecnico)
+    {
+
+        <text>
+            $("#modalCambiosAutocad").modal();
+            console.log("checando si hay cambios");
+            $("#modal-container-for-dynamic-view").load('@Url.Action("ChecarSiHayCambios", "Planos")', function(){
+            console.log("terminado");
+            });
+
+        </text>
+    }
+
+
+    $("select#FraccionesVendiblesDropdown").chosen({no_results_text: "No se encontraron fracciones VENDIBLES con ese nombre."}).change(function(e){
+    var fraccionid = $(this).val();
+    window.location.href = "/proyectosdeinversion/ver/"+fraccionid;
+    });
+    $("#proyectos-de-inversion-section").click(function(e){
+    if(e.target.id == "proyectos-de-inversion-section"){
+    setTimeout(function(){$("#FraccionesVendiblesDropdown_chosen").trigger('mousedown');},5);
+    }
+    });
+
+
+    $("select#FraccionesDropdown").chosen().change(function(e){
+    var fraccionid = $(this).val();
+    window.location.href = "/fracciones/details/"+fraccionid;
+    });
+    $("#fracciones-dropdown-section").click(function(e){
+    if(e.target.id == "fracciones-dropdown-section"){
+    setTimeout(function(){$("#FraccionesDropdown_chosen").trigger('mousedown');},5);
+    }
+    });
+
+
+    $("select#SubdivisionesDropdown").chosen().change(function(e){
+    var fraccionid = $(this).val();
+    window.location.href = "/subdivisiones/detalles/"+fraccionid;
+    });
+    $("#subdivisiones-dropdown-section").click(function(e){
+    if(e.target.id == "subdivisiones-dropdown-section"){
+    setTimeout(function(){$("#SubdivisionesDropdown_chosen").trigger('mousedown');},5);
+    }
+    });
+
+
+    $("select#EmpresasDropdown").chosen().change(function(e){
+    var empresaid = $(this).val();
+    window.location.href = "/clientes/details/"+empresaid;
+    });
+    $("#empresas-dropdown-section").click(function(e){
+    if(e.target.id == "empresas-dropdown-section"){
+    setTimeout(function(){$("#EmpresasDropdown_chosen").trigger('mousedown');},5);
+    }
+    });
+
+
+    $("select#TiposDeSueloDropdown").chosen().change(function(e){
+    var sueloid = $(this).val();
+    window.location.href = "/tiposdesuelo/details/"+sueloid;
+    });
+    $("#usos-de-suelo-dropdown-section").click(function(e){
+    if(e.target.id == "usos-de-suelo-dropdown-section"){
+    setTimeout(function(){$("#TiposDeSueloDropdown_chosen").trigger('mousedown');},5);
+    }
+    });
+
+
+
+    });
+
+
+
+
+
+
+    @*Como transformar array de c# a array compatible con Mapchart:*@
+
+    @*var model = @Html.Raw(Json.Encode(Model));
+        console.log(model);*@
+    @*var data = new Array(model.SuelosConArea.length);
+        for(i = 0; i < model.SuelosConArea.length ; i++){
+            data[i] = new Array();
+            data[i][0] = model.SuelosConArea[i].NombreDelSuelo;
+            data[i][1] = model.SuelosConArea[i].Area;
+        } //>*@
+
+}

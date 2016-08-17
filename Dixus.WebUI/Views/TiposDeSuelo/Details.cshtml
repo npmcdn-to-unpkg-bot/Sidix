@@ -1,0 +1,117 @@
+﻿@model Dixus.Entidades.TipoDeSuelo
+
+@{
+    ViewBag.Title = Model.Nombre;
+}
+
+@section header{
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.theme.min.css" rel="stylesheet" />
+}
+
+@section scripts{
+<script src="~/scripts/dist/koViewModels.min.js"></script>
+<script src="~/scripts/jquery-ui.min.js"></script>
+}
+
+@section jsCode{
+
+    var model = new dixus.viewModels.TablaFracciones();
+    ko.applyBindings( model , document.getElementById('table-wrapper') );
+    $( "#m2-slider" ).slider({
+        range: true,
+        min: 0,
+        max: 1032,
+        values: [ 0, 1032],
+        slide: function( event, ui ) {
+            $( "#metros-cuadrados-filtro" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        }
+    });
+    $( "#metros-cuadrados-filtro" ).val( $( "#m2-slider" ).slider( "values", 0 ) + " - " + $( "#m2-slider" ).slider( "values", 1 )  );
+
+    $( "#factor-slider" ).slider({
+        range: true,
+        min: 0,
+        max: 1,
+        values: [ 0, 1],
+        step: 0.01,
+        slide: function( event, ui ) {
+            $( "#factor-topografico-filtro" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        }
+    });
+
+    $( "#factor-topografico-filtro" ).val( $( "#factor-slider" ).slider( "values", 0 ) + " - " + $( "#factor-slider" ).slider( "values", 1 )  );
+}
+
+<h3 class="page-title">@Model.Nombre</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+
+        <dd>
+            @Html.indicadorDeSuelo(Model.Color)
+        </dd>
+
+        <dt>
+            MVAs por Hectarea
+        </dt>
+
+        <dd>
+            @Model.MvaPorHectarea.ToString("0.#######")
+        </dd>
+
+        @if (Model is Dixus.Entidades.TipoDeSueloVivienda)
+        {
+            <dt>Viviendas por Hectarea</dt>
+            <dd>@( ((Dixus.Entidades.TipoDeSueloVivienda)Model).ViviendaPorHectareaPromedio )</dd>
+
+            <dt>Habitantes por vivienda</dt>
+            <dd>@( ((Dixus.Entidades.TipoDeSueloVivienda)Model).HabitantesPorViviendaPromedio )</dd>
+        }
+
+        @if (Model is Dixus.Entidades.TipoDeSueloEmpresarial)
+        {
+            <dt>Porcent. para demanda de LPS</dt>
+            <dd>@( String.Format("{0:#0.##%}",((Dixus.Entidades.TipoDeSueloEmpresarial)Model).PorcentajeParaDemanda) )</dd>
+
+            <dt>Lps Por hectarea para demanda</dt>
+            <dd>@( ((Dixus.Entidades.TipoDeSueloEmpresarial)Model).LpsPorHectareaParaDemanda )</dd>
+        }
+
+        @if (Model.TuDeReferencia.HasValue)
+        {
+            <dt>T.U. de referencia</dt>
+            <dd>@Model.TuDeReferencia.Value.ToString("C")</dd>
+        }
+
+    </dl>
+
+</div>
+<hr class="not-to-top"/>
+<div class="content-padder">
+
+    <p>
+        <a href="@Url.Action("Edit", new { id = Model.TipoDeSueloId })" class="btn btn-verde">
+            Editar
+        </a>
+        <a href="@Url.Action("Index")" class="btn btn-verde">
+            Lista de tipos de suelo
+        </a>
+    </p>
+
+</div>
+<hr class="not-to-bottom" />
+
+@Html.Action("TablaFracciones", "Fracciones", new { fracciones = Model.ObtenerFraccionesActivas() })
+
+

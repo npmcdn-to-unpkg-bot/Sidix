@@ -1,0 +1,70 @@
+﻿@model Dixus.WebUI.Models.AdminUsuariosViewModel
+
+@{
+    ViewBag.Title = "Administrar Usuarios";
+}
+
+<h3 class="page-title">Usuarios</h3>
+<hr class="green-stripe" />
+
+
+@if (Model.usuarios.Count() > 0)
+{
+    <div class="table-wrapper">
+        <table id="tabla-usuarios" class="text-left table table-responsive data-table tabla-extendida">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th class="text-left">Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.usuarios)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(user.UserName,"Usuario","Operacion",new { id=user.Id },null)</td>
+                        <td>@user.NombreCompleto</td>
+                        <td>@user.Email</td>
+                        <td class="text-left">
+                            @*<ul>
+                                @foreach (var role in user.Roles)
+                                {
+
+                                    <li> @role </li>
+                                }
+                            </ul>*@
+                            <div class="checkbox checkbox-success">
+                                <input id="administrador-checkbox" type="checkbox" @( user.Roles.Contains("Administrador") ? "checked" : "") disabled /><label for="administrador-checkbox">Administrador</label> <br />
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input id="legal-checkbox" type="checkbox" @( user.Roles.Contains("Legal") ? "checked" : "") disabled/><label for="legal-checkbox">Legal</label> <br />
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input id="ventas-checkbox" type="checkbox" @( user.Roles.Contains("Ventas") ? "checked" : "") disabled/><label for="ventas-checkbox">Ventas</label> <br />
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input id="tecnico-checkbox" type="checkbox" @( user.Roles.Contains("Técnico") ? "checked" : "") disabled/><label for="tecnico-checkbox">Técnico</label> <br />
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="text-center alert alert-info">
+        No hay usuarios
+    </div>
+}
+
+<hr class="not-to-top" />
+
+<div class="content-padder text-center">
+    @Html.ActionLink("Agregar usuario", "agregarusuario", null, new { @class = "btn btn-verde" })
+</div>
+<hr class="not-to-bottom" />
+

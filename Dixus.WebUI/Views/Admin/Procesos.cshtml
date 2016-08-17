@@ -1,0 +1,137 @@
+﻿@model Dixus.WebUI.Models.ConcentradoOperacionViewModel
+
+@{
+    ViewBag.Title = "Procesos";
+}
+
+<h3 class="page-title">Procesos</h3>
+<hr class="green-stripe" />
+
+
+@*<hr class="not-to-top" />*@
+<div id="pagina-procesos-admin">
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div id="seccion-tareas">
+                <h4 class="section-title">
+                    5 Ultimas tareas
+                </h4>
+
+                <div class="table-wrapper">
+                    <table id="tabla-tareas" class="text-left mdl-data-table mdl-js-data-table data-table tabla-extendida">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Junta</th>
+                                <th class="text-center">Completada</th>
+                                <th class="text-center">Porcentaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tarea in Model.Tareas)
+                            {
+                                <tr>
+                                    <td @*data-toggle="tooltip" data-placement="bottom" data-container="body" title="@tarea.Descripcion"*@ class="cell-fixed-width" style="width:200px;">@Html.ActionLink(tarea.Nombre, "Tarea", "Operacion", new { id = tarea.TareaId }, null)</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-container="body" title="@Html.DisplayFor(model=>tarea.JuntaDeConsejo.Fecha)">@Html.ActionLink(tarea.JuntaDeConsejo.Titulo, "Junta", "Operacion", new { id = tarea.JuntaDeConsejoId }, null)</td>
+                                    <td class="text-center">
+                                        <div class="checkbox checkbox-success">
+                                            <input type="checkbox" @( tarea.ChecarSiEstaCompletada() ? "checked" : "" ) disabled /><label></label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        @(tarea.ObtenerPorcentajeDeProgreso() == 0 ? "0%" : String.Format("{0:##.##%}", tarea.ObtenerPorcentajeDeProgreso()) )
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"><a class="btn btn-verde" href="#">Ver más...</a> </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+
+            <hr class="not-to-top" />
+
+            <div id="seccion-acuerdos">
+
+                <h4 class="section-title">
+                    5 Ultimos acuerdos
+                </h4>
+
+                <div class="table-wrapper">
+                    <table id="tabla-acuerdos" class="text-left mdl-data-table mdl-js-data-table data-table tabla-extendida">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Junta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var acuerdo in Model.Acuerdos)
+                            {
+                                <tr>
+                                    <td class="cell-fixed-width" style="width:200px;">@acuerdo.Nombre</td>
+                                    <td class="cell-fixed-width cell-wrap" style="min-width:150px; max-width:300px;">@acuerdo.Descripcion</td>
+                                    <td>@acuerdo.JuntaDeConsejo.Titulo</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"><a href="#" class="btn btn-verde">Ver más...</a></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div id="seccion-juntas">
+                <h4 class="section-title">
+                    10 Ultimas Juntas
+                </h4>
+                <div class="table-wrapper">
+                    <table id="tabla-juntas" class="text-left mdl-data-table mdl-js-data-table data-table tabla-extendida">
+                        <thead>
+                            <tr>
+                                <th>Titulo</th>
+                                <th>Fecha</th>
+                                <th class="text-center">Asistentes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var junta in Model.Juntas.OrderByDescending(junta => junta.Fecha))
+                            {
+                            <tr>
+                                <td>@Html.ActionLink(junta.Titulo, "Junta","Operacion",new { id = junta.JuntaDeConsejoId },null)</td>
+                                <td>@Html.DisplayFor(x => junta.Fecha)</td>
+                                <td data-toggle="tooltip" data-placement="bottom" data-container="body" title="@String.Join(", ",junta.UsuariosPresentes.Select(usuario=>usuario.Nombre))" class="text-center">@junta.NumDeUsuariosPresentes()</td>
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"><a href="#" class="btn btn-verde">Nueva Junta</a> <a class="btn btn-verde" href="#">Ver más...</a> </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>

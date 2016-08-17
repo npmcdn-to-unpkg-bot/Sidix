@@ -1,0 +1,20 @@
+﻿@model Dixus.WebUI.Models.ErrorViewModel
+
+<h3 class="page-title">Error</h3>
+<hr class="green-stripe" />
+
+<div class="alert alert-info">
+    @{
+        switch (Model.Estatus)
+        {
+            case HttpStatusCode.Forbidden:
+                @:Lo siento. No tienes permiso para ver este contenido
+                break;
+            default:
+                @:No se puede mostrar la pagina
+                break;
+        }
+    }
+</div>
+
+

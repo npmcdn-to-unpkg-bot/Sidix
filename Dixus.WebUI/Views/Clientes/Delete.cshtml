@@ -1,0 +1,36 @@
+﻿@model Dixus.Entidades.Cliente
+
+@{
+    ViewBag.Title = Model.Nombre + " - Borrar";
+}
+
+<div class="content-padder">
+
+    <h3>@Model.Nombre</h3>
+    <h3>¿Seguro que deseas eliminar este cliente?</h3>
+    <hr />
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Sí, Borrar" class="btn btn-danger" /> |
+                @Html.ActionLink("Volver a clientes", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+    </div>
+
+</div>

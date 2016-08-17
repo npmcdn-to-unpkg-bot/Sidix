@@ -1,0 +1,183 @@
+﻿@model Dixus.Entidades.Fraccion
+
+@{ 
+    var EstatusDeFraccion = Model.ObtenerEstatus();
+    var Donada = Dixus.Entidades.EstatusDeSubdivision.Donada;
+    var Vendida = Dixus.Entidades.EstatusDeSubdivision.Vendida;
+    var Libre = Dixus.Entidades.EstatusDeSubdivision.Libre;
+    var Garantia = Dixus.Entidades.EstatusDeSubdivision.Garantia;
+    var Comprometida = Dixus.Entidades.EstatusDeSubdivision.Comprometida;
+
+}  
+
+<dl class="dl-horizontal dl-bordered detalles-fraccion-info @( ViewBag.DlCentrado ? "dl-equal-sides }":"")">
+
+    <dt>Nombre</dt>
+    <dd>@Html.ActionLink(Model.Nombre, "details", new { id = Model.FraccionId })</dd>
+
+    <dt> Tipo de Suelo </dt>
+    <dd> @Html.ActionLink(Model.TipoDeSuelo.Nombre, "Details", "TiposDeSuelo", new { id = Model.TipoDeSueloId }, null)</dd>
+
+    <dt>Estatus</dt>
+    <dd>
+        @EstatusDeFraccion
+        @if (EstatusDeFraccion == Vendida || EstatusDeFraccion == Garantia || EstatusDeFraccion == Donada)
+        {
+        @:( @Html.ActionLink("Ver subdivisión", "Detalles", "subdivisiones", new { id = Model.FraccionLegalId }, null) )
+        }
+    </dd>
+
+    @*@if (EstatusDeFraccion == Vendida && Model.SubdivisionLegal != null)
+    {
+    <dt>Propietario</dt>
+    <dd>@Html.ActionLink(@Model.SubdivisionLegal.Clientes.Nombre, "Details", "Empresas", new { id = Model.SubdivisionLegal.PropietarioId }, null)</dd>
+    }
+
+    @if (EstatusDeFraccion == Garantia && Model.SubdivisionLegal.Empresa != null)
+    {
+    <dt>En garantía para</dt>
+    <dd>@Html.ActionLink(@Model.SubdivisionLegal.Empresa.Nombre, "Details", "Empresas", new { id = Model.SubdivisionLegal.EmpresaId }, null)</dd>
+    }
+
+    @if (EstatusDeFraccion == Donada && Model.SubdivisionLegal.Empresa != null)
+    {
+    <dt>Donada a</dt>
+    <dd>@Html.ActionLink(@Model.SubdivisionLegal.Empresa.Nombre, "Details", "Empresas", new { id = Model.SubdivisionLegal.EmpresaId }, null)</dd>
+    }*@
+
+    <dt> Etapa </dt>
+    <dd>
+        @( Model.Etapa.HasValue ? Model.Etapa.Value.ToString() : "-" )
+    </dd>
+
+    <dt>Factor Topografico </dt>
+    <dd>
+
+        @if (Model.FactorTopografico.HasValue)
+        {
+            @String.Format("{0:##.##%}", Model.FactorTopografico ?? 0)
+        }
+        else
+        {
+            @: N/A
+        }
+    </dd>
+
+    <dt> M<sup>2</sup></dt>
+    <dd> @Html.DisplayFor(model => model.MetrosCuadrados) </dd>
+
+    <dt> Hectareas </dt>
+    <dd>@Html.DisplayFor(model => model.Hectareas)  </dd>
+
+    @if (Model.MetrosCuadrados != Model.MetrosCuadradosAprovechables)
+    {
+        <dt>Area usable</dt>
+        <dd>@Html.DisplayFor(model => model.MetrosCuadradosAprovechables)</dd>
+
+        <dt>Hectareas usables</dt>
+        <dd>@Html.DisplayFor(model => model.HectareasAprovechables)</dd>
+    }
+
+    <dt>Area vendible</dt>
+    <dd>@Html.DisplayFor(model => model.MetrosVendibles)</dd>
+
+    <dt>Energía Eléctrica (MVAs)</dt>
+    <dd>@Model.GetMvaRequeridos().ToString("#,0.####")</dd>
+
+    <dt>Agua Potable (LPS)</dt>
+    <dd>@Model.GetLpsMedioDiarioAgua().ToString("#,0.####")</dd>
+
+    <dt>Agua Saneamiento (LPS)</dt>
+    <dd>@Model.GetLpsMedioDiarioSaneamiento().ToString("#,0.####")</dd>
+
+</dl>
+
+@*@if (Model.InversionesCalculadasDiferente && Model.CalculosEspeciales != null)
+            {
+    <div class="text-center">
+        <div class="alert alert-info">
+            Esta fracción tiene situaciones especiales en el cobro de inversiones:            
+        </div>
+
+        <p><strong>Energía Eléctrica</strong></p>
+
+        @if (Model.CalculosEspeciales.NoOcupaEnergia)
+        {
+            <p>No ocupa, ni se le cobra energía</p>
+        }
+        else
+        {
+            if (Model.CalculosEspeciales.NoUsaEnergiaStandard)
+            {
+
+                if (Model.CalculosEspeciales.FactorDeUsoEnergia.HasValue)
+                {
+                    <p>Tiene un factor de uso especial: @Model.CalculosEspeciales.FactorDeUsoEnergia.Value</p>
+                }
+                else if (Model.CalculosEspeciales.CantidadEnergia.HasValue)
+                {
+                    <p>Tiene una cantidad fija específicada: @Model.CalculosEspeciales.CantidadEnergia.Value MVAs</p>
+                }
+                else
+                {
+                    <p>No ha específicado ni un factor especial, ni cantidad fija especial, por favor específiquelo dando click <a href="@Url.Action("Edit", new { id = Model.FraccionId })">aquí</a></p>
+                }
+
+            }
+            if (Model.CalculosEspeciales.NoSeLeCobraEnergia)
+            {
+                <p>No se le cobra energía</p>
+            }
+            else
+            {
+                if (Model.CalculosEspeciales.NoPagaLoMismoEnEnergia)
+                {
+                    <p>Tiene precio diferente por MVA: $@Html.DisplayFor(model => model.CalculosEspeciales.PrecioEnergia)</p>
+                }
+            }
+        }
+
+        <p><strong>Agua y saneamiento</strong></p>
+
+        @if (Model.CalculosEspeciales.NoOcupaAgua)
+        {
+            <p>No ocupa, ni se le cobra agua potable ni drenaje</p>
+        }
+        else
+        {
+            if (Model.CalculosEspeciales.NoUsaAguaStandard)
+            {
+
+                if (Model.CalculosEspeciales.FactorDeUsoAgua.HasValue)
+                {
+                    <p>Tiene un factor de uso LPS especial: @Model.CalculosEspeciales.FactorDeUsoAgua.Value LPS</p>
+                    <p>Tiene un factor de uso LPS saneamiento especial: @(Model.CalculosEspeciales.FactorDeUsoAgua.Value * .75) LPS</p>
+                }
+                else if (Model.CalculosEspeciales.CantidadAgua.HasValue)
+                {
+                    <p>Cantidad fija de LPS agua específicada: @Model.CalculosEspeciales.CantidadAgua.Value LPS</p>
+                    <p>Cantidad fija de LPS drenaje específicada: @(Model.CalculosEspeciales.CantidadAgua.Value * .75) LPS</p>
+                }
+                else
+                {
+                    <p>No ha específicado ni un factor especial, ni cantidad fija especial, por favor específiquelo dando click <a href="@Url.Action("Edit", new { id = Model.FraccionId })">aquí</a></p>
+                }
+
+            }
+            if (Model.CalculosEspeciales.NoSeLeCobraAgua)
+            {
+                <p>No se le cobra agua potable</p>
+            }
+            else
+            {
+                if (Model.CalculosEspeciales.NoPagaLoMismoEnAgua)
+                {
+                    <p>Tiene precio diferente por LPS: $@Html.DisplayFor(model => model.CalculosEspeciales.PrecioEspecialAgua)</p>
+                }
+            }
+        }
+
+
+    </div>
+}*@
+

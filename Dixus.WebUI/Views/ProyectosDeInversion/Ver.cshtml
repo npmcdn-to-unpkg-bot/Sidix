@@ -1,0 +1,124 @@
+﻿@model Dixus.WebUI.Models.ProyectosInversionViewModel
+
+@{
+    ViewBag.Title = @Model.Fraccion.Nombre + " | Proyectos De Inversion";
+    Dixus.Entidades.EstatusDeSubdivision EstatusDeFraccion = Model.Fraccion.ObtenerEstatus();
+}
+
+<h3 class="page-title">@Html.ActionLink(Model.Fraccion.Nombre, "details", "fracciones",new { id = Model.Fraccion.FraccionId }, null) <small>Proyecto De Inversion</small></h3>
+
+@*Alertas*@
+<div id="seccion-de-alertas">
+
+    <hr class="green-stripe" />
+
+    @if (EstatusDeFraccion != Dixus.Entidades.EstatusDeSubdivision.Libre)
+    {
+        var Estatus = EstatusDeFraccion;
+        <div class="alert alert-danger alert-dismissable not-to-bottom">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>NOTA:</strong>
+            @switch (Estatus)
+            {
+                case Dixus.Entidades.EstatusDeSubdivision.Vendida:
+                    @: Esta fraccion ya está vendida
+                break;
+                case Dixus.Entidades.EstatusDeSubdivision.Donada:
+                    @: La fracción está donada
+                break;
+                case Dixus.Entidades.EstatusDeSubdivision.Garantia:
+                    @: Esta fracción está dada en garantía
+                break;
+            }
+        </div>
+    }
+    @if (!Model.Fraccion.FactorTopografico.HasValue)
+    {
+        <div class="alert alert-danger alert-dismissable not-to-bottom">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>NOTA:</strong> Esta fracción no tiene un factor topográfico especificado, por lo tanto el area usable/vendible está basada en el 100%. Favor de especificar uno <a href="@Url.Action("edit","fracciones", new { id = Model.Fraccion.FraccionId })">aquí</a>
+        </div>
+    }
+</div>
+<hr class="not-to-top" />
+
+<div id="proyectos-de-inversion-content-wrapper">
+
+    <div class="content-padder">
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="enclosed-title">Información general</div>
+                @Html.Action("infofraccion", "fracciones", new { fraccion = Model.Fraccion, centrada = true })
+            </div>
+            <div id="calculos-proyectos" class="col-md-8">
+                <div class="enclosed-title">Tabla de cálculos</div>
+
+                @Html.Action("TablaDeTu", new { InfoTu = Model.AnalisisTU })
+
+
+                @*<hr class="green-stripe" />*@
+                <div class="enclosed-title">Ingresos, Costos y Márgenes</div>
+                <dl class="dl-horizontal dl-bordered detalles-fraccion-info dl-equal-sides">
+
+                    <dt>T.U. de referencia :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.TuDeReferencia)</dd>
+
+                    <dt>T.U. del desarrollador :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.TuDelDesarrollador)</dd>
+
+                    <dt>Precio de venta por M2 vendible :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.PrecioDeVentaPorM2Vendible)</dd>
+
+                    <dt>Superficie vendible :</dt>
+                    <dd>@String.Format("{0:N}", Model.AnalisisDePrecioDeVenta.SuperficieVendible) m<sup>2</sup></dd>
+
+                    <dt>Monto de la operación :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.MontoDeLaOperacion)</dd>
+
+                    <dt>Superficie total :</dt>
+                    <dd>@String.Format("{0:N}", Model.AnalisisDePrecioDeVenta.SuperficieTotal) m<sup>2</sup></dd>
+
+                    <dt>Precio de venta M2 por valor residual :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.PrecioDeVentaM2PorValorResidual)</dd>
+
+                    <dt>Ingresos :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.Ingresos)</dd>
+
+                    <dt>Costos :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.Costos) </dd>
+
+                    <dt>Utilidad bruta :</dt>
+                    <dd class="cantidad-importante">@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.UtilidadBruta) </dd>
+
+                    <dt>Margen bruto :</dt>
+                    <dd class="cantidad-importante">@String.Format("{0:P2}", Model.AnalisisDePrecioDeVenta.MargenBruto)</dd>
+
+                    <dt>GAV :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.GAV) </dd>
+
+                    <dt>CIF :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.CIF) </dd>
+
+                    <dt>Utilidad antes de impuestos :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.UtilidadAntesDeImpuestos)</dd>
+
+                    <dt>Impuestos :</dt>
+                    <dd>@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.Impuestos)</dd>
+
+                    <dt>Utilidad neta :</dt>
+                    <dd class="cantidad-importante">@String.Format("$ {0:N}", Model.AnalisisDePrecioDeVenta.UtilidadNeta)</dd>
+
+                    <dt>Margen neto :</dt>
+                    <dd class="cantidad-importante">@String.Format("{0:P2}", Model.AnalisisDePrecioDeVenta.MargenNeto)</dd>
+
+                </dl>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+

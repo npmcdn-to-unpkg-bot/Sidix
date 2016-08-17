@@ -1,0 +1,40 @@
+﻿@model Dixus.WebUI.Models.LoginViewModel
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dixus</title>
+    <link href="~/Content/dist/styles.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="container body-content">
+        <div id="login-page">
+
+            <img src="~/Content/Images/dixus-logo-nuevo.png" />
+            @using (@Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.User, new { @class = "form-control", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.User, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+              
+                <div class="form-group">
+                    <input type="submit" value="Acceder" class="btn btn-default" />
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

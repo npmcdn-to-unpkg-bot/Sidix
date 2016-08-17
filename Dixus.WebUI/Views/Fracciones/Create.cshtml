@@ -1,0 +1,433 @@
+﻿@model Dixus.WebUI.Models.CrearFraccionViewModel
+@{
+    ViewBag.Title = "Nueva Fraccion";
+}
+
+@section scripts{
+    @*<script src="~/scripts/knockout.js"></script>*@
+}
+
+@section jsCode{
+    function CrearFraccionViewModel() {
+        var self = this;
+        self.modelo = @Html.Raw(Json.Encode(Model));
+        console.log(self.modelo);
+
+        self.suelo = ko.observable(self.modelo.TipoDeSueloId || null);
+
+        self.tipoDeSueloFueSeleccionado = ko.computed(function () { return self.suelo() ? true : false; });
+        self.prefijoDeSuelo = ko.computed(function(){ return dixus.generarPrefijoDeSuelo(self.suelo()); });
+
+        self.esVivienda = ko.computed(function(){ return (self.suelo()          <   6 && self.suelo() > 0) ? true : false; });
+        self.esComercio = ko.computed(function(){ return self.suelo()           ==  6 ? true : false; });
+        self.esComercioYServicios = ko.computed(function(){ return self.suelo() ==  7 ? true : false; });
+        self.esIndustrial = ko.computed(function(){ return self.suelo()         ==  8 ? true : false; });
+        self.esParqueTec = ko.computed(function(){ return self.suelo()          ==  9 ? true : false; });
+        self.esServiciosEspeciales = ko.computed(function(){ return self.suelo()==  10 ? true : false; });
+        self.esAreaConservacion = ko.computed(function(){ return self.suelo()   ==  11 ? true : false; });
+        self.esReservaEstrategica = ko.computed(function(){ return self.suelo() ==  12 ? true : false; });
+        self.esEquipamiento = ko.computed(function(){ return self.suelo()       ==  13 ? true : false; });
+        self.esDonacion = ko.computed(function(){ return self.suelo()           ==  14 ? true : false; });
+        self.esVialidad = ko.computed(function(){ return self.suelo()           ==  15 ? true : false; });
+
+        self.esVendible = ko.computed(function(){ return self.esEquipamiento() || self.esDonacion() || self.esVialidad() ? false : true; });
+        self.estaVendida = ko.observable(self.modelo.Vendida || false);
+
+        self.seCalculaDiferente = ko.observable(self.modelo.InversionesCalculadasDiferente || false);
+
+        self.noOcupaEnergia = ko.observable(self.modelo.NoOcupaEnergia || false);
+        self.ocupaEnergiaEspecial = ko.observable(self.modelo.NoUsaEnergiaStandard || false);
+        self.tipoDeEnergiaEspecial = ko.observable('factor')
+        self.excentoDeCobroDeEnergia = ko.observable(self.modelo.NoSeLeCobraEnergia || false);
+        self.tienePrecioEspecialEnergia = ko.observable(self.modelo.NoPagaLoMismoEnEnergia || false);
+
+        self.noOcupaAgua = ko.observable(self.modelo.NoOcupaAgua || false);
+        self.ocupaAguaEspecial = ko.observable(self.modelo.NoUsaAguaStandard || false);
+        self.tipoDeAguaEspecial = ko.observable('factor')
+        self.excentoDeCobroDeAgua = ko.observable(self.modelo.NoSeLeCobraAgua || false);
+        self.tienePrecioEspecialAgua = ko.observable(self.modelo.NoPagaLoMismoEnAgua || false);
+        
+    };
+
+    var vm = new CrearFraccionViewModel();
+
+    ko.applyBindings(vm);
+
+}
+
+<div class="content-padder">
+
+    <h3 class="page-title">Crear fracción</h3>
+    <div>
+        <a href="@Url.Action("Index")" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Volver a fracciones
+        </a>
+    </div>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div id="forma-crear-fraccion" class="forma-con-secciones row">
+            <div class="col-md-6">
+                <div class="panel panel-verde">
+                    <div class="panel-heading">
+                        General
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+
+                            <label for="TipoDeSueloId">Tipo de Suelo</label>
+                            <div>
+                                @Html.DropDownList("TipoDeSueloId", null, "Selecciona un tipo de suelo..", htmlAttributes: new { @class = "form-control", data_bind = "value: suelo" })
+                                @Html.ValidationMessageFor(model => model.TipoDeSueloId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div data-bind="visible: tipoDeSueloFueSeleccionado" style="display:none;">
+                            <div id="parte-general">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Nombre)
+                                    <div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="PrefixFraccionNombre" data-bind="text: prefijoDeSuelo"></span>
+                                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                        @*@Html.bootstrapCheckboxFor(model => model.Nombre)*@
+                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Superficie</label>
+                                    <div>
+                                        <div class="input-group">
+                                            @Html.EditorFor(model => model.MetrosCuadrados, new { htmlAttributes = new { @class = "form-control" } })
+                                            <span class="input-group-addon">m<sup>2</sup></span>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.MetrosCuadrados, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Etapa</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.Etapa, new { htmlAttributes = new { @class = "form-control"} })
+                                        @Html.ValidationMessageFor(model => model.Etapa, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>F. Topográfico (opcional)</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.FactorTopografico, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.FactorTopografico, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vendibles" data-bind="visible: esVendible">
+                                @*<div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.Vendida, new { data_bind = "checked: estaVendida" })
+                                            Está vendida @Html.ValidationMessageFor(model => model.Vendida, "", new { @class = "text-danger" })
+
+                                        </label>
+                                    </div>
+                                </div>*@
+
+
+
+                                @Html.bootstrapCheckboxFor(x => x.Vendida, null, null, "Vendida")
+
+
+
+
+                                <div class="form-group">
+                                    <label><span data-bind="visible: estaVendida">Año en que se vendió</span><span data-bind="visible: !estaVendida()">Año pronosticado de venta</span></label>
+                                    <div>
+                                        @Html.EditorFor(model => model.AñoVenta, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AñoVenta, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-bind="visible: estaVendida">
+                                    <label>Cliente</label>
+                                    <div>
+                                        @Html.DropDownList("ClienteId", null, "Selecciona un cliente..", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comerciales" data-bind="visible: esComercio">
+                                <div class="form-group">
+                                    <label>Tipo de Comercio</label>
+                                    <div>
+                                        @Html.DropDownList("TipoDeComercioId", null, "Selecciona un tipo de comercio..", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TipoDeComercioId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="industriales" data-bind="visible: esIndustrial">
+                                <div class="form-group">
+                                    <label>Producto producido</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.ProductoProducido, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProductoProducido, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vivienda" data-bind="visible: esVivienda">
+                                <div class="form-group">
+                                    <label>Viviendas desarrolladas</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.ViviendasDesarrolladas, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ViviendasDesarrolladas, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Viviendas en proceso</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.ViviendasEnProceso, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ViviendasEnProceso, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Viviendas por desarrollar</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.ViviendasPorDesarrollar, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ViviendasPorDesarrollar, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vialidades" data-bind="visible: esVialidad">
+                                <div class="form-group">
+                                    <label>Distancia</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.Distancia, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Distancia, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ancho del carril</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.AnchoDelCarril, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AnchoDelCarril, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Numero de carriles</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.NumeroDeCarriles, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.NumeroDeCarriles, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.InversionesCalculadasDiferente, new { data_bind = "checked: seCalculaDiferente" })
+                                        Calculo especial de inversiones @Html.ValidationMessageFor(model => model.InversionesCalculadasDiferente, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Aceptar" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="casos-especiales" data-bind="visible: seCalculaDiferente" style="display:none;">
+                    <div class="panel panel-verde">
+                        <div class="panel-heading">
+                            Energía Eléctrica
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.NoOcupaEnergia, new { data_bind = "checked: noOcupaEnergia" })
+                                        No ocupa energia @Html.ValidationMessageFor(model => model.NoOcupaEnergia, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div data-bind="visible: !noOcupaEnergia()">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.NoUsaEnergiaStandard, new { data_bind = "checked: ocupaEnergiaEspecial" })
+                                            No usa el cálculo standard @Html.ValidationMessageFor(model => model.NoUsaEnergiaStandard, "", new { @class = "text-danger" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div id="cantidad-especial-energia" data-bind="visible: ocupaEnergiaEspecial">
+                                    <div class="form-group">
+                                        <label>Factor de uso</label>
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><input type="radio" name="tipoDeEnergiaEspecial" value="factor" data-bind="checked: tipoDeEnergiaEspecial"/></span>
+                                                @Html.EditorFor(model => model.FactorDeUsoEnergia, new { htmlAttributes = new { @class = "form-control", data_bind="enable: tipoDeEnergiaEspecial() == 'factor'" } })
+                                                <span class="input-group-addon">MVAs / Ha</span>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.FactorDeUsoEnergia, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Cantidad de energía total requerida</label>
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><input type="radio" name="tipoDeEnergiaEspecial" value="cantidad" data-bind="checked: tipoDeEnergiaEspecial"/></span>
+                                                @Html.EditorFor(model => model.CantidadEnergia, new { htmlAttributes = new { @class = "form-control", data_bind="enable: tipoDeEnergiaEspecial() == 'cantidad'" } })
+                                                <span class="input-group-addon">MVAs</span>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.CantidadEnergia, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.NoSeLeCobraEnergia, new { data_bind = "checked: excentoDeCobroDeEnergia" })
+                                            No se le cobra energía @Html.ValidationMessageFor(model => model.NoSeLeCobraEnergia, "", new { @class = "text-danger" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-bind="visible: !excentoDeCobroDeEnergia()">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.NoPagaLoMismoEnEnergia,  new { data_bind = "checked: tienePrecioEspecialEnergia" })
+                                            Se le cobra energía pero a diferente precio @Html.ValidationMessageFor(model => model.NoPagaLoMismoEnEnergia, "", new { @class = "text-danger" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-bind="visible: tienePrecioEspecialEnergia">
+                                    <label>Precio especial de energía</label>
+                                    <div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            @Html.EditorFor(model => model.PrecioEnergia, new { htmlAttributes = new { @class = "form-control" } })
+                                            <span class="input-group-addon">/ MVA</span>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.PrecioEnergia, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="panel panel-verde">
+                        <div class="panel-heading">
+                            Agua Potable
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.NoOcupaAgua, new { data_bind = "checked: noOcupaAgua" })
+                                        No ocupa agua @Html.ValidationMessageFor(model => model.NoOcupaAgua, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div data-bind="visible: !noOcupaAgua()">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.NoUsaAguaStandard, new { data_bind = "checked: ocupaAguaEspecial" })
+                                            No usa el cálculo standard @Html.ValidationMessageFor(model => model.NoUsaAguaStandard, "", new { @class = "text-danger" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div data-bind="visible: ocupaAguaEspecial">
+                                    <div class="form-group">
+                                        <label>Factor de uso</label>
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><input type="radio" name="tipoDeAguaEspecial" value="factor" data-bind="checked: tipoDeAguaEspecial" /></span>
+                                                @Html.EditorFor(model => model.FactorDeUsoAgua, new { htmlAttributes = new { @class = "form-control", data_bind = "enable: tipoDeAguaEspecial() == 'factor'" } })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.FactorDeUsoAgua, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Cantidad de agua total requerida</label>
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><input type="radio" name="tipoDeAguaEspecial" value="cantidad" data-bind="checked: tipoDeAguaEspecial" /></span>
+                                                @Html.EditorFor(model => model.CantidadAgua, new { htmlAttributes = new { @class = "form-control", data_bind = "enable: tipoDeAguaEspecial() == 'cantidad'" } })
+                                                <span class="input-group-addon">LPS</span>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.CantidadAgua, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.NoSeLeCobraAgua, new { data_bind = "checked: excentoDeCobroDeAgua" })
+                                            No se le cobra agua potable @Html.ValidationMessageFor(model => model.NoSeLeCobraAgua, "", new { @class = "text-danger" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-bind="visible: !excentoDeCobroDeAgua()">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(model => model.NoPagaLoMismoEnAgua, new { data_bind = "checked: tienePrecioEspecialAgua" })
+                                            Se le cobra agua pero a diferente precio @Html.ValidationMessageFor(model => model.NoPagaLoMismoEnAgua, "", new { @class = "text-danger" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" data-bind="visible: tienePrecioEspecialAgua">
+                                    <label>Precio especial de agua (LPS)</label>
+                                    <div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            @Html.EditorFor(model => model.PrecioEspecialAgua, new { htmlAttributes = new { @class = "form-control" } })
+                                            <span class="input-group-addon">/ LPS</span>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.PrecioEspecialAgua, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="panel panel-verde">
+                        <div class="panel-heading">
+                            Otras inversiones
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.SeExcluyeDeCobroDeInversiones)
+                                        Excluida de demás inversiones @Html.ValidationMessageFor(model => model.SeExcluyeDeCobroDeInversiones, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+</div>

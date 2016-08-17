@@ -1,0 +1,46 @@
+﻿@model Dixus.Entidades.Fraccion
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h3 class="page-title">
+    @Model.Nombre <small>Detalles</small>
+    <a href="@Url.Action("edit",new { id = Model.FraccionId })" data-toggle="tooltip" data-placement="right" title="Editar"><i class="fa fa-pencil"></i></a>
+</h3>
+
+<hr class="green-stripe" />
+<div class="clearfix"></div>
+<hr class="not-to-top" />
+
+<div class="content-padder-xs">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="enclosed-title">Información general</div>
+            @Html.Action("infofraccion", new { fraccion = Model, centrada = true })
+        </div>
+
+        <div class="col-md-6">
+
+            <div id="menu-acciones-fraccion">
+                @if (Model is Dixus.Entidades.FraccionVendible)
+                {
+                    <a href="/proyectosdeinversion/ver/@Model.FraccionId" class="btn btn-verde btn-fixed-width medium">Proy. de inversión</a><br class="hidden-xs hidden-sm" />
+                }
+                <a href="/mapa/anza" class="btn btn-verde btn-fixed-width medium">Ver en planos</a><br />
+                @if (Model.ObtenerEstatus() == Dixus.Entidades.EstatusDeSubdivision.Libre)
+                {
+                    <a href='@Url.Action("iniciarcompraventa")' class='btn btn-verde btn-fixed-width medium'>Iniciar compra-venta</a><br class="hidden-xs hidden-sm" /><a href='/mapa/anza' class='btn btn-verde btn-fixed-width medium'>Donar</a>
+                }
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+

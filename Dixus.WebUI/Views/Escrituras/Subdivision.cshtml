@@ -1,0 +1,28 @@
+﻿@model Dixus.Entidades.EscrituraDeSubdivision
+
+@{
+    ViewBag.Title = "Escritura subdivision "+ Model.NumDeSubdivision.ToString();
+}
+
+
+<h3 class="page-title">Escritura de subdivisión @Model.NumDeSubdivision.ToString()</h3>
+
+
+@*<hr class="not-to-top"/>
+    <div class="content-padder">*@
+
+  
+
+    @*<hr class="not-to-bottom" />
+    </div>*@
+
+@*<div class="btn-group btn-group-justified" data-toggle="buttons">
+    <a class="btn btn-verde" href="@Url.Action("pdf")">
+        PDF <i class="fa fa-file-pdf-o"></i>
+    </a>
+</div>*@
+
+@Html.Action("TablaSubdivisiones", "Subdivisiones", new { escrituraSubdivisionId = Model.EscrituraId })
+  <a href="~/Content/ESCRITURA 1,645.pdf" class="btn btn-danger col-xs-12">
+    <i class="fa fa-file-pdf-o"></i>  PDF
+</a>

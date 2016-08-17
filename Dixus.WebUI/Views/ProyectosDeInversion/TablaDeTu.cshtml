@@ -1,0 +1,292 @@
+﻿@model Dixus.BusinessRules.ProyectosDeInversion.Entidades.TuMacronanzanaYDesarrollador
+
+<div class="table-wrapper">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Concepto</th>
+                <th>TU Total</th>
+                <th>TU Macromanzana</th>
+                <th>TU Desarrollador</th>
+            </tr>
+        </thead>
+
+        @*TIerra*@
+        <tr data-toggle="collapse" class="section-summary" data-parent="#tabla-proyectos" href="#tierraDetalles" aria-expanded="true" aria-controls="collapseOne">
+            <td class="mdl-data-table__cell--non-numeric">Tierra</td>
+            <td>@String.Format("$ {0:N}", Model.TuTotal.TotalTierra)</td>
+            <td>@String.Format("$ {0:N}", Model.TuMacromanzana.TotalTierra)</td>
+            <td>@String.Format("$ {0:N}", Model.TuDesarrollador.TotalTierra)</td>
+        </tr>
+        <tbody id="tierraDetalles" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Adquisicion de tierra</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.AdquisicionDeTierra)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.AdquisicionDeTierra)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.AdquisicionDeTierra)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Gastos de adquisicion</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.GastosDeAdquisicion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.GastosDeAdquisicion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.GastosDeAdquisicion)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Gastos notariales / Otros</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.GastosNotariales)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.GastosNotariales)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.GastosNotariales)</td>
+            </tr>
+        </tbody>
+
+        @*Gastos por fraccionar*@
+        <tr data-toggle="collapse" class="section-summary" data-parent="#tabla-proyectos" href="#gastosPorFraccionarDetails" aria-expanded="true" aria-controls="collapseOne">
+            <td class="mdl-data-table__cell--non-numeric">Gastos por fraccionar</td>
+            <td>@String.Format("$ {0:N}", Model.TuTotal.TotalGastosPorFraccionar)</td>
+            <td>@String.Format("$ {0:N}", Model.TuMacromanzana.TotalGastosPorFraccionar)</td>
+            <td>@String.Format("$ {0:N}", Model.TuDesarrollador.TotalGastosPorFraccionar)</td>
+        </tr>
+        <tbody id="gastosPorFraccionarDetails" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Proyecto Plan Maestro</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.ProyectoPlanMaestro)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.ProyectoPlanMaestro)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.ProyectoPlanMaestro)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Pago Presupuesto Urbanización</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.PresupuestoYUrbanizacion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.PresupuestoYUrbanizacion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.PresupuestoYUrbanizacion)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Impacto ambiental</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.ImpactoAmbiental)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.ImpactoAmbiental)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.ImpactoAmbiental)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Autorizacion Impacto Ambiental</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.AutorizacionImpactoAmbiental)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.AutorizacionImpactoAmbiental)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.AutorizacionImpactoAmbiental)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Proyecto de rasantes Agua Potable y Drenaje</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.RasantesAguaPotableYDrenaje)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.RasantesAguaPotableYDrenaje)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.RasantesAguaPotableYDrenaje)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Licencia uso del suelo</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.LicenciaUsoDeSuelo)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.LicenciaUsoDeSuelo)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.LicenciaUsoDeSuelo)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Deslinde del terreno</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.DeslindeDeTerreno)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.DeslindeDeTerreno)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.DeslindeDeTerreno)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Estudio topográfico</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.EstudioTopografico)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.EstudioTopografico)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.EstudioTopografico)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Estudio de inundabilidad</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.EstudioInundabilidad)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.EstudioInundabilidad)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.EstudioInundabilidad)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Mecánica de suelos</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.MecanicaDeSuelos)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.MecanicaDeSuelos)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.MecanicaDeSuelos)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Autorización</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Autorizacion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Autorizacion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Autorizacion)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Prediales 2008 2009 2010</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Prediales)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Prediales)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Prediales)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Derechos de conexión Agua y Drenaje</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.DerechosConexionAguaYDrenaje)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.DerechosConexionAguaYDrenaje)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.DerechosConexionAguaYDrenaje)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Derechos CFE</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.DerechosCFE)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.DerechosCFE)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.DerechosCFE)</td>
+            </tr>
+        </tbody>
+
+        @*Infraestructura*@
+        <tr data-toggle="collapse" class="section-summary" data-parent="#tabla-proyectos" href="#infraestructuraDetalles" aria-expanded="true">
+            <td class="mdl-data-table__cell--non-numeric">Infraestructura</td>
+            <td>@String.Format("$ {0:N}", Model.TuTotal.TotalInfraestructura)</td>
+            <td>@String.Format("$ {0:N}", Model.TuMacromanzana.TotalInfraestructura)</td>
+            <td>@String.Format("$ {0:N}", Model.TuDesarrollador.TotalInfraestructura)</td>
+        </tr>
+        <tbody id="infraestructuraDetalles" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Obras para suministro de energía eléctrica y conexión CFE</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.EnergiaElectrica)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.EnergiaElectrica)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.EnergiaElectrica)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Obras para suministro y conexión de agua potable</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.AguaPotable)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.AguaPotable)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.AguaPotable)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Obras para saneamiento y conexión drenaje</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Saneamiento)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Saneamiento)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Saneamiento)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Vialidades, pavimentación y señalización</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Vialidades)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Vialidades)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Vialidades)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Infraestructura para kilo Puerta de Anza</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.ObrasEspeciales)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.ObrasEspeciales)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.ObrasEspeciales)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Red Digital</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.RedDigital)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.RedDigital)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.RedDigital)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Gas Natural</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.GasNatural)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.GasNatural)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.GasNatural)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Movimiento y compactación de tierra</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.MovimientoDeTierra)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.MovimientoDeTierra)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.MovimientoDeTierra)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Costos indirectos de obra</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.CostosIndirectos)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.CostosIndirectos)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.CostosIndirectos)</td>
+            </tr>
+        </tbody>
+
+
+        <tr data-toggle="collapse" class="section-summary" data-parent="#tabla-proyectos" href="#obrasEspecialesDetalles" aria-expanded="true">
+            <td class="mdl-data-table__cell--non-numeric">Obras Especiales</td>
+            <td>@String.Format("$ {0:N}", Model.TuTotal.TotalObrasEspeciales)</td>
+            <td>@String.Format("$ {0:N}", Model.TuMacromanzana.TotalObrasEspeciales)</td>
+            <td>@String.Format("$ {0:N}", Model.TuDesarrollador.TotalObrasEspeciales)</td>
+        </tr>
+        <tbody id="obrasEspecialesDetalles" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Kilo</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Kilo)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Kilo)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Kilo)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Parque</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Parque)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Parque)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Parque)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Arborización kilo y parque</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.ArborizacionKiloYParque)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.ArborizacionKiloYParque)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.ArborizacionKiloYParque)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Barda perimetral</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.BardaPerimetral)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.BardaPerimetral)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.BardaPerimetral)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Barda decorativa</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.BardaDecorativa)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.BardaDecorativa)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.BardaDecorativa)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Muros de contención</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.MurosDeContencion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.MurosDeContencion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.MurosDeContencion)</td>
+            </tr>
+        </tbody>
+
+        @*Urbanización*@
+        <tr data-toggle="collapse" class="section-summary" data-parent="#tabla-proyectos" href="#urbanizacionDetalles" aria-expanded="true">
+            <td class="mdl-data-table__cell--non-numeric">Urbanización</td>
+            <td>@String.Format("$ {0:N}", Model.TuTotal.TotalUrbanizacion)</td>
+            <td>@String.Format("$ {0:N}", Model.TuMacromanzana.TotalUrbanizacion)</td>
+            <td>@String.Format("$ {0:N}", Model.TuDesarrollador.TotalUrbanizacion)</td>
+        </tr>
+        <tbody id="urbanizacionDetalles" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Resumen urbanización</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Urbanizacion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Urbanizacion)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Urbanizacion)</td>
+            </tr>
+        </tbody>
+
+        @*Post Venta*@
+        <tr data-toggle="collapse" class="section-summary" data-parent="#tabla-proyectos" href="#postventaDetalles" aria-expanded="true">
+            <td class="mdl-data-table__cell--non-numeric">Post Venta</td>
+            <td>@String.Format("$ {0:N}", Model.TuTotal.TotalPostVenta)</td>
+            <td>@String.Format("$ {0:N}", Model.TuMacromanzana.TotalPostVenta)</td>
+            <td>@String.Format("$ {0:N}", Model.TuDesarrollador.TotalPostVenta)</td>
+        </tr>
+        <tbody id="postventaDetalles" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Vigilancia</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Vigilancia)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Vigilancia)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Vigilancia)</td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">Mantenimiento</td>
+                <td>@String.Format("$ {0:N}", Model.TuTotal.Mantenimiento)</td>
+                <td>@String.Format("$ {0:N}", Model.TuMacromanzana.Mantenimiento)</td>
+                <td>@String.Format("$ {0:N}", Model.TuDesarrollador.Mantenimiento)</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td>@String.Format("{0:N}", Model.TuTotal.TotalTU)</td>
+                <td>@String.Format("{0:N}", Model.TuMacromanzana.TotalTU)</td>
+                <td>@String.Format("{0:N}", Model.TuDesarrollador.TotalTU)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

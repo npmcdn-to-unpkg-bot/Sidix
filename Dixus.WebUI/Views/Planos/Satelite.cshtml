@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Satelite";
+}
+
+<div id="map">
+
+</div>
+
+@section scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCN8UR-21LmEl6Yr43AWraT4RxcJm8LRyc&callback=initMap" async defer></script>
+}
+
+@section jsCode{
+    function initMap() {
+
+        var mapDiv = document.getElementById('map');
+
+        var map = new google.maps.Map(mapDiv, {
+            center: {lat: 31.3168509, lng: -110.9090467},
+            zoom: 14
+        });
+
+        map.data.loadGeoJson('/scripts/dist/mapa-anza.json');
+
+    }
+}

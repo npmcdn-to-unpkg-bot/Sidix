@@ -1,0 +1,161 @@
+﻿@model Dixus.BusinessRules.CambiosAutocad.Entidades.ResumenDeCambiosAutocad
+
+@{
+    ViewBag.Title = "Confirmar cambios";
+    var fraccionesNombre = Model.ObtenerFraccionesQueNomasModificaronNombre();
+    var fraccionesUso = Model.ObtenerFraccionesQueNomasModificaronUsoDeSuelo();
+    var fraccionesNombreYUso = Model.ObtenerFraccionesQueModificaronNombreYUso();
+    var fraccionesIdenticas = Model.ObtenerFraccionesQueSiguenIdenticas();
+
+    var vialidadesNombre = Model.ObtenerVialidadesQueNomasModificaronNombre();
+    var vialidadesTramo = Model.ObtenerVialidadesQueNomasModificaronTramo();
+    var vialidadesNombreYTramo = Model.ObtenerVialidadesQueModificaronNombreYTramo();
+    var vialidadesIdenticas = Model.ObtenerVialidadesQueSiguenIdenticas();
+
+}
+
+@Html.PageTitle("Confirmar cambios")
+
+<div id="pagina-confirmar-cambios-autocad">
+    <div class="content-padder">
+
+        <p class="well">Por favor confirma que los siguientes cambios detectados, son correctos. Si los consideras correctos, presiona "Confirmar" para proceder con su autorización.</p>
+
+        @if (fraccionesNombre.Count() > 0 || fraccionesUso.Count() > 0 || fraccionesNombreYUso.Count() > 0 || vialidadesNombre.Count() > 0 || vialidadesTramo.Count() > 0 || vialidadesNombreYTramo.Count() > 0)
+        {
+            <h4 class="section-title">Fracciones y Poligonos con cambios de información:</h4>
+
+            if (fraccionesNombre.Count() > 0)
+            {
+                <h4 class="section-title">Fracciones que solo modificaron su nombre: </h4>
+                <ul>
+                    @foreach (var fracc in fraccionesNombre)
+                    {
+                        <li>Fraccion @fracc.FraccionSidix.Nombre cambió su nombre a @fracc.FraccionAutocad.Nombre</li>
+                    }
+                </ul>
+            }
+
+            if (fraccionesUso.Count() > 0)
+            {
+                <h4 class="section-title">Fracciones que solo modificaron su uso de suelo: </h4>
+                <ul>
+                    @foreach (var fracc in fraccionesUso)
+                    {
+                        <li>Fraccion @fracc.FraccionSidix.TipoDeSuelo.Nombre cambió su uso a  "@fracc.FraccionAutocad.Uso" </li>
+                    }
+                </ul>
+            }
+
+            if (fraccionesNombreYUso.Count() > 0)
+            {
+                <h4 class="section-title">Fracciones que modificaron su nombre y uso de suelo: </h4>
+                <ul>
+                    @foreach (var fracc in fraccionesNombreYUso)
+                    {
+                        <li>Fraccion @fracc.FraccionSidix.Nombre con uso de suelo @fracc.FraccionSidix.TipoDeSuelo.Nombre cambió su nombre a @fracc.FraccionAutocad.Nombre y su uso a  "@fracc.FraccionAutocad.Uso" </li>
+                    }
+                </ul>
+            }
+
+            @*VIALIDADES*@
+        if (vialidadesNombre.Count() > 0)
+        {
+            <h4 class="section-title">Vialidades que solo modificaron su nombre: </h4>
+            <ul>
+                @foreach (var vial in vialidadesNombre)
+                    {
+                    <li>Vialidad @vial.VialidadSidix.Nombre cambió su nombre a @vial.VialidadAutocad.ViaNombre</li>
+                }
+            </ul>
+        }
+
+        if (vialidadesTramo.Count() > 0)
+        {
+            <h4 class="section-title">Vialidades que solo modificaron su tramo: </h4>
+            <ul>
+                @foreach (var vial in vialidadesTramo)
+                    {
+                    <li>Vialidad @vial.VialidadSidix.Tramo cambió su uso a  "@vial.VialidadAutocad.ViaTramo" </li>
+                }
+            </ul>
+            }
+
+            if (vialidadesNombreYTramo.Count() > 0)
+            {
+                <h4 class="section-title">Vialidades que modificaron su nombre y tramo: </h4>
+                <ul>
+                    @foreach (var vial in vialidadesNombreYTramo)
+                    {
+                        <li>Vialidad @vial.VialidadSidix.Nombre con tramo @vial.VialidadSidix.Tramo cambió su nombre a @vial.VialidadAutocad.ViaNombre y su tramo a  "@vial.VialidadAutocad.ViaTramo" </li>
+                    }
+                </ul>
+            }
+        }
+
+
+
+        @if (Model.FraccionesSidixQueNoTienenContraparte.Count() > 0 || Model.FraccionesAutocadQueNoTienenContraparte.Count() > 0)
+        {
+            <div>
+                <h4 class="section-title">Fracciones que serán reemplazadas:</h4>
+                <div class="row">
+                    @foreach (var fraccYaNoExiste in Model.FraccionesSidixQueNoTienenContraparte)
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4">@Html.ActionLink(fraccYaNoExiste.Nombre,"Details","Fracciones", new { id = fraccYaNoExiste.FraccionId }, null)</div>
+                    }
+                </div>
+
+                <p style="padding:15px 0;"><small><strong>Serán reemplazadas por:</strong></small></p>
+                <div class="row">
+
+                    @foreach (var fraccNueva in Model.FraccionesAutocadQueNoTienenContraparte)
+                {
+                        <div class="col-lg-2 col-md-3 col-sm-4">@fraccNueva.Nombre</div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (Model.VialidadesSidixQueNoTienenContraparte.Count() > 0 || Model.VialidadesAutocadQueNoTienenContraparte.Count() > 0)
+        {
+            <div>
+                <h4 class="section-title">Vialidades que serán reemplazadas:</h4>
+                <div class="row">
+                    @foreach (var vialYaNoExiste in Model.VialidadesSidixQueNoTienenContraparte)
+                {
+                        <div class="col-lg-2 col-md-3 col-sm-4">@vialYaNoExiste.Nombre</div>
+                    }
+                </div>
+
+                <p style="padding:15px 0;"><small><strong>Serán reemplazadas por:</strong></small></p>
+
+                <div class="row">
+                @foreach (var vialNueva in Model.VialidadesAutocadQueNoTienenContraparte)
+                {
+                    <div class="col-lg-2 col-md-3 col-sm-4">@vialNueva.ViaNombre@vialNueva.ViaTramo</div>
+                }</div>
+            </div>
+        }
+    
+        <hr />
+
+        <div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <button type="submit" id="btnConfirmar" class="btn btn-verde">
+                       Aceptar y continuar <i class="fa fa-check"></i> 
+                    </button>
+                </div>
+            }
+        </div>
+
+
+
+    </div>
+    <hr class="not-to-bottom" />
+
+</div>

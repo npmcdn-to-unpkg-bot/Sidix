@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Dixus.Entidades.TipoDeSuelo>
+
+@{
+    ViewBag.Title = "Tipos de suelo";
+    int counter = 0;
+    double AreaTotal = Model.Sum(tiposuelo => tiposuelo.Fracciones.Sum(fracc => fracc.MetrosCuadrados));
+}
+
+@section jsCode{
+    $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    });
+
+}
+
+<h3 class="page-title">Usos de Suelo</h3>
+  
+@*<div class="btn-group btn-group-justified" data-toggle="buttons">
+    <a class="btn btn-verde" href="@Url.Action("Create")">
+        Nuevo tipo de suelo
+    </a>
+</div>*@
+<hr class="green-stripe" />
+
+<table class="@Html.tableClasses("left")">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="hidden-xs"></th>
+            <th class="text-left"> @Html.DisplayNameFor(model => model.Nombre) </th>
+            <th>Fracciones <span title="Fracciones del Plan Maestro" data-toggle="tooltip" data-placement="top" class="superscript-info">?</span> </th>
+            <th class="hidden-xs">Area</th>
+            <th class="hidden-xs">Porcentaje</th>
+            <th class="hidden-xs">@Html.DisplayNameFor(model => model.MvaPorHectarea) </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        counter = counter + 1;
+        <tr>
+            <td class="button-cell text-center">@counter</td>
+            <td class="hidden-xs min-width-cell"> @Html.indicadorDeSuelo(item.Color)</td>
+            <td class="text-left"> @Html.ActionLink(item.Nombre, "Details", new { id = item.TipoDeSueloId }) </td>
+            <td> @item.Fracciones.Count() </td>
+            <td class="hidden-xs"> @String.Format("{0:N}", item.Fracciones.Sum(fracc => fracc.MetrosCuadrados))</td>
+            <td class="hidden-xs"> @String.Format("{0:P2}", ((item.Fracciones.Sum(fracc => fracc.MetrosCuadrados)) / AreaTotal))</td>
+            <td class="hidden-xs"> @Html.DisplayFor(modelItem => item.MvaPorHectarea) </td>
+            <td class="button-cell">
+                <a href="@Url.Action("Edit", new {id = item.TipoDeSueloId})"><i data-toggle="tooltip" data-placement="left" title="Editar tipo de suelo" class="fa fa-pencil"></i> </a>
+            </td>
+        </tr>
+    }
+    <tfoot>
+        <tr>
+            <td></td>
+            <td class="hidden-xs"></td>
+            <td class="text-left">Totales</td>
+            <td>@Model.Sum(x => x.Fracciones.Count())</td>
+            <td class="hidden-xs">@String.Format("{0:N}", AreaTotal)</td>
+            <td class="hidden-xs">@String.Format("{0:P2}",AreaTotal/AreaTotal)</td>
+            <td class="hidden-xs"></td>
+            <td></td>
+        </tr>
+    </tfoot>
+
+</table>
+<hr class="not-to-top" />
+
+

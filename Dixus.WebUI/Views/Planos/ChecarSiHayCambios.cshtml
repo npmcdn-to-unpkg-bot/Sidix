@@ -1,0 +1,36 @@
+﻿@model bool
+
+@{
+    Layout = null;
+}
+
+@*Todo este contenido va dentro de un modal*@
+
+@if (Model)
+{
+    <div class="modal-body text-center">
+        <i class="fa fa-exclamation-circle fa-2x" style="color:#ad2d2d;"></i>
+        <div>
+            <h4 style="margin-bottom:20px;"><strong>El modelo de Autocad ha cambiado.</strong></h4>
+            Para que estos cambios se vean reflejados en el sistema, es necesario que sean revisados y enviados para su autorización a las personas correspondientes.
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">En otro momento</button>
+        <a href="@Url.Action("ConfirmarCambios","Planos")" class="btn btn-verde">Revisar cambios</a>
+    </div>
+
+}
+else
+{
+    <div class="modal-body text-center">
+        <i class="fa fa-check fa-2x" style="color:#479a21;"></i>
+        <div>El modelo de autocad está al tanto.</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+    <script>
+        setTimeout(function () { $("#modalCambiosAutocad").modal("hide"); }, 2000);
+    </script>
+}

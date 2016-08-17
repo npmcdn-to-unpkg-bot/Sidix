@@ -1,0 +1,50 @@
+﻿@model Dixus.Entidades.TipoDeSuelo
+
+@{
+    ViewBag.Title = Model.Nombre + " - Borrar";
+}
+
+<div class="content-padder">
+    <h3>@Model.Nombre | Borrar</h3>
+    <h4>¿Seguro que deseas eliminar este tipo de suelo?</h4>
+    <hr />
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+
+            <dd>
+                @Html.indicadorDeSuelo(Model.Color)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MvaPorHectarea)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MvaPorHectarea)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Sí, Borrar" class="btn btn-danger" /> |
+                @Html.ActionLink("Volver a tipos de suelo", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+    </div>
+</div>

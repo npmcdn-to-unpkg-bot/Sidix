@@ -1,0 +1,35 @@
+﻿@model Dixus.Entidades.Cliente
+
+@{
+    ViewBag.Title = "Registrar cliente";
+}
+<h3 class="page-title">Registrar cliente</h3>
+<hr class="green-stripe"/>
+<hr class="not-to-top" />
+
+<div class="content-padder">
+   
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder=Html.DisplayNameFor(model => model.Nombre) } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Crear" class="btn btn-verde" /> @Html.ActionLink("Salir sin guardar", "Index", null, new { @class = "btn btn-verde" })
+                </div>
+            </div>
+        </div>
+    }
+ 
+</div>

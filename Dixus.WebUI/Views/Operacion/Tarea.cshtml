@@ -1,0 +1,147 @@
+﻿@model Dixus.Entidades.Tarea
+
+@{
+    ViewBag.Title = "Tarea";
+    bool Completada = Model.ChecarSiEstaCompletada();
+    double Porcentaje = Model.ObtenerPorcentajeDeProgreso();
+    int NumDeResponsables = Model.NumDeResponsables();
+    bool esBinaria = Model is Dixus.Entidades.TareaBinaria;
+    bool esDePorcentaje = Model is Dixus.Entidades.TareaDePorcentaje;
+    bool esCompraventa = Model is Dixus.Entidades.ProcesoDeCompraventa;
+    bool esSubdivision = Model is Dixus.Entidades.ProcesoDeSubdivision;
+}
+
+<h3 class="page-title">Tarea: @Model.Nombre</h3>
+<hr class="green-stripe" />
+<hr class="not-to-top" />
+
+@*@Html.Partial("PageTitle", "Analisis de Tarea")*@
+
+<div id="pagina-analisis-tarea">
+
+
+    <div class="content-padder">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+
+                <div class="porcentaje-de-tarea">
+                    <h4 class="section-title not-to-top">Progreso</h4>
+                    <div class="well">
+                        @String.Format("{0:#0.##%}", Porcentaje) (@(Completada ? "Completada" : Porcentaje > 0 ? "En Progreso" : "Sin Empezar"))
+                    </div>
+                </div>
+
+                <div id="origen-de-tarea">
+                    <h4 class="section-title">Origen</h4>
+                    <div class="well">
+                        @Html.ActionLink(Model.JuntaDeConsejo.Titulo + " (" + Html.DisplayFor(model => model.JuntaDeConsejo.Fecha) + ")", "Junta", new { id = Model.JuntaDeConsejoId }, new {@class="normal-color"})
+                    </div>
+                </div>
+
+                <div id="responsables-de-tarea">
+
+                    <h4 class="section-title">@NumDeResponsables Responsable@(NumDeResponsables > 1 ? "s" : ""):</h4>
+                    <ul>
+                        @foreach (var user in Model.Responsables)
+                        {
+                            <li><a class="normal-color" href="@Url.Action("Usuario", new { id = user.Id })">@user.NombreCompleto</a></li>
+
+                        }
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-8">
+
+                <div id="descripcion-de-tarea">
+                    <h4 class="section-title">
+                        Descripción:
+                    </h4>
+                    <div class="well" ">@Model.Descripcion</div>
+                </div>
+
+                @if (!Model.Observaciones.IsEmpty())
+                {
+                    <div id="observaciones-de-tarea">
+                        <h4 class="section-title">
+                            Observaciones:
+                        </h4>
+                        <div class="well">@Model.Observaciones</div>
+                    </div>
+                }
+
+                <div id="pasos-de-tarea">
+
+                    <h4 class="section-title">Pasos:</h4>
+                    <div class="well">
+                        @if (esBinaria || esDePorcentaje)
+                        {
+                            <div class="checkbox checkbox-success">
+                                <input id="unico-paso-checkbox" type="checkbox" @( Model.ChecarSiEstaCompletada() ? "checked" : "") disabled /><label for="unico-paso-checkbox">@Model.Descripcion</label> <br />
+                            </div>
+                        }
+
+                        @if (esCompraventa)
+                        {
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeCompraventa)Model).SeEnvioDatosANotaria, new { disabled = "disabled" })
+                                    <label>Se enviaron datos de la compraventa a la notaría</label> <br />
+                                </div>
+                            </div>
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeCompraventa)Model).SeRecibioProyectosDeCompraventaDeNotaria, new { disabled = "disabled" })
+                                    <label>Se recibieron proyectos de compraventa de notaría</label> <br />
+                                </div>
+                            </div>
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeCompraventa)Model).SeFirmoEscrituraFinal, new { disabled = "disabled" })
+                                    <label>Se hizo la firma de la escritura final</label> <br />
+                                </div>
+                            </div>
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeCompraventa)Model).SeRegistroEscrituraFinalAnteRegistroPublico, new { disabled = "disabled" })
+                                    <label>Se registró la escritura final ante el registro público</label> <br />
+                                </div>
+                            </div>
+                        }
+
+                        @if (esSubdivision)
+                        {
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeSubdivision)Model).SolicitudParaDesarrolloUrbanoCompletada, new { disabled = "disabled" })
+                                    <label>Se completó la solicitud para desarrollo urbano</label> <br />
+                                </div>
+                            </div>
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeSubdivision)Model).RecibioProyectosDeEscrituraDeNotaria, new { disabled = "disabled" })
+                                    <label>Se recibieron proyectos de escritura de notaría</label> <br />
+                                </div>
+                            </div>
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeSubdivision)Model).FirmaDeProyectoFinalCompletada, new { disabled = "disabled" })
+                                    <label>Se hizo la firma de la escritura final</label> <br />
+                                </div>
+                            </div>
+                            <div class="paso-de-tarea">
+                                <div class="checkbox checkbox-success">
+                                    @Html.CheckBoxFor(model => ((Dixus.Entidades.ProcesoDeSubdivision)Model).EscrituraFinalRegistradaAnteRegistroPublico, new { disabled = "disabled" })
+                                    <label>Se registró la escritura final ante el registro público</label> <br />
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>

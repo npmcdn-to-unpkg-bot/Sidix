@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | Dixus</title>
+    @*<link href="~/Content/dist/styles.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/Content/material.min (2).css" rel="stylesheet" />
+    <link href="~/Content/build/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/build/site.css" rel="stylesheet" />
+    <link href="~/Content/build/font-awesome.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon (4).ico" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    @RenderSection("header", required: false)
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <meta name="description" content="Sistema Integral Dixus" />
+</head>
+<body>
+    @*<div id="side-menu">
+        <div id="side-menu-inner-wrapper"></div>
+        <button type="button" id="close-menu-button"><i class="fa fa-times"></i></button>
+        <h4 id="menu-title">Menu</h4>
+    </div>*@
+    <div id="body-wrapper">
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink(((string)ViewBag.Title).ToUpper(), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                @Html.ActionLink("SIIDIX", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <div class="navbar-right">
+                    <div id="navbar-info-addicional">
+                        <div class="navbar-logo"></div>
+                        <h3 class="navbar-title">Sistema de Información Integral Dixus</h3>
+                    </div>
+                    <button id="notifications-button" role="button" data-toggle="popover" class="btn btn-danger navbar-btn" data-placement="bottom">
+                        <i class="fa fa-user" title=""></i>
+                    </button> 
+                    @if (Request.IsAuthenticated && User.IsInRole("Administrador"))
+                    {
+                        <a href="@Url.Action("Opciones", "Admin")" class="btn btn-danger"><i class="fa fa-gears"></i></a>
+                    }
+                    @Html.ActionLink("Salir", "Logoff", "Login", null, new { @class = "btn btn-danger navbar-btn" })
+                    @*<button id="menu-trigger" class="btn btn-danger"><i class="fa fa-bars"></i></button>*@
+                </div>
+            </div>
+        </div>
+
+        <div id="sidebar">
+            <ul>
+                <li><a href="@Url.Action("Index", "home")" title="Inicio"><i class="fa fa-home fa-2x"></i><br /></a></li>
+                @*<li><a href="@Url.Action("Dashboard", "home")" title="Herramientas de análisis"><i class="fa fa-dashboard fa-2x"></i><br /></a></li>*@
+                <li><a href="@Url.Action("Index","planos")" title="Planos"><i class="fa fa-map fa-2x"></i><br /></a></li>
+                <li><a href="@Url.Action("Index","fracciones")" title="Fracciones"><i class="fa fa-th-large fa-2x"></i><br /></a></li>
+                <li><a href="@Url.Action("Index","subdivisiones")" title="Subdivisiones Legales"><i class="fa fa-legal fa-2x"></i><br /></a></li>
+                <li><a href="@Url.Action("Index", "tiposdesuelo")" title="Usos de suelo"><i class="fa fa-sitemap fa-2x"></i><br /></a></li>
+                <li><a href="@Url.Action("Index","clientes")" title="Empresas"><i class="fa fa-users fa-2x"></i><br /></a></li>
+                <li><a href="@Url.Action("Index","finanzas")" title="Finanzas"><i class="fa fa-money fa-2x"></i><br /></a></li>
+            </ul>
+        </div>
+
+        <div class="body-content">
+            <div class="body-wrapper">
+                <div class="clearfix"></div>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/scripts/dist/scripts.min.js">  </script>
+    <script src="~/scripts/material.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        @RenderSection("jsCode", required: false)
+        $(document).ready(function () {
+            $('#sidebar i').click(function () {
+                $currentIcon = $(this);
+                $loadingIcon = "<i class='fa fa-spinner fa-spin fa-2x'></i>";
+                $anchor = $currentIcon.parent();
+                $currentIcon.remove();
+                $anchor.prepend($loadingIcon);
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+            $('button.btn-loader, .btn.btn-loader, .mdl-button.btn-loader').on('click', function () {
+                var $btn = $(this).button('loading');
+                setTimeout(function () {
+                    $btn.button('reset');
+                }, 3000);
+            })
+            $('#notifications-button').popover({
+                html: true,
+                trigger: 'click',
+                content: 'Aqui va informacion sobre cosas que tengas que hacer, etc.',
+                title: "<a href='@Url.Action("Usuario","Operacion", new { id = @ViewBag.UserId })'>@ViewBag.Usuario</a>"
+            });
+            //$("#menu-trigger").click(function () {
+            //    var posicionAbierta = "200px";
+            //    var posicionCerrada = "0";
+            //    $bodyWrapper = $("#body-wrapper");
+            //    var posicionActual = $bodyWrapper.css("left");
+            //    if (posicionAbierta == posicionActual) {
+            //        $("#body-wrapper").css("left", posicionCerrada);
+            //    } else {
+            //        $("#body-wrapper").css("left", posicionAbierta);
+            //    }
+                
+            //});
+
+        });
+
+    </script>
+
+
+</body>
+</html>
