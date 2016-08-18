@@ -1,10 +1,8 @@
 ﻿
 CORTO PLAZO
 
-- Cargar informacion actualizada del Plan Maestro y Subdivisiones Legales
 - Afinar cálculos de cobros unitarios de inversiones
 
-- Sistema para actualizar fracciones legales
 - Corregir errores que pudieran surgir al comparar fracciones
 - Requerir autorizacion de administradores para hacer cambios a planos
 - Determinar protocolos para actualizar, cargar y autorizar cambios al PM
@@ -16,7 +14,8 @@ CORTO PLAZO
 - Configurar permisos para roles / usuarios
 
 - Sistema para revision de progreso / estatus de tareas
-- Llevar control de proceso de compra-venta en cada una de sus etapas
+- Poder agregar tareas y juntas
+- Llevar control de proceso de compra-venta / subdivisones / checar documentos, etc. en cada una de sus etapas
 
 - Terminar tabla dinamica de fracciones
 
@@ -28,6 +27,8 @@ LARGO PLAZO
 - Mecanismo de revision de archivos y documentos digitalizados
 - Poder comprobar que mapa legal y claves catastrales coinciden con informacion de "Nogalessonora.gob.mx"
 - Permitir que personas que no son usuarios aparezcan en juntas
+- Cargar informacion actualizada del Plan Maestro y Subdivisiones Legales
+- Sistema para actualizar fracciones legales
 
 
 PREGUNTAS:

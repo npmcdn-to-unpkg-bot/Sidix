@@ -17,7 +17,14 @@
 
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-default">
-                    <h3 class="section-title">Técnico</h3>
+
+                    <h3 class="section-title">
+                        @*<span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                            <i class="fa fa-wrench fa-stack-1x"></i>
+                        </span>*@
+                        Técnico
+                    </h3>
                     <hr class="not-to-top not-to-bottom" />
                     <div class="panel-body">
 
@@ -59,7 +66,13 @@
             {
                 <div class="col-sm-6 col-md-4">
                     <div class="panel panel-default">
-                        <h3 class="section-title">Administrativo</h3>
+                        <h3 class="section-title">
+                            @*<span class="fa-stack fa-lg">
+                                <i class="fa fa-circle-o fa-stack-2x"></i>
+                                <i class="fa fa-folder fa-stack-1x"></i>
+                            </span>*@
+                            Administrativo
+                        </h3>
                         <hr class="not-to-top not-to-bottom" />
                         <div class="panel-body">
                             <div id="proyectos-de-inversion-section" class="btn btn-verde-obscuro col-xs-12 no-chop">
@@ -80,7 +93,13 @@
             {
                 <div class="col-sm-6 col-md-4">
                     <div class="panel panel-default">
-                        <h3 class="section-title">Comercialización</h3>
+                        <h3 class="section-title">
+                            @*<span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x fa-2x"></i>
+                                <i class="fa fa-bar-chart fa-stack-1x fa-inverse"></i>
+                            </span>*@
+                            Comercialización
+                        </h3>
                         <hr class="not-to-top not-to-bottom" />
                         <div class="panel-body">
                             <div class="panel sub-panel">
@@ -169,11 +188,11 @@
                 bottom:0;
                 right:auto;
                 margin-bottom:0;
-                width:220px;
+                width:250px;
                 text-align:center;
             }
             .body-content{
-                padding-left:220px;
+                padding-left:250px;
                 padding-top:0;
             }
             .navbar-header{
@@ -228,9 +247,7 @@
 
         <text>
             $("#modalCambiosAutocad").modal();
-            console.log("checando si hay cambios");
-            $("#modal-container-for-dynamic-view").load('@Url.Action("ChecarSiHayCambios", "Planos")', function(){
-            console.log("terminado");
+                $("#modal-container-for-dynamic-view").load('@Url.Action("ChecarSiHayCambios", "Planos")', function(){
             });
 
         </text>

@@ -17,5 +17,7 @@ namespace Dixus.Repositorios.Abstract
         IEnumerable<TTarea> ObtenerTareasArribaDeCiertoPorcentaje<TTarea>(double porcentaje) where TTarea : Tarea;
         IEnumerable<TTarea> ObtenerTareasDebajoDeCiertoPorcentaje<TTarea>(double porcentaje) where TTarea : Tarea;
 
+        IEnumerable<Tarea> ObtenerTareasPorUsuario(string username);
+        IEnumerable<TTarea> ObtenerTareasPorUsuario<TTarea>(string username) where TTarea : Tarea;
     }
 }

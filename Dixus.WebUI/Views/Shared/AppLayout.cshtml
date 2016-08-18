@@ -76,9 +76,9 @@
 
     <script src="~/scripts/dist/scripts.min.js">  </script>
     <script src="~/scripts/material.min.js"></script>
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
-    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+
     @RenderSection("scripts", required: false)
+
     <script type="text/javascript">
         @RenderSection("jsCode", required: false)
         $(document).ready(function () {
@@ -96,24 +96,30 @@
                     $btn.button('reset');
                 }, 3000);
             })
-            $('#notifications-button').popover({
-                html: true,
-                trigger: 'click',
-                content: 'Aqui va informacion sobre cosas que tengas que hacer, etc.',
-                title: "<a href='@Url.Action("Usuario","Operacion", new { id = @ViewBag.UserId })'>@ViewBag.Usuario</a>"
+
+            
+            
+            var requestNotifications = $.ajax('/api/notifications');
+
+            $.when(requestNotifications).done(function (tareas) {
+                var elem = "";
+                if (tareas.length == 0) {
+                    elem = "<div class='notificacion'>No tienes tareas asignadas por hacer</div>";
+                }
+                for (var i = 0; i < tareas.length; i++) {
+                    var tarea = tareas[i];
+                    elem +=
+                       "<a class='notificacion' href='@Url.Action("Tarea","Operacion")/"+tarea.TareaId+"'>" + tarea.Nombre + "</a>" 
+                }
+
+                $('#notifications-button').popover({
+                    html: true,
+                    content: elem,
+                    trigger: 'click',
+                    title: "<a href='@Url.Action("Usuario","Operacion", new { id = @ViewBag.UserId })'>@ViewBag.Usuario</a><br><small style='color:white'>Tareas por hacer</small>",
+                });
+
             });
-            //$("#menu-trigger").click(function () {
-            //    var posicionAbierta = "200px";
-            //    var posicionCerrada = "0";
-            //    $bodyWrapper = $("#body-wrapper");
-            //    var posicionActual = $bodyWrapper.css("left");
-            //    if (posicionAbierta == posicionActual) {
-            //        $("#body-wrapper").css("left", posicionCerrada);
-            //    } else {
-            //        $("#body-wrapper").css("left", posicionAbierta);
-            //    }
-                
-            //});
 
         });
 

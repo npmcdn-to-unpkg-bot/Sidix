@@ -35,6 +35,9 @@ namespace Dixus.WebUI.Models
 
     public class NuevaJuntaViewModel
     {
-
+        public string Titulo { get; set; }
+        //public string EsDelDiaEnQueSeCreo{ get; set; }
+        public DateTime FechaEnQueSucedio { get; set; }
+        public string Observaciones { get; set; }
     }
 }

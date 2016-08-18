@@ -9,7 +9,7 @@
     double NumDeAcuerdosGenerados = Model.Junta.NumDeAcuerdosAlcanzados();
 }
 
-@Html.PageTitle("Minuta:", Model.Junta.Titulo)
+@Html.PageTitle(Model.Junta.Titulo, "Minuta")
 
 <div id="pagina-junta">
 
@@ -32,19 +32,30 @@
                         }
                         else
                         {
-                            <div>No tiene un objetivo especificado. Para añadir uno, haz click @Html.ActionLink("aquí", "editarjunta", "operacion", new { id = Model.Junta.JuntaDeConsejoId} ,null)</div>
+                            <div>No tiene un objetivo especificado. Para añadir uno, haz click @Html.ActionLink("aquí", "editarjunta", "operacion", new { id = Model.Junta.JuntaDeConsejoId }, null)</div>
                         }
                     </div>
                 </div>
 
                 <div id="asistentes-de-junta">
-                    <h4 class="section-title">@NumDeAsistentes Asistente@(NumDeAsistentes > 1 ? "s" : ""):</h4>
+                    <h4 class="section-title">@NumDeAsistentes Asistente@(NumDeAsistentes == 1 ? "" : "s"):</h4>
+                   
                     <ul>
-                        @foreach (var user in Model.Junta.UsuariosPresentes)
+                        @if (Model.Junta.UsuariosPresentes.Count > 0)
                         {
-                            <li><a class="normal-color" href="@Url.Action("Usuario", new { id = user.Id })">@user.NombreCompleto</a></li>
+                            foreach (var user in Model.Junta.UsuariosPresentes)
+                            {
+                                <li><a class="normal-color" href="@Url.Action("Usuario", new { id = user.Id })">@user.NombreCompleto</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No has agregado ningún usuario a esta junta aún</li>
                         }
                     </ul>
+                    <div class="well-sm">
+                        <a data-toggle="modal" data-target="#agregar-asistente-modal">Agregar usuario...</a>
+                    </div>
                 </div>
 
                 @if (!Model.Junta.Observaciones.IsEmpty())
@@ -87,8 +98,12 @@
                     }
                     else
                     {
-                        <div class="alert alert-info" role="alert">No se registró ningun acuerdo en esta junta</div>
+                        <div class="well" role="alert">No se ha registrado ningun acuerdo en esta junta</div>
+
                     }
+                    <div class="well-sm">
+                        <a data-toggle="modal" data-target="#agregar-acuerdo-modal">Agregar acuerdo...</a>
+                    </div>
                 </div>
 
                 <div id="tareas-de-junta">
@@ -126,42 +141,45 @@
                     }
                     else
                     {
-                        <div class="alert alert-info" role="alert">No se asignó ninguna tarea en esta junta</div>
+                        <div class="well" role="alert">No se ha registrado ninguna tarea en esta junta</div>
                     }
+                    <div class="well-sm">
+                        <a data-toggle="modal" data-target="#agregar-tarea-modal">Agregar tarea...</a>
+                    </div>
                 </div>
 
 
 
                 @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    @NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo generado" : "Acuerdos generados")
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
-                               
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        @NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo generado" : "Acuerdos generados")
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                    @NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea asignada" : "Tareas asignadas") (@NumDeTareaPendientes pendientes)
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="panel-body">
-                                
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                        @NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea asignada" : "Tareas asignadas") (@NumDeTareaPendientes pendientes)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
 
 
             </div>
@@ -169,3 +187,42 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="agregar-asistente-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @Html.PageTitle("Nueva junta")
+                </div>*@
+            @Html.Action("AgregarAsistenteAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="agregar-acuerdo-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @Html.PageTitle("Nueva junta")
+                </div>*@
+            @Html.Action("AgregarAcuerdoAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="agregar-tarea-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @Html.PageTitle("Nueva junta")
+                </div>*@
+            @Html.Action("AgregarTareaAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

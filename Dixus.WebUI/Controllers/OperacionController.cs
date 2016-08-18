@@ -16,7 +16,6 @@ namespace Dixus.WebUI.Controllers
 {
     public class OperacionController : Controller
     {
-        //private string _userId;
         private IUnitOfWork _uow;
         public OperacionController(IUnitOfWork uowParam)
         {
@@ -24,6 +23,7 @@ namespace Dixus.WebUI.Controllers
             //_userId = HttpContext.User.Identity.GetUserId();
         }
 
+        // Tareas
         public ActionResult Tarea(int? id)
         {
             if (id == null)
@@ -49,7 +49,91 @@ namespace Dixus.WebUI.Controllers
         {
             return View();
         }
-       
+        [HttpPost]
+        public ActionResult AgregarTarea(NuevaTareaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // To do: agregar tarea
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+        
+        // Juntas
+        public ActionResult Junta(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            JuntaDeConsejo junta = _uow.Juntas.ObtenerPorId( j => j.JuntaDeConsejoId == id.Value, "Acuerdos", "Tareas", "UsuariosPresentes");
+            if (junta == null) return HttpNotFound();
+
+            JuntaViewModel model = new JuntaViewModel() { Junta = junta };
+
+            // Para ver los detalles de una junta, tienes que haber estado presente, o ser administrador
+            if (HttpContext.User.IsInRole("Administrador") || junta.UsuariosPresentes.Any(us => us.Id == HttpContext.User.Identity.GetUserId()))
+            {
+                return View(model);
+            }
+            else
+            {
+                return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
+            }
+        }
+        public ActionResult AgregarJunta()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AgregarJunta(NuevaJuntaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // To do: agregar junta
+                JuntaDeConsejo junta = new JuntaDeConsejo()
+                {
+                    Titulo = model.Titulo,
+                    Observaciones = model.Observaciones,
+                    Fecha = model.FechaEnQueSucedio
+                };
+                try
+                {
+                    _uow.Juntas.Agregar(junta);
+                    _uow.SaveToDB();
+                    var juntaid = _uow.Juntas.Filtrar(jun => jun.Titulo == model.Titulo && jun.Fecha == model.FechaEnQueSucedio).FirstOrDefault().JuntaDeConsejoId;
+                    return RedirectToAction("Junta", "Operacion", new { id = juntaid});
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Hubo un error al crear la junta. Mensaje del error: "+ex.Message);
+                    return View(model);
+                }
+                
+                
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+        public ActionResult AgregarAsistenteAJunta(int juntaid)
+        {
+            return PartialView();
+        }
+        public ActionResult AgregarAcuerdoAJunta(int juntaid)
+        {
+            return PartialView();
+        }
+        public ActionResult AgregarTareaAJunta(int juntaid)
+        {
+            return PartialView();
+        }
+
+
+        // Usuarios
         public async Task<ActionResult> Usuario(string id)
         {
             if (String.IsNullOrEmpty(id)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,55 +165,8 @@ namespace Dixus.WebUI.Controllers
             }
         }
 
-        public ActionResult Junta(int? id)
-        {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            JuntaDeConsejo junta = _uow.Juntas.ObtenerPorId( j => j.JuntaDeConsejoId == id.Value, "Acuerdos", "Tareas", "UsuariosPresentes");
-            if (junta == null) return HttpNotFound();
 
-            JuntaViewModel model = new JuntaViewModel() { Junta = junta };
 
-            // Para ver los detalles de una junta, tienes que haber estado presente, o ser administrador
-            if (HttpContext.User.IsInRole("Administrador") || junta.UsuariosPresentes.Any(us => us.Id == HttpContext.User.Identity.GetUserId()))
-            {
-                return View(model);
-            }
-            else
-            {
-                return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
-            }
-        }
-        public ActionResult AgregarJunta()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AgregarTarea(NuevaTareaViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // To do: agregar tarea
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return View(model);
-            }
-        }
-        [HttpPost]
-        public ActionResult AgregarJunta(NuevaJuntaViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // To do: agregar junta
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return View(model);
-            }
-        }
     }
 }

@@ -2379,55 +2379,64 @@ namespace Dixus.Domain.Migrations
                     Fecha = new DateTime(2016,05,20),
                     Titulo = "Junta Presentacion SIDIX",
                     UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 2,
                     Fecha = DateTime.Now,
                     Titulo = "Revision de avances sistema SIDIX",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 3,
                     Fecha = new DateTime(2016,2,10),
                     Titulo = "Consejo DIXUS",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 4,
                     Fecha = new DateTime(2016,4,1),
                     Titulo = "Consejo VINTEL",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 5,
                     Fecha = new DateTime(2015,12,24),
                     Titulo = "Reunion de Navidad",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 6,
                     Fecha = new DateTime(2015,10,6),
                     Titulo = "Consejo Evalorem",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 7,
                     Fecha = new DateTime(2016,12,24),
                     Titulo = "Junta Operativa VINTEL",
                     UsuariosPresentes = new List<MyUser>(),
-                    Observaciones = "También estubo la Mony Hernandez y Kako"
+                    Observaciones = "También estubo la Mony Hernandez y Kako",
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 8,
                     Fecha = new DateTime(2016,1,6),
                     Titulo = "Junta Operativa Evalorem",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
                 new JuntaDeConsejo()  {
                     JuntaDeConsejoId = 9,
                     Fecha = new DateTime(2016,3,21),
                     Titulo = "Consejo Primaveral DIXUS",
-                    UsuariosPresentes = new List<MyUser>()
+                    UsuariosPresentes = new List<MyUser>(),
+                    //UsuarioCreadorId = "d606da6a-fe2e-4ef5-b792-15833b95ddba"
                 },
 
             };

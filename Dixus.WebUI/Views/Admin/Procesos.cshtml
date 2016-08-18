@@ -1,10 +1,10 @@
 ﻿@model Dixus.WebUI.Models.ConcentradoOperacionViewModel
 
 @{
-    ViewBag.Title = "Procesos";
+    ViewBag.Title = "Operación";
 }
 
-<h3 class="page-title">Procesos</h3>
+<h3 class="page-title">Operación</h3>
 <hr class="green-stripe" />
 
 
@@ -15,7 +15,7 @@
         <div class="col-lg-6">
             <div id="seccion-tareas">
                 <h4 class="section-title">
-                    5 Ultimas tareas
+                    Ultimas tareas
                 </h4>
 
                 <div class="table-wrapper">
@@ -32,8 +32,8 @@
                             @foreach (var tarea in Model.Tareas)
                             {
                                 <tr>
-                                    <td @*data-toggle="tooltip" data-placement="bottom" data-container="body" title="@tarea.Descripcion"*@ class="cell-fixed-width" style="width:200px;">@Html.ActionLink(tarea.Nombre, "Tarea", "Operacion", new { id = tarea.TareaId }, null)</td>
-                                    <td data-toggle="tooltip" data-placement="bottom" data-container="body" title="@Html.DisplayFor(model=>tarea.JuntaDeConsejo.Fecha)">@Html.ActionLink(tarea.JuntaDeConsejo.Titulo, "Junta", "Operacion", new { id = tarea.JuntaDeConsejoId }, null)</td>
+                                    <td class="cell-fixed-width" style="width:200px;">@Html.ActionLink(tarea.Nombre, "Tarea", "Operacion", new { id = tarea.TareaId }, null)</td>
+                                    <td>@Html.ActionLink(tarea.JuntaDeConsejo.Titulo, "Junta", "Operacion", new { id = tarea.JuntaDeConsejoId }, null)</td>
                                     <td class="text-center">
                                         <div class="checkbox checkbox-success">
                                             <input type="checkbox" @( tarea.ChecarSiEstaCompletada() ? "checked" : "" ) disabled /><label></label>
@@ -60,7 +60,7 @@
             <div id="seccion-acuerdos">
 
                 <h4 class="section-title">
-                    5 Ultimos acuerdos
+                    Ultimos acuerdos
                 </h4>
 
                 <div class="table-wrapper">
@@ -78,7 +78,7 @@
                                 <tr>
                                     <td class="cell-fixed-width" style="width:200px;">@acuerdo.Nombre</td>
                                     <td class="cell-fixed-width cell-wrap" style="min-width:150px; max-width:300px;">@acuerdo.Descripcion</td>
-                                    <td>@acuerdo.JuntaDeConsejo.Titulo</td>
+                                    <td>@Html.ActionLink(acuerdo.JuntaDeConsejo.Titulo, "Junta", "Operacion", new { id = acuerdo.JuntaDeConsejoId }, null)</td>
                                 </tr>
                             }
                         </tbody>
@@ -96,7 +96,7 @@
         <div class="col-lg-6">
             <div id="seccion-juntas">
                 <h4 class="section-title">
-                    10 Ultimas Juntas
+                    Ultimas Juntas
                 </h4>
                 <div class="table-wrapper">
                     <table id="tabla-juntas" class="text-left mdl-data-table mdl-js-data-table data-table tabla-extendida">
@@ -110,16 +110,16 @@
                         <tbody>
                             @foreach (var junta in Model.Juntas.OrderByDescending(junta => junta.Fecha))
                             {
-                            <tr>
-                                <td>@Html.ActionLink(junta.Titulo, "Junta","Operacion",new { id = junta.JuntaDeConsejoId },null)</td>
-                                <td>@Html.DisplayFor(x => junta.Fecha)</td>
-                                <td data-toggle="tooltip" data-placement="bottom" data-container="body" title="@String.Join(", ",junta.UsuariosPresentes.Select(usuario=>usuario.Nombre))" class="text-center">@junta.NumDeUsuariosPresentes()</td>
-                            </tr>
+                                <tr>
+                                    <td>@Html.ActionLink(junta.Titulo, "Junta", "Operacion", new { id = junta.JuntaDeConsejoId }, null)</td>
+                                    <td>@Html.DisplayFor(x => junta.Fecha)</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-container="body" title="@String.Join(", ",junta.UsuariosPresentes.Select(usuario=>usuario.Nombre))" class="text-center">@junta.NumDeUsuariosPresentes()</td>
+                                </tr>
                             }
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5"><a href="#" class="btn btn-verde">Nueva Junta</a> <a class="btn btn-verde" href="#">Ver más...</a> </td>
+                                <td colspan="5"><a data-toggle="modal" data-target="#agregar-junta-modal" class="btn btn-verde">Nueva Junta</a> <a class="btn btn-verde" href="#">Ver más...</a> </td>
                             </tr>
                         </tfoot>
                     </table>
@@ -130,8 +130,18 @@
 
     </div>
 
-
-
-
-
 </div>
+
+
+<div class="modal fade" id="agregar-junta-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @Html.PageTitle("Nueva junta")
+            </div>*@
+            @Html.Action("AgregarJunta","Operacion")
+            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

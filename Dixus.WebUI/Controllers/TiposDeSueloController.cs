@@ -38,11 +38,7 @@ namespace Dixus.WebUI.Controllers
             return View(tipoDeSuelo);
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-        
+     
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -56,24 +52,7 @@ namespace Dixus.WebUI.Controllers
             }
             return View(tipoDeSuelo);
         }
-
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if(id > 0 && id <= 15){
-                return View("NoSePuedeBorrar");
-            }
-            TipoDeSuelo tipoDeSuelo = uow.TiposDeSuelo.ObtenerPorId(id.Value);
-            if (tipoDeSuelo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tipoDeSuelo);
-        }
-
+        
         public JsonResult JsonTiposDeSuelo()
         {
             var tipos = uow.TiposDeSuelo.Obtener().Select(tipo => new
@@ -82,20 +61,6 @@ namespace Dixus.WebUI.Controllers
                 UsoId = tipo.TipoDeSueloId
             });
             return Json(tipos, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TipoDeSueloId,Nombre,Color,MvaPorHectarea")] TipoDeSuelo tipoDeSuelo)
-        {
-            if (ModelState.IsValid)
-            {
-                uow.TiposDeSuelo.Agregar(tipoDeSuelo);
-                uow.SaveToDB();
-                return RedirectToAction("Index");
-            }
-
-            return View(tipoDeSuelo);
         }
 
         [HttpPost]

@@ -1098,6 +1098,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\WebApi\NotificationsController.cs" />
     <Compile Include="Controllers\WebApi\VialidadesGeoJsonController.cs" />
     <Compile Include="Controllers\WebApi\FraccionesGeoJsonController.cs" />
     <Compile Include="Controllers\OperacionController.cs" />
@@ -1194,8 +1195,6 @@
     <Content Include="Views\TiposDeComercio\Details.cshtml" />
     <Content Include="Views\TiposDeComercio\Edit.cshtml" />
     <Content Include="Views\TiposDeComercio\Index.cshtml" />
-    <Content Include="Views\TiposDeSuelo\Create.cshtml" />
-    <Content Include="Views\TiposDeSuelo\Delete.cshtml" />
     <Content Include="Views\TiposDeSuelo\Details.cshtml" />
     <Content Include="Views\TiposDeSuelo\Edit.cshtml" />
     <Content Include="Views\TiposDeSuelo\Index.cshtml" />
@@ -1215,6 +1214,10 @@
     <Content Include="Views\Planos\ModeloAutocadInvalido.cshtml" />
     <Content Include="Views\Planos\ErroresDeValidacion.cshtml" />
     <Content Include="Views\Planos\Leaflet.cshtml" />
+    <Content Include="Views\Operacion\AgregarJunta.cshtml" />
+    <Content Include="Views\Operacion\AgregarAsistenteAJunta.cshtml" />
+    <Content Include="Views\Operacion\AgregarTareaAJunta.cshtml" />
+    <Content Include="Views\Operacion\AgregarAcuerdoAJunta.cshtml" />
     <None Include="Views\TiposDeSuelo\NoSePuedeBorrar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

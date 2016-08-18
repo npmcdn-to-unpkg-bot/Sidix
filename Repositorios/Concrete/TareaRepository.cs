@@ -64,5 +64,21 @@ namespace Dixus.Repositorios.Concrete
         {
             return DixusContext.Tareas.OfType<TTarea>().OrderByDescending(tar => tar.JuntaDeConsejo.Fecha).Take(howmany).ToList();
         }
+
+        public IEnumerable<TTarea> ObtenerTareasPorUsuario<TTarea>(string username) where TTarea : Tarea
+        {
+            return DixusContext.Tareas
+                .OfType<TTarea>()
+                .Where(tar => tar.Responsables
+                   .Any(res => res.UserName == username))
+                .ToList();
+        }
+        public IEnumerable<Tarea> ObtenerTareasPorUsuario(string username)
+        {
+            return DixusContext.Tareas
+                .Where(tar => tar.Responsables
+                   .Any(res => res.UserName == username))
+                .ToList();
+        }
     }
 }
