@@ -30,7 +30,10 @@ namespace Dixus.WebUI.Models
 
     public class NuevoAcuerdoViewModel
     {
-
+        public int JuntaId { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Observaciones { get; set; }
     }
 
     public class NuevaJuntaViewModel

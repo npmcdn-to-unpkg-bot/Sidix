@@ -24,12 +24,12 @@ namespace Dixus.WebUI.Controllers
         }
 
         // Tareas
-        public ActionResult Tarea(int? id)
+        public async Task<ActionResult> Tarea(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Tarea tarea = _uow.Tareas.ObtenerPorId ( x=> x.TareaId == id.Value, "JuntaDeConsejo", "Responsables");
+            Tarea tarea = await _uow.Tareas.ObtenerPorIdAsync ( x=> x.TareaId == id.Value, "JuntaDeConsejo", "Responsables");
             if (tarea == null)
                 return HttpNotFound();
 
@@ -45,6 +45,56 @@ namespace Dixus.WebUI.Controllers
                 return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
             }
         }
+        public async Task<ActionResult> Junta(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            JuntaDeConsejo junta = await _uow.Juntas.ObtenerPorIdAsync( j => j.JuntaDeConsejoId == id.Value, "Acuerdos", "Tareas", "UsuariosPresentes");
+            if (junta == null) return HttpNotFound();
+
+            JuntaViewModel model = new JuntaViewModel() { Junta = junta };
+
+            // Para ver los detalles de una junta, tienes que haber estado presente, o ser administrador
+            if (HttpContext.User.IsInRole("Administrador") || junta.UsuariosPresentes.Any(us => us.Id == HttpContext.User.Identity.GetUserId()))
+            {
+                return View(model);
+            }
+            else
+            {
+                return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
+            }
+        }
+        public async Task<ActionResult> Usuario(string id)
+        {
+            if (String.IsNullOrEmpty(id)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            // Para ver los detalles de un usuario, tienes que ser o el mismo usuario, o administrador
+            if (HttpContext.User.IsInRole("Administrador") || HttpContext.User.Identity.GetUserId() == id)
+            {
+                MyUser usuario = await _uow.Usuarios.ObtenerPorId(id, "Tareas.JuntaDeConsejo", "JuntasAsistidas");
+                if (usuario == null) return HttpNotFound();
+
+                List<string> rolesDelUsuario = new List<string>();
+                foreach (var role in usuario.Roles)
+                {
+                    var rol = await _uow.Roles.ObtenerPorId(role.RoleId);
+                    rolesDelUsuario.Add(rol.Name);
+                }
+
+                SingleUserViewModel model = new SingleUserViewModel()
+                {
+                    Usuario = usuario,
+                    Roles = rolesDelUsuario
+                };
+
+                return View(model);
+            }
+            else
+            {
+                return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
+            }
+        }
+
         public ActionResult AgregarTarea()
         {
             return View();
@@ -64,25 +114,6 @@ namespace Dixus.WebUI.Controllers
         }
         
         // Juntas
-        public ActionResult Junta(int? id)
-        {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            JuntaDeConsejo junta = _uow.Juntas.ObtenerPorId( j => j.JuntaDeConsejoId == id.Value, "Acuerdos", "Tareas", "UsuariosPresentes");
-            if (junta == null) return HttpNotFound();
-
-            JuntaViewModel model = new JuntaViewModel() { Junta = junta };
-
-            // Para ver los detalles de una junta, tienes que haber estado presente, o ser administrador
-            if (HttpContext.User.IsInRole("Administrador") || junta.UsuariosPresentes.Any(us => us.Id == HttpContext.User.Identity.GetUserId()))
-            {
-                return View(model);
-            }
-            else
-            {
-                return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
-            }
-        }
         public ActionResult AgregarJunta()
         {
             return View();
@@ -121,6 +152,7 @@ namespace Dixus.WebUI.Controllers
         }
         public ActionResult AgregarAsistenteAJunta(int juntaid)
         {
+            
             return PartialView();
         }
         public ActionResult AgregarAcuerdoAJunta(int juntaid)
@@ -129,41 +161,12 @@ namespace Dixus.WebUI.Controllers
         }
         public ActionResult AgregarTareaAJunta(int juntaid)
         {
+            
             return PartialView();
         }
 
 
         // Usuarios
-        public async Task<ActionResult> Usuario(string id)
-        {
-            if (String.IsNullOrEmpty(id)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            // Para ver los detalles de un usuario, tienes que ser o el mismo usuario, o administrador
-            if (HttpContext.User.IsInRole("Administrador") || HttpContext.User.Identity.GetUserId() == id)
-            {
-                MyUser usuario = await _uow.Usuarios.ObtenerPorId(id, "Tareas.JuntaDeConsejo", "JuntasAsistidas");
-                if (usuario == null) return HttpNotFound();
-
-                List<string> rolesDelUsuario = new List<string>();
-                foreach (var role in usuario.Roles)
-                {
-                    var rol = await _uow.Roles.ObtenerPorId(role.RoleId);
-                    rolesDelUsuario.Add(rol.Name);
-                }
-
-                SingleUserViewModel model = new SingleUserViewModel()
-                {
-                    Usuario = usuario,
-                    Roles = rolesDelUsuario
-                };
-
-                return View(model);
-            }
-            else
-            {
-                return View("Error", new ErrorViewModel(HttpStatusCode.Forbidden));
-            }
-        }
 
 
 

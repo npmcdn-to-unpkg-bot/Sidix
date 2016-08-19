@@ -147,41 +147,6 @@
                         <a data-toggle="modal" data-target="#agregar-tarea-modal">Agregar tarea...</a>
                     </div>
                 </div>
-
-
-
-                @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        @NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo generado" : "Acuerdos generados")
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                        @NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea asignada" : "Tareas asignadas") (@NumDeTareaPendientes pendientes)
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
-
-
             </div>
 
         </div>
@@ -192,10 +157,7 @@
 <div class="modal fade" id="agregar-asistente-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            @*<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    @Html.PageTitle("Nueva junta")
-                </div>*@
+            @Html.PageTitle("Agregar asistente")
             @Html.Action("AgregarAsistenteAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -204,12 +166,8 @@
 <div class="modal fade" id="agregar-acuerdo-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            @*<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    @Html.PageTitle("Nueva junta")
-                </div>*@
+            @Html.PageTitle("Agregar acuerdo")
             @Html.Action("AgregarAcuerdoAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
-
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -217,10 +175,7 @@
 <div class="modal fade" id="agregar-tarea-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            @*<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    @Html.PageTitle("Nueva junta")
-                </div>*@
+            @Html.PageTitle("Agregar tarea")            
             @Html.Action("AgregarTareaAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
 
         </div><!-- /.modal-content -->

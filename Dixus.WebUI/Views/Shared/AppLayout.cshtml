@@ -41,7 +41,7 @@
                         <h3 class="navbar-title">Sistema de Información Integral Dixus</h3>
                     </div>
                     <button id="notifications-button" role="button" data-toggle="popover" class="btn btn-danger navbar-btn" data-placement="bottom">
-                        <i class="fa fa-user" title=""></i>
+                        <i class="fa fa-user" title=""></i> <span class="badge"></span>
                     </button> 
                     @if (Request.IsAuthenticated && User.IsInRole("Administrador"))
                     {
@@ -103,16 +103,19 @@
 
             $.when(requestNotifications).done(function (tareas) {
                 var elem = "";
+                var $notificationsButton = $('#notifications-button');
                 if (tareas.length == 0) {
                     elem = "<div class='notificacion'>No tienes tareas asignadas por hacer</div>";
+                } else {
+                    $notificationsButton.find("badge").html(tareas.length);
+                    for (var i = 0; i < tareas.length; i++) {
+                        var tarea = tareas[i];
+                        elem +=
+                           "<a class='notificacion' href='@Url.Action("Tarea","Operacion")/"+tarea.TareaId+"'>" + tarea.Nombre + "</a>" 
+                    }
                 }
-                for (var i = 0; i < tareas.length; i++) {
-                    var tarea = tareas[i];
-                    elem +=
-                       "<a class='notificacion' href='@Url.Action("Tarea","Operacion")/"+tarea.TareaId+"'>" + tarea.Nombre + "</a>" 
-                }
-
-                $('#notifications-button').popover({
+                
+                $notificationsButton.popover({
                     html: true,
                     content: elem,
                     trigger: 'click',

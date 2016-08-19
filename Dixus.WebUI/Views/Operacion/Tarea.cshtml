@@ -11,11 +11,7 @@
     bool esSubdivision = Model is Dixus.Entidades.ProcesoDeSubdivision;
 }
 
-<h3 class="page-title">Tarea: @Model.Nombre</h3>
-<hr class="green-stripe" />
-<hr class="not-to-top" />
-
-@*@Html.Partial("PageTitle", "Analisis de Tarea")*@
+@Html.PageTitle("Tarea", Model.Nombre)
 
 <div id="pagina-analisis-tarea">
 
@@ -27,8 +23,11 @@
 
                 <div class="porcentaje-de-tarea">
                     <h4 class="section-title not-to-top">Progreso</h4>
-                    <div class="well">
-                        @String.Format("{0:#0.##%}", Porcentaje) (@(Completada ? "Completada" : Porcentaje > 0 ? "En Progreso" : "Sin Empezar"))
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="@String.Format("{0:#0}", Porcentaje)" aria-valuemin="0" aria-valuemax="100" style="width: @String.Format("{0:#0%}", Porcentaje)">
+                            <span id="cantidad-de-progreso">@String.Format("{0:#0%}", Porcentaje)</span>
+                            <span class="sr-only">@String.Format("{0:#0.##%}", Porcentaje) Complete</span>
+                        </div>
                     </div>
                 </div>
 
@@ -145,3 +144,4 @@
         </div>
 
     </div>
+ </div>

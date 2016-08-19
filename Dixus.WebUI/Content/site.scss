@@ -369,7 +369,7 @@ form {
 .body-content {
     position: relative;
     height: 100vh;
-    padding: 50px 0 0 62px;
+    padding: 50px 0 0 0px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -494,6 +494,7 @@ form {
     height: 100vh;
     width: 62px;
     left: 0;
+    display:none;
     /*background-color: #e4e1e1;*/
     /*background-color: #47608d;*/
     background-color: $nice-blue;
@@ -1267,14 +1268,14 @@ dl .cantidad-importante {
     }
 
     .porcentaje-de-tarea {
-        /*font-size:1.6em;*/
-        color: $verde-obscuro;
-        font-weight: bold;
-        /*text-align:center;*/
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
+        .progress{
+            background-color:#efefef;
+        }
+        #cantidad-de-progreso{
+           position:relative;
+           top:2px;
+           font-weight:bold;
+        }
     }
 
     #pasos-de-tarea {
