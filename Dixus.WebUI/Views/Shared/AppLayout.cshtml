@@ -107,7 +107,8 @@
                 if (tareas.length == 0) {
                     elem = "<div class='notificacion'>No tienes tareas asignadas por hacer</div>";
                 } else {
-                    $notificationsButton.find("badge").html(tareas.length);
+                    console.log(tareas.length);
+                    $notificationsButton.find(".badge").html(tareas.length);
                     for (var i = 0; i < tareas.length; i++) {
                         var tarea = tareas[i];
                         elem +=

@@ -23,7 +23,6 @@ namespace Dixus.WebUI.Controllers
             //_userId = HttpContext.User.Identity.GetUserId();
         }
 
-        // Tareas
         public async Task<ActionResult> Tarea(int? id)
         {
             if (id == null)
@@ -95,12 +94,34 @@ namespace Dixus.WebUI.Controllers
             }
         }
 
-        public ActionResult AgregarTarea()
+
+
+        public ActionResult AgregarJunta()
         {
             return View();
         }
+        public ActionResult AgregarAsistenteAJunta(int juntaid)
+        {
+            
+            return PartialView();
+        }
+        public ActionResult AgregarAcuerdoAJunta(int juntaid)
+        {
+            NuevoAcuerdoViewModel model = new NuevoAcuerdoViewModel()
+            {
+                JuntaId = juntaid
+            };
+            return PartialView(model);
+        }
+        public ActionResult AgregarTareaAJunta(int juntaid)
+        {
+            
+            return PartialView();
+        }
+
+
         [HttpPost]
-        public ActionResult AgregarTarea(NuevaTareaViewModel model)
+        public ActionResult AgregarTarea    (NuevaTareaViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -111,12 +132,6 @@ namespace Dixus.WebUI.Controllers
             {
                 return View(model);
             }
-        }
-        
-        // Juntas
-        public ActionResult AgregarJunta()
-        {
-            return View();
         }
         [HttpPost]
         public ActionResult AgregarJunta(NuevaJuntaViewModel model)
@@ -150,26 +165,26 @@ namespace Dixus.WebUI.Controllers
                 return View(model);
             }
         }
-        public ActionResult AgregarAsistenteAJunta(int juntaid)
+        [HttpPost]
+        public ActionResult AgregarAcuerdoAJunta(NuevoAcuerdoViewModel nuevoAcuerdo)
         {
-            
-            return PartialView();
-        }
-        public ActionResult AgregarAcuerdoAJunta(int juntaid)
-        {
-            return PartialView();
-        }
-        public ActionResult AgregarTareaAJunta(int juntaid)
-        {
-            
-            return PartialView();
+            //if (ModelState.IsValid)
+            //{
+
+            //}
+            //else
+            //{
+            //    return 
+            //}
+            throw new NotImplementedException();
         }
 
 
-        // Usuarios
 
-
-
+        //public ActionResult AgregarTarea()
+        //{
+        //    return View();
+        //}
 
     }
 }

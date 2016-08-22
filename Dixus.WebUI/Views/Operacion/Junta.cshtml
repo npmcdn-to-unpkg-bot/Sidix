@@ -18,12 +18,12 @@
         <div class="row">
             <div class="col-sm-12 col-md-4">
 
-                <div id="fecha-de-junta">
+                <section id="fecha-de-junta">
                     <h4 class="section-title">Fecha</h4>
                     <div class="well">@Html.DisplayFor(model => model.Junta.Fecha)</div>
-                </div>
+                </section>
 
-                <div id="objetivo-de-junta">
+                <section id="objetivo-de-junta">
                     <h4 class="section-title">Objetivo</h4>
                     <div class="well">
                         @if (!Model.Junta.Objetivo.IsEmpty())
@@ -35,9 +35,9 @@
                             <div>No tiene un objetivo especificado. Para añadir uno, haz click @Html.ActionLink("aquí", "editarjunta", "operacion", new { id = Model.Junta.JuntaDeConsejoId }, null)</div>
                         }
                     </div>
-                </div>
+                </section>
 
-                <div id="asistentes-de-junta">
+                <section id="asistentes-de-junta">
                     <h4 class="section-title">@NumDeAsistentes Asistente@(NumDeAsistentes == 1 ? "" : "s"):</h4>
                    
                     <ul>
@@ -53,27 +53,27 @@
                             <li>No has agregado ningún usuario a esta junta aún</li>
                         }
                     </ul>
-                    <div class="well-sm">
-                        <a data-toggle="modal" data-target="#agregar-asistente-modal">Agregar usuario...</a>
+                    <div class="link-agregar">
+                        <a data-toggle="modal" data-target="#myModal" data-title="Agregar asistente" data-formurl='@Url.Action("AgregarAsistenteAJunta", new { juntaid = Model.Junta.JuntaDeConsejoId })'>Agregar usuario</a>
                     </div>
-                </div>
+                </section>
 
                 @if (!Model.Junta.Observaciones.IsEmpty())
                 {
-                    <div id="observaciones-de-junta">
+                    <section id="observaciones-de-junta">
                         <h4 class="section-title">Observaciones</h4>
                         <div class="well">
                             @Model.Junta.Observaciones
                         </div>
-                    </div>
+                    </section>
                 }
 
             </div>
 
             <div class="col-sm-12 col-md-8">
 
-                <div id="acuerdos-de-junta">
-                    <h4 class="section-title">@NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo generado" : "Acuerdos generados")</h4>
+                <section id="acuerdos-de-junta">
+                    <h4 class="section-title">@NumDeAcuerdosGenerados @(NumDeAcuerdosGenerados == 1 ? "Acuerdo" : "Acuerdos")</h4>
                     @if (NumDeAcuerdosGenerados > 0)
                     {
                         <div class="table-wrapper">
@@ -101,13 +101,13 @@
                         <div class="well" role="alert">No se ha registrado ningun acuerdo en esta junta</div>
 
                     }
-                    <div class="well-sm">
-                        <a data-toggle="modal" data-target="#agregar-acuerdo-modal">Agregar acuerdo...</a>
+                    <div class="link-agregar">
+                        <a data-toggle="modal" data-target="#myModal" data-title="Agregar acuerdo" data-formurl='@Url.Action("AgregarAcuerdoAJunta", new { juntaid = Model.Junta.JuntaDeConsejoId })'>Agregar acuerdo</a>
                     </div>
-                </div>
+                </section>
 
-                <div id="tareas-de-junta">
-                    <h4 class="section-title">@NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea asignada" : "Tareas asignadas") (@NumDeTareaPendientes pendientes)</h4>
+                <section id="tareas-de-junta">
+                    <h4 class="section-title">@NumDeTareasAsignadas @(NumDeTareasAsignadas == 1 ? "Tarea" : "Tareas") (@NumDeTareaPendientes pendientes)</h4>
                     @if (NumDeTareasAsignadas > 0)
                     {
                         <div class="table-wrapper">
@@ -143,41 +143,45 @@
                     {
                         <div class="well" role="alert">No se ha registrado ninguna tarea en esta junta</div>
                     }
-                    <div class="well-sm">
-                        <a data-toggle="modal" data-target="#agregar-tarea-modal">Agregar tarea...</a>
+                    <div class="link-agregar">
+                        <a data-toggle="modal" data-target="#myModal" data-title="Agregar tarea" data-formurl='@Url.Action("AgregarTareaAJunta", new { juntaid = Model.Junta.JuntaDeConsejoId })'>Agregar tarea</a>
                     </div>
-                </div>
+                </section>
             </div>
 
         </div>
     </div>
 </div>
 
-
-<div class="modal fade" id="agregar-asistente-modal" tabindex="-1" role="dialog">
+@*Modal*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            @Html.PageTitle("Agregar asistente")
-            @Html.Action("AgregarAsistenteAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            @Html.PageTitle("")
+            <div id="modal-form-content">
 
-<div class="modal fade" id="agregar-acuerdo-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            @Html.PageTitle("Agregar acuerdo")
-            @Html.Action("AgregarAcuerdoAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="modal fade" id="agregar-tarea-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            @Html.PageTitle("Agregar tarea")            
-            @Html.Action("AgregarTareaAJunta", "Operacion", new { juntaid = Model.Junta.JuntaDeConsejoId })
+@section jsCode{
+    
+    $("#myModal").on('show.bs.modal', function (event) {
+       
+        var button = $(event.relatedTarget);
+        var url = button.data('formurl');
+        var titulo = button.data('title');
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        var modal = $(this);
+        var modalTitle = modal.find('.page-title');
+        var modalContent = modal.find('#modal-form-content');
+        
+        modalTitle.text(titulo);
+        modalContent.html("<div class='well-sm text-center'><i class='fa fa-circle-o-notch fa-spin'></i></div>");
+
+        modalContent.load(url);
+        
+    })
+    
+}

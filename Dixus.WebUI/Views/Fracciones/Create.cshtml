@@ -55,15 +55,11 @@
 
 }
 
+
+@Html.PageTitle("Crear Fraccion")
+
 <div class="content-padder">
 
-    <h3 class="page-title">Crear fracción</h3>
-    <div>
-        <a href="@Url.Action("Index")" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Volver a fracciones
-        </a>
-    </div>
-    <hr />
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -110,7 +106,7 @@
                                 <div class="form-group">
                                     <label>Etapa</label>
                                     <div>
-                                        @Html.EditorFor(model => model.Etapa, new { htmlAttributes = new { @class = "form-control"} })
+                                        @Html.EditorFor(model => model.Etapa, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Etapa, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -125,14 +121,14 @@
                             </div>
                             <div class="vendibles" data-bind="visible: esVendible">
                                 @*<div class="form-group">
-                                    <div class="checkbox">
-                                        <label>
-                                            @Html.CheckBoxFor(model => model.Vendida, new { data_bind = "checked: estaVendida" })
-                                            Está vendida @Html.ValidationMessageFor(model => model.Vendida, "", new { @class = "text-danger" })
+                                        <div class="checkbox">
+                                            <label>
+                                                @Html.CheckBoxFor(model => model.Vendida, new { data_bind = "checked: estaVendida" })
+                                                Está vendida @Html.ValidationMessageFor(model => model.Vendida, "", new { @class = "text-danger" })
 
-                                        </label>
-                                    </div>
-                                </div>*@
+                                            </label>
+                                        </div>
+                                    </div>*@
 
 
 
@@ -269,8 +265,8 @@
                                         <label>Factor de uso</label>
                                         <div>
                                             <div class="input-group">
-                                                <span class="input-group-addon"><input type="radio" name="tipoDeEnergiaEspecial" value="factor" data-bind="checked: tipoDeEnergiaEspecial"/></span>
-                                                @Html.EditorFor(model => model.FactorDeUsoEnergia, new { htmlAttributes = new { @class = "form-control", data_bind="enable: tipoDeEnergiaEspecial() == 'factor'" } })
+                                                <span class="input-group-addon"><input type="radio" name="tipoDeEnergiaEspecial" value="factor" data-bind="checked: tipoDeEnergiaEspecial" /></span>
+                                                @Html.EditorFor(model => model.FactorDeUsoEnergia, new { htmlAttributes = new { @class = "form-control", data_bind = "enable: tipoDeEnergiaEspecial() == 'factor'" } })
                                                 <span class="input-group-addon">MVAs / Ha</span>
                                             </div>
                                             @Html.ValidationMessageFor(model => model.FactorDeUsoEnergia, "", new { @class = "text-danger" })
@@ -281,8 +277,8 @@
                                         <label>Cantidad de energía total requerida</label>
                                         <div>
                                             <div class="input-group">
-                                                <span class="input-group-addon"><input type="radio" name="tipoDeEnergiaEspecial" value="cantidad" data-bind="checked: tipoDeEnergiaEspecial"/></span>
-                                                @Html.EditorFor(model => model.CantidadEnergia, new { htmlAttributes = new { @class = "form-control", data_bind="enable: tipoDeEnergiaEspecial() == 'cantidad'" } })
+                                                <span class="input-group-addon"><input type="radio" name="tipoDeEnergiaEspecial" value="cantidad" data-bind="checked: tipoDeEnergiaEspecial" /></span>
+                                                @Html.EditorFor(model => model.CantidadEnergia, new { htmlAttributes = new { @class = "form-control", data_bind = "enable: tipoDeEnergiaEspecial() == 'cantidad'" } })
                                                 <span class="input-group-addon">MVAs</span>
                                             </div>
                                             @Html.ValidationMessageFor(model => model.CantidadEnergia, "", new { @class = "text-danger" })
@@ -302,7 +298,7 @@
                                 <div class="form-group" data-bind="visible: !excentoDeCobroDeEnergia()">
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBoxFor(model => model.NoPagaLoMismoEnEnergia,  new { data_bind = "checked: tienePrecioEspecialEnergia" })
+                                            @Html.CheckBoxFor(model => model.NoPagaLoMismoEnEnergia, new { data_bind = "checked: tienePrecioEspecialEnergia" })
                                             Se le cobra energía pero a diferente precio @Html.ValidationMessageFor(model => model.NoPagaLoMismoEnEnergia, "", new { @class = "text-danger" })
                                         </label>
                                     </div>

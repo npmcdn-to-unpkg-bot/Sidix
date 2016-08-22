@@ -11,6 +11,9 @@ $screen-md-min: 992px;
 $screen-md-max: 1199px;
 $screen-lg-min: 1200px;
 
+.modal{
+    overflow:hidden;
+}
 
 .leaflet-popup {
     z-index: 200;
@@ -833,55 +836,68 @@ hr {
         right: -15px;
     }
 
-    #notifications-button + .popover {
-        padding: 0;
-        min-width: 200px;
-        max-width: 350px;
-        border-radius:0;
+    #notifications-button{
+        position:relative;
 
-        .popover-title {
-            background-color: $nice-blue;
-            padding: 10px 20px;
+        .badge{
+            position:absolute;
+            top:3px;
+            right:3px;
+            background-color:$nice-blue;
+        }
+
+        & + .popover{
+            padding: 0;
+            min-width: 250px;
+            max-width: 350px;
             border-radius:0;
 
-            & a {
-                color: white;
-                text-decoration: none;
+            .popover-title {
+                background-color: $nice-blue;
+                padding: 10px 20px;
+                border-radius:0;
+
+                & a {
+                    color: white;
+                    text-decoration: none;
+                }
+            }
+
+            .popover-content {
+                padding: 0;
+            }
+
+            .notificacion {
+                font-size: 13px;
+                padding: 10px 20px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: block;
+                color: black;
+
+                &:hover{
+                     background-color:#e5e5e5;
+                     text-decoration:none;
+                }
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid #b5b5b5;
+                }
+
+                &:before {
+                    content: "\f10c";
+                    font-family: "FontAwesome";
+                    padding-right: 10px;
+                }
+            }
+
+            .arrow::after {
+                border-bottom-color:  $nice-blue;
             }
         }
 
-        .popover-content {
-            padding: 0;
-        }
-
-        .notificacion {
-            font-size: 13px;
-            padding: 10px 20px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: block;
-            color: black;
-
-            &:hover{
-                 background-color:#e5e5e5;
-                 text-decoration:none;
-            }
-
-            &:not(:last-child) {
-                border-bottom: 1px solid #b5b5b5;
-            }
-
-            &:before {
-                content: "\f10c";
-                font-family: "FontAwesome";
-                padding-right: 10px;
-            }
-        }
-
-        .arrow::after {
-            border-bottom-color:  $nice-blue;
-        }
     }
+
 }
 
 .navbar-default .navbar-toggle {
@@ -1358,14 +1374,9 @@ dl .cantidad-importante {
 }
 
 #pagina-junta {
-    #accordion {
-        .panel-body {
-            padding: 0;
-        }
-    }
 
-    .alert {
-        margin-bottom: 0;
+    section{
+        margin-bottom:20px;
     }
 
     #asistentes-de-junta{
@@ -1395,6 +1406,20 @@ dl .cantidad-importante {
 
     #tareas-de-junta .well, #acuerdos-de-junta .well{
         margin-bottom:0;
+    }
+
+    .link-agregar{
+        padding: 4px 0 0 0;
+        a:hover{
+            cursor:pointer;
+            text-decoration:none;
+            &:after{
+                content:'\f0fe';
+                font-family:'FontAwesome';
+                padding-left:5px;
+                top:-1px;
+            }
+        }
     }
 
 }
