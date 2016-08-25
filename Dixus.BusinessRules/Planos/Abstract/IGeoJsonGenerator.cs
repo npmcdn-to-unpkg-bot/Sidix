@@ -1,4 +1,4 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Concrete;
+﻿using Dixus.BusinessRules.Planos.Concrete;
 using Dixus.Entidades;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Abstract
+namespace Dixus.BusinessRules.Planos.Abstract
 {
     public interface IGeoJsonGenerator
     {

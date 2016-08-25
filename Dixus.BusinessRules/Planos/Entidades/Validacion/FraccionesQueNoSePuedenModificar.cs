@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Entidades.Validacion
+namespace Dixus.BusinessRules.Planos.Entidades.Validacion
 {
     public class FraccionesQueNoSePuedenModificar
     {

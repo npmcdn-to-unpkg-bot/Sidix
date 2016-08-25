@@ -1,15 +1,15 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Abstract;
+﻿using Dixus.BusinessRules.Planos.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dixus.Entidades.Gis;
-using Dixus.BusinessRules.CambiosAutocad.Entidades;
+using Dixus.BusinessRules.Planos.Entidades;
 using Dixus.Entidades;
-using Dixus.BusinessRules.CambiosAutocad.Entidades.Validacion;
+using Dixus.BusinessRules.Planos.Entidades.Validacion;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Concrete
+namespace Dixus.BusinessRules.Planos.Concrete
 {
     public class ValidadorAutocad : IValidadorAutocad
     {

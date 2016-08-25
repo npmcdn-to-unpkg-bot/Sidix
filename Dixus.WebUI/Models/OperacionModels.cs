@@ -2,6 +2,7 @@
 using Dixus.Entidades.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -25,12 +26,13 @@ namespace Dixus.WebUI.Models
 
     public class NuevaTareaViewModel
     {
-
+        public int JuntaId { get; set; }
     }
 
     public class NuevoAcuerdoViewModel
     {
         public int JuntaId { get; set; }
+        [Required]
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Observaciones { get; set; }

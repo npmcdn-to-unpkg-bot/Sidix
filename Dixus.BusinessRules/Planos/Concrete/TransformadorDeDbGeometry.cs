@@ -1,4 +1,4 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Abstract;
+﻿using Dixus.BusinessRules.Planos.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Concrete
+namespace Dixus.BusinessRules.Planos.Concrete
 {
     public class TransformadorDeGeometriaAGeoJson : ITransformadorDeGeometriaAGeoJson
     {

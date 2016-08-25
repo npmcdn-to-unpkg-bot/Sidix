@@ -1,6 +1,6 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Abstract;
-using Dixus.BusinessRules.CambiosAutocad.Concrete;
-using Dixus.BusinessRules.CambiosAutocad.Entidades;
+﻿using Dixus.BusinessRules.Planos.Abstract;
+using Dixus.BusinessRules.Planos.Concrete;
+using Dixus.BusinessRules.Planos.Entidades;
 using Dixus.Entidades;
 using Dixus.Entidades.Gis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

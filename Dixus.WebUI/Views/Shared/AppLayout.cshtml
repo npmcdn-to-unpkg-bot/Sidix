@@ -80,8 +80,16 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
+
+        @* Hacer AJAX Get request para notificaciones  *@
+        var requestNotifications = $.ajax('/api/notifications');
+
+        @* Renderea la seccion de codigo que se puede agregar desde cada vista usando "@section jsCode" *@
         @RenderSection("jsCode", required: false)
+
         $(document).ready(function () {
+
+            @* Agregar icono de cargando a items del menu del sidebar *@
             $('#sidebar i').click(function () {
                 $currentIcon = $(this);
                 $loadingIcon = "<i class='fa fa-spinner fa-spin fa-2x'></i>";
@@ -89,33 +97,27 @@
                 $currentIcon.remove();
                 $anchor.prepend($loadingIcon);
             });
+
+            @* Inicializar tooltip de Bootstrap a cualquier tag que lo requiera*@
             $('[data-toggle="tooltip"]').tooltip();
-            $('button.btn-loader, .btn.btn-loader, .mdl-button.btn-loader').on('click', function () {
-                var $btn = $(this).button('loading');
-                setTimeout(function () {
-                    $btn.button('reset');
-                }, 3000);
-            })
 
-            
-            
-            var requestNotifications = $.ajax('/api/notifications');
-
+            @* Funcion a llamar (callback) para cuando lleguen las notificaciones via AJAX *@
             $.when(requestNotifications).done(function (tareas) {
+
                 var elem = "";
                 var $notificationsButton = $('#notifications-button');
+
                 if (tareas.length == 0) {
                     elem = "<div class='notificacion'>No tienes tareas asignadas por hacer</div>";
                 } else {
-                    console.log(tareas.length);
                     $notificationsButton.find(".badge").html(tareas.length);
                     for (var i = 0; i < tareas.length; i++) {
                         var tarea = tareas[i];
-                        elem +=
-                           "<a class='notificacion' href='@Url.Action("Tarea","Operacion")/"+tarea.TareaId+"'>" + tarea.Nombre + "</a>" 
+                        var linkUrl = "@Url.Action("Tarea","Operacion")/"+ tarea.TareaId ;
+                        elem += "<a class='notificacion' href='"+linkUrl+"'>" + tarea.Nombre + "</a>"
                     }
                 }
-                
+
                 $notificationsButton.popover({
                     html: true,
                     content: elem,

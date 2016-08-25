@@ -1,5 +1,5 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Abstract;
-using Dixus.BusinessRules.CambiosAutocad.Entidades;
+﻿using Dixus.BusinessRules.Planos.Abstract;
+using Dixus.BusinessRules.Planos.Entidades;
 using Dixus.Entidades;
 using Dixus.Entidades.Gis;
 using System;
@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Concrete
+namespace Dixus.BusinessRules.Planos.Concrete
 {
 
     public class DetectorDeCambiosAutocad : IDetectorDeCambiosAutocad

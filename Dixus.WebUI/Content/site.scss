@@ -578,16 +578,8 @@ form {
             height: 275px;
         }
 
-        &.ficha-mapa-interactivo > .mdl-card__title {
-            background: url('/Content/Images/Interactivo3.png') center / cover;
-        }
-
         &.ficha-mapa-satelital > .mdl-card__title {
             background: url('/Content/Images/Satelital.PNG') center / cover;
-        }
-
-        &.ficha-mapa-mapbox > .mdl-card__title {
-            background: url('/Content/Images/mapbox.PNG') center / cover;
         }
 
         &.ficha-mapa-leaflet > .mdl-card__title {

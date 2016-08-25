@@ -7,7 +7,7 @@ using Dixus.WebUI.Models;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using Dixus.BusinessRules.CambiosAutocad.Entidades;
+using Dixus.BusinessRules.Planos.Entidades;
 #pragma warning disable CS0618 // Type or member is obsolete
 
 namespace Dixus.WebUI

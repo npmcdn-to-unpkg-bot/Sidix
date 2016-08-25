@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Abstract
+namespace Dixus.BusinessRules.Planos.Abstract
 {
     public interface ITransformadorDeGeometriaAGeoJson
     {

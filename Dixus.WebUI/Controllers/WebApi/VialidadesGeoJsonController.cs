@@ -1,4 +1,4 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Abstract;
+﻿using Dixus.BusinessRules.Planos.Abstract;
 using Dixus.Entidades;
 using Dixus.Repositorios.Abstract;
 using Dixus.Repositorios.Concrete;

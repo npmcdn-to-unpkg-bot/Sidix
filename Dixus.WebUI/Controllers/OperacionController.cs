@@ -121,7 +121,7 @@ namespace Dixus.WebUI.Controllers
 
 
         [HttpPost]
-        public ActionResult AgregarTarea    (NuevaTareaViewModel model)
+        public ActionResult AgregarTarea (NuevaTareaViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -168,23 +168,35 @@ namespace Dixus.WebUI.Controllers
         [HttpPost]
         public ActionResult AgregarAcuerdoAJunta(NuevoAcuerdoViewModel nuevoAcuerdo)
         {
-            //if (ModelState.IsValid)
-            //{
-
-            //}
-            //else
-            //{
-            //    return 
-            //}
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                JuntaDeConsejo junta = _uow.Juntas.ObtenerPorId( j => j.JuntaDeConsejoId == nuevoAcuerdo.JuntaId, "Acuerdos");
+                if ( junta == null)
+                {
+                    return HttpNotFound();
+                }
+                if ( junta.Acuerdos == null)
+                {
+                    junta.Acuerdos = new List<AcuerdoDeConsejo>();
+                }
+                try
+                {
+                    junta.Acuerdos.Add(new AcuerdoDeConsejo()
+                    {
+                        Nombre = nuevoAcuerdo.Nombre,
+                        Descripcion = nuevoAcuerdo.Descripcion,
+                        Observaciones = nuevoAcuerdo.Observaciones
+                    });
+                    _uow.SaveToDB();
+                    
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "No se pudo agregar el acuerdo a la junta correspondiente. Vuelve a intentarlo. Error: " + ex.Message);
+                }
+            }
+            return RedirectToAction("Junta", new { id = nuevoAcuerdo.JuntaId });
         }
-
-
-
-        //public ActionResult AgregarTarea()
-        //{
-        //    return View();
-        //}
-
+        
     }
 }

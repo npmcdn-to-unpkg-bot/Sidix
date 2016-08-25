@@ -1,7 +1,7 @@
 ﻿using Dixus.Entidades;
 using Dixus.Entidades.Gis;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Entidades
+namespace Dixus.BusinessRules.Planos.Entidades
 {
     public class ModificacionAPropiedadesDeFraccion
     {

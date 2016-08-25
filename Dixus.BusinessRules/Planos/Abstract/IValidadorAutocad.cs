@@ -1,10 +1,10 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Entidades;
-using Dixus.BusinessRules.CambiosAutocad.Entidades.Validacion;
+﻿using Dixus.BusinessRules.Planos.Entidades;
+using Dixus.BusinessRules.Planos.Entidades.Validacion;
 using Dixus.Entidades;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Abstract
+namespace Dixus.BusinessRules.Planos.Abstract
 {
     public interface IValidadorAutocad
     {

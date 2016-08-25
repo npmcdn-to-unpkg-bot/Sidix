@@ -1,6 +1,6 @@
 namespace Dixus.BusinessRules
 {
-    using CambiosAutocad.Entidades;
+    using Planos.Entidades;
     using System.Data.Entity.Spatial;
 
     public class GeometriaSobrepuesta

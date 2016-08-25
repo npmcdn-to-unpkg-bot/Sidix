@@ -1,4 +1,4 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Entidades;
+﻿using Dixus.BusinessRules.Planos.Entidades;
 using Dixus.Entidades;
 using Dixus.Entidades.Gis;
 using Dixus.Repositorios.Abstract;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Abstract
+namespace Dixus.BusinessRules.Planos.Abstract
 {
     public interface IDetectorDeCambiosAutocad
     {

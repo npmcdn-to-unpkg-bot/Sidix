@@ -23,7 +23,7 @@
 
         @if (fraccionesNombre.Count() > 0 || fraccionesUso.Count() > 0 || fraccionesNombreYUso.Count() > 0 || vialidadesNombre.Count() > 0 || vialidadesTramo.Count() > 0 || vialidadesNombreYTramo.Count() > 0)
         {
-            <h4 class="section-title">Fracciones y Poligonos con cambios de información:</h4>
+            @*<h4 class="section-title">Fracciones y Poligonos con cambios de información:</h4>*@
 
             if (fraccionesNombre.Count() > 0)
             {
@@ -59,26 +59,26 @@
             }
 
             @*VIALIDADES*@
-        if (vialidadesNombre.Count() > 0)
-        {
-            <h4 class="section-title">Vialidades que solo modificaron su nombre: </h4>
-            <ul>
-                @foreach (var vial in vialidadesNombre)
-                    {
-                    <li>Vialidad @vial.VialidadSidix.Nombre cambió su nombre a @vial.VialidadAutocad.ViaNombre</li>
-                }
-            </ul>
-        }
+            if (vialidadesNombre.Count() > 0)
+            {
+                <h4 class="section-title">Vialidades que solo modificaron su nombre: </h4>
+                <ul>
+                    @foreach (var vial in vialidadesNombre)
+                        {
+                        <li>Vialidad @vial.VialidadSidix.Nombre cambió su nombre a @vial.VialidadAutocad.ViaNombre</li>
+                    }
+                </ul>
+            }
 
-        if (vialidadesTramo.Count() > 0)
-        {
-            <h4 class="section-title">Vialidades que solo modificaron su tramo: </h4>
-            <ul>
-                @foreach (var vial in vialidadesTramo)
-                    {
-                    <li>Vialidad @vial.VialidadSidix.Tramo cambió su uso a  "@vial.VialidadAutocad.ViaTramo" </li>
-                }
-            </ul>
+            if (vialidadesTramo.Count() > 0)
+            {
+                <h4 class="section-title">Vialidades que solo modificaron su tramo: </h4>
+                <ul>
+                    @foreach (var vial in vialidadesTramo)
+                        {
+                        <li>Vialidad @vial.VialidadSidix.Nombre@vial.VialidadSidix.Tramo cambió su tramo a  "@vial.VialidadAutocad.ViaTramo" </li>
+                    }
+                </ul>
             }
 
             if (vialidadesNombreYTramo.Count() > 0)
@@ -87,7 +87,7 @@
                 <ul>
                     @foreach (var vial in vialidadesNombreYTramo)
                     {
-                        <li>Vialidad @vial.VialidadSidix.Nombre con tramo @vial.VialidadSidix.Tramo cambió su nombre a @vial.VialidadAutocad.ViaNombre y su tramo a  "@vial.VialidadAutocad.ViaTramo" </li>
+                        <li>Vialidad @vial.VialidadSidix.Nombre con tramo @vial.VialidadSidix.Tramo cambió su nombre a "@vial.VialidadAutocad.ViaNombre" y su tramo a  "@vial.VialidadAutocad.ViaTramo" </li>
                     }
                 </ul>
             }

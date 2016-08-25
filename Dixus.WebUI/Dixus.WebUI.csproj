@@ -1187,7 +1187,6 @@
     <Content Include="Views\Planos\Index.cshtml" />
     <Content Include="Views\Planos\Satelite.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
-    <Content Include="Views\Planos\Anza.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Double.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\decimal.cshtml" />
     <Content Include="Views\TiposDeComercio\Create.cshtml" />
@@ -1198,7 +1197,6 @@
     <Content Include="Views\TiposDeSuelo\Details.cshtml" />
     <Content Include="Views\TiposDeSuelo\Edit.cshtml" />
     <Content Include="Views\TiposDeSuelo\Index.cshtml" />
-    <Content Include="Views\Planos\Mapbox.cshtml" />
     <Content Include="Views\Subdivisiones\Index.cshtml" />
     <Content Include="Views\Subdivisiones\Detalles.cshtml" />
     <Content Include="Views\Subdivisiones\TablaSubdivisiones.cshtml" />

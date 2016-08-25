@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Entidades
+namespace Dixus.BusinessRules.Planos.Entidades
 {
     public class InfoComparableDePoligono
     {

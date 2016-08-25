@@ -1,11 +1,11 @@
-﻿using Dixus.BusinessRules.CambiosAutocad.Entidades;
+﻿using Dixus.BusinessRules.Planos.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dixus.BusinessRules.CambiosAutocad.Concrete
+namespace Dixus.BusinessRules.Planos.Concrete
 {
     public class ComparadorDeFraccionesCompleto : IEqualityComparer<InfoComparableDeFraccion>
     {

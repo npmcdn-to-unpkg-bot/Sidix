@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Dixus.BusinessRules.CambiosAutocad.Abstract;
-using Dixus.BusinessRules.CambiosAutocad.Concrete;
-using Dixus.BusinessRules.CambiosAutocad.Entidades;
+using Dixus.BusinessRules.Planos.Abstract;
+using Dixus.BusinessRules.Planos.Concrete;
+using Dixus.BusinessRules.Planos.Entidades;
 using Dixus.BusinessRules.Fracciones.Abstract;
 using Dixus.BusinessRules.Fracciones.Concrete;
 using Dixus.Entidades;
@@ -37,18 +37,7 @@ namespace Dixus.WebUI.Controllers
 
         public ActionResult Satelite()
         {
-           
-            return View();
-        }
-
-        public ActionResult Anza()
-        {
-            return View();
-        }
-
-        public ActionResult Mapbox()
-        {
-            return View();
+           return View();
         }
         
         [Authorize(Roles = "Técnico")]

@@ -1,5 +1,5 @@
 ﻿using Dixus.BusinessRules;
-using Dixus.BusinessRules.CambiosAutocad.Entidades;
+using Dixus.BusinessRules.Planos.Entidades;
 using Dixus.Entidades;
 using Dixus.Entidades.Gis;
 using System;
