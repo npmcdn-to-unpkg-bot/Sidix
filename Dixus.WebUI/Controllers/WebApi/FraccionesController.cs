@@ -10,13 +10,14 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 
-namespace Dixus.WebUI.Controllers
+namespace Dixus.WebUI.Controllers.WebApi
 {
-    public class FraccionesGeoJsonController : ApiController
+    [RoutePrefix("/api/fracciones")]
+    public class FraccionesController : ApiController
     {
 
-        // GET: api/FraccionesGeoJson
-        public JsonResult<object> Get()
+        // GET: api/Fracciones
+        public IHttpActionResult Get()
         {
 
             IUnitOfWork uow = new UnitOfWork();
@@ -38,6 +39,8 @@ namespace Dixus.WebUI.Controllers
 
             return Json(obj);
         }
+        
+
 
         // GET: api/GeoJsonApi/5
         public JsonResult<object> Get(int id)

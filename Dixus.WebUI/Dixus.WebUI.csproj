@@ -1098,9 +1098,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\WebApi\NotificationsController.cs" />
+    <Compile Include="Controllers\WebApi\TareasController.cs" />
     <Compile Include="Controllers\WebApi\VialidadesGeoJsonController.cs" />
-    <Compile Include="Controllers\WebApi\FraccionesGeoJsonController.cs" />
+    <Compile Include="Controllers\WebApi\FraccionesController.cs" />
     <Compile Include="Controllers\OperacionController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />

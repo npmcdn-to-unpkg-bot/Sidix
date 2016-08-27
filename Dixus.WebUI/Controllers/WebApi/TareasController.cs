@@ -11,7 +11,8 @@ using System.Web.Http.Results;
 
 namespace Dixus.WebUI.Controllers.WebApi
 {
-    public class NotificationsController : ApiController
+    [RoutePrefix("/api/tareas")]
+    public class TareasController : ApiController
     {
 
         public JsonResult<IEnumerable<Tarea>> Get()

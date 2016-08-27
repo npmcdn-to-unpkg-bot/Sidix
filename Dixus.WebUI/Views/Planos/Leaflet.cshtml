@@ -72,8 +72,8 @@
     proj4.defs("EPSG:32612", "+proj=utm +zone=12 +datum=WGS84 +units=m +no_defs");
     var fraccionesLayer;
     var vialidadesLayer;
-    var fraccionesGeoJsonRequest = $.ajax('/api/FraccionesGeoJson');
-    var vialidadesGeoJsonRequest = $.ajax( '/api/VialidadesGeoJson');
+    var fraccionesGeoJsonRequest = $.ajax('/api/Fracciones');
+    var vialidadesGeoJsonRequest = $.ajax( '/api/Vialidades');
 
     $.when( fraccionesGeoJsonRequest, vialidadesGeoJsonRequest).done( function(fracciones, vialidades){
         fraccionesLayer = L.Proj.geoJson(fracciones, {

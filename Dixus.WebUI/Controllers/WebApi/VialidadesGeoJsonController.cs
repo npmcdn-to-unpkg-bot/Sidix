@@ -12,7 +12,8 @@ using System.Web.Http.Results;
 
 namespace Dixus.WebUI.Controllers
 {
-    public class VialidadesGeoJsonController : ApiController
+    [RoutePrefix("/api/vialidades")]
+    public class VialidadesController : ApiController
     {
 
         // GET: api/VialidadesGeoJson
