@@ -183,5 +183,36 @@
         modalContent.load(url);
         
     })
-    
+
+    function JuntaViewModel() {
+
+        var self = this;
+        self.modelo = @Html.Raw(Json.Encode(Model));
+        console.log(self.modelo);
+
+        self.suelo = ko.observable(self.modelo.TipoDeSueloId || null);
+
+        self.tipoDeSueloFueSeleccionado = ko.computed(function () { return self.suelo() ? true : false; });
+        self.prefijoDeSuelo = ko.computed(function(){ return dixus.generarPrefijoDeSuelo(self.suelo()); });
+
+        self.esVendible = ko.computed(function(){ return self.esEquipamiento() || self.esDonacion() || self.esVialidad() ? false : true; });
+        self.estaVendida = ko.observable(self.modelo.Vendida || false);
+
+       
+        self.tipoDeEnergiaEspecial = ko.observable('factor')
+        self.excentoDeCobroDeEnergia = ko.observable(self.modelo.NoSeLeCobraEnergia || false);
+        self.tienePrecioEspecialEnergia = ko.observable(self.modelo.NoPagaLoMismoEnEnergia || false);
+
+        self.noOcupaAgua = ko.observable(self.modelo.NoOcupaAgua || false);
+        self.ocupaAguaEspecial = ko.observable(self.modelo.NoUsaAguaStandard || false);
+        self.tipoDeAguaEspecial = ko.observable('factor')
+        self.excentoDeCobroDeAgua = ko.observable(self.modelo.NoSeLeCobraAgua || false);
+        self.tienePrecioEspecialAgua = ko.observable(self.modelo.NoPagaLoMismoEnAgua || false);
+
+    };
+
+    var vm = new JuntaViewModel();
+
+    ko.applyBindings(vm);
+
 }

@@ -19,7 +19,6 @@ namespace Dixus.WebUI.Controllers.WebApi
         // GET: api/Fracciones
         public IHttpActionResult Get()
         {
-
             IUnitOfWork uow = new UnitOfWork();
             IGeoJsonGenerator generadorGeoJson = new GeoJsonGenerator();
             IEnumerable<Fraccion> Fracciones = uow.Fracciones.Obtener("TipoDeSuelo");

@@ -15,6 +15,7 @@ namespace Dixus.WebUI
         {
             filters.Add(new System.Web.Mvc.AuthorizeAttribute());
             filters.Add(new LoginInfoAttribute());
+            filters.Add(new HandleErrorAttribute());
         }
 
     }

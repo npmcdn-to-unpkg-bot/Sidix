@@ -82,7 +82,7 @@
     <script type="text/javascript">
 
         @* Hacer AJAX Get request para notificaciones  *@
-        var requestNotifications = $.ajax('/api/notifications');
+        var requestTareas = $.ajax('/api/tareas');
 
         @* Renderea la seccion de codigo que se puede agregar desde cada vista usando "@section jsCode" *@
         @RenderSection("jsCode", required: false)
@@ -102,15 +102,16 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             @* Funcion a llamar (callback) para cuando lleguen las notificaciones via AJAX *@
-            $.when(requestNotifications).done(function (tareas) {
+            $.when( requestTareas ).done(function (tareas) {
 
                 var elem = "";
                 var $notificationsButton = $('#notifications-button');
 
                 if (tareas.length == 0) {
                     elem = "<div class='notificacion'>No tienes tareas asignadas por hacer</div>";
-                } else {
-                    $notificationsButton.find(".badge").html(tareas.length);
+                }
+                else
+                {
                     for (var i = 0; i < tareas.length; i++) {
                         var tarea = tareas[i];
                         var linkUrl = "@Url.Action("Tarea","Operacion")/"+ tarea.TareaId ;
@@ -122,7 +123,7 @@
                     html: true,
                     content: elem,
                     trigger: 'click',
-                    title: "<a href='@Url.Action("Usuario","Operacion", new { id = @ViewBag.UserId })'>@ViewBag.Usuario</a><br><small style='color:white'>Tareas por hacer</small>",
+                    title: "<a href='@Url.Action("Usuario","Operacion", new { id = @ViewBag.UserId })'>@ViewBag.Usuario</a>",
                 });
 
             });

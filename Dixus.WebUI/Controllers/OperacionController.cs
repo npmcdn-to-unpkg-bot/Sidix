@@ -46,11 +46,17 @@ namespace Dixus.WebUI.Controllers
         }
         public async Task<ActionResult> Junta(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
             JuntaDeConsejo junta = await _uow.Juntas.ObtenerPorIdAsync( j => j.JuntaDeConsejoId == id.Value, "Acuerdos", "Tareas", "UsuariosPresentes");
-            if (junta == null) return HttpNotFound();
-
+            if (junta == null)
+            {
+                return HttpNotFound();
+            }
+           
             JuntaViewModel model = new JuntaViewModel() { Junta = junta };
 
             // Para ver los detalles de una junta, tienes que haber estado presente, o ser administrador
@@ -94,8 +100,6 @@ namespace Dixus.WebUI.Controllers
             }
         }
 
-
-
         public ActionResult AgregarJunta()
         {
             return View();
@@ -118,7 +122,6 @@ namespace Dixus.WebUI.Controllers
             
             return PartialView();
         }
-
 
         [HttpPost]
         public ActionResult AgregarTarea (NuevaTareaViewModel model)
