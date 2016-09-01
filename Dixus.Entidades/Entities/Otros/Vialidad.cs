@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dixus.Entidades
 {
     [Table("Vialidades")]
-    public class Vialidad : EntidadDescontinuable
+    public class Vialidad : Entidad
     {
         [Key]
         public int VialidadId { get; set; }

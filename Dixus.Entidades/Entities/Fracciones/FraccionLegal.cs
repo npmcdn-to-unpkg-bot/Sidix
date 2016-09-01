@@ -25,8 +25,6 @@ namespace Dixus.Entidades
         public DateTime? FechaDeInscripcion { get; set; }
 
         public string Observaciones { get; set; }
-        public bool Descontinuada { get; set; }
-        public DateTime? FechaDescontinuada { get; set; }
 
         [ForeignKey("EscrituraDeSubdivision")]
         public int EscrituraSubdivisionId { get; set; }

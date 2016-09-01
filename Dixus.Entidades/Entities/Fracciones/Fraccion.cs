@@ -8,7 +8,7 @@ using System.Data.Entity.Spatial;
 namespace Dixus.Entidades
 {
     [Table("Fracciones")]
-    public abstract class Fraccion : EntidadDescontinuable, IValidatableObject
+    public abstract class Fraccion : Entidad, IValidatableObject
     {
         public int FraccionId { get; set; }
 

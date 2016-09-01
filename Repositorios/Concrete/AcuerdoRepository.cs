@@ -9,7 +9,6 @@ namespace Dixus.Repositorios.Concrete
 {
     public class AcuerdoRepository : Repository<AcuerdoDeConsejo>, IAcuerdoRepository
     {
-        public DixusContext DixusContext { get { return Context as DixusContext; } }
         public AcuerdoRepository(DixusContext context) : base(context)
         {
 
@@ -17,18 +16,18 @@ namespace Dixus.Repositorios.Concrete
         
         public IEnumerable<AcuerdoDeConsejo> ObtenerAcuerdosQueIncluyanTexto(string textoBuscado)
         {
-            return DixusContext.Acuerdos.Where(
+            return EntityQuery.Where(
                 acuerdo =>
                     acuerdo.Descripcion.ToLower().Contains(textoBuscado.ToLower()) ||
                     acuerdo.Observaciones.ToLower().Contains(textoBuscado.ToLower())).ToList();
         }
         public IEnumerable<AcuerdoDeConsejo> ObtenerAcuerdosMasRecientes(int howmany)
         {
-            return DixusContext.Acuerdos.OrderByDescending(ac => ac.JuntaDeConsejo.Fecha).Take(howmany).ToList();
+            return EntityQuery.OrderByDescending(ac => ac.JuntaDeConsejo.Fecha).Take(howmany).ToList();
         }
         public IEnumerable<AcuerdoDeConsejo> ObtenerAcuerdosQueIncluyanTextoMasRecientes(string textoBuscado, int howmany)
         {
-            var acuerdosQueIncluyenTexto = DixusContext.Acuerdos.Where(
+            var acuerdosQueIncluyenTexto = EntityQuery.Where(
                 acuerdo =>
                     acuerdo.Descripcion.ToLower().Contains(textoBuscado.ToLower()) ||
                     acuerdo.Observaciones.ToLower().Contains(textoBuscado.ToLower()));

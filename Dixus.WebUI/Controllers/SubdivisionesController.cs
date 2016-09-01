@@ -38,15 +38,19 @@ namespace Dixus.WebUI.Controllers
         
         public ActionResult TablaSubdivisiones(int? escrituraSubdivisionId)
         {
-            IEnumerable<FraccionLegal> subdivisiones;
-            if(escrituraSubdivisionId != null && uow.EscriturasDeSubdivision.ObtenerPorId(escrituraSubdivisionId.Value) != null)
+            IEnumerable<FraccionLegal> subdivisiones; 
+
+            if ( escrituraSubdivisionId == null)
             {
-                subdivisiones = uow.SubdivisionesLegales.Filtrar(x => x.EscrituraSubdivisionId == escrituraSubdivisionId, "EscrituraDeSubdivision").OrderBy(x=>x.FechaDeOtorgamiento);
+                subdivisiones = uow.SubdivisionesLegales.Obtener("EscrituraDeSubdivision");     
             }
             else
             {
-                subdivisiones = uow.SubdivisionesLegales.Obtener("EscrituraDeSubdivision").OrderBy(x=>x.FechaDeOtorgamiento);
+                subdivisiones = uow.SubdivisionesLegales.Filtrar(sub => sub.EscrituraSubdivisionId == escrituraSubdivisionId.Value, "EscrituraDeSubdivision");
             }
+
+            subdivisiones.OrderBy(x => x.FechaDeOtorgamiento);
+
             return View(subdivisiones);
         }
 

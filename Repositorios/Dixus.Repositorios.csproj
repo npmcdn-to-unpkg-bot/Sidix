@@ -72,13 +72,12 @@
     <Compile Include="Abstract\IUnitOfWork.cs" />
     <Compile Include="Abstract\IClienteRepository.cs" />
     <Compile Include="Abstract\IFraccionRepository.cs" />
-    <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\ITipoDeSueloRepository.cs" />
     <Compile Include="Abstract\ITransaccionRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
-    <Compile Include="Abstract\IRepositoryBasic.cs" />
+    <Compile Include="Abstract\Base\IRepository.cs" />
     <Compile Include="CategoriasFracciones.cs" />
-    <Compile Include="Concrete\RepositoryBasic.cs" />
+    <Compile Include="Concrete\Base\Repository.cs" />
     <Compile Include="Concrete\VialidadRepository.cs" />
     <Compile Include="Concrete\TareaRepository.cs" />
     <Compile Include="Concrete\AcuerdoRepository.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="Concrete\FraccionRepository.cs" />
     <Compile Include="Concrete\GisRepository.cs" />
     <Compile Include="Concrete\OpcionesRepository.cs" />
-    <Compile Include="Concrete\Repository.cs" />
     <Compile Include="Concrete\RoleRepository.cs" />
     <Compile Include="Concrete\TipoDeComercioRepository.cs" />
     <Compile Include="Concrete\TipoDeInversionRepository.cs" />

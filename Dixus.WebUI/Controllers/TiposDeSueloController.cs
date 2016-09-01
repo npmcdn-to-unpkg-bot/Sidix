@@ -45,7 +45,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoDeSuelo tipoDeSuelo = uow.TiposDeSuelo.ObtenerPorId(id.Value);
+            TipoDeSuelo tipoDeSuelo = uow.TiposDeSuelo.ObtenerPorId( tipo => tipo.TipoDeSueloId == id.Value);
             if (tipoDeSuelo == null)
             {
                 return HttpNotFound();
@@ -84,7 +84,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return View("NoSePuedeBorrar");
             }
-            TipoDeSuelo tipoDeSuelo = uow.TiposDeSuelo.ObtenerPorId(id);
+            TipoDeSuelo tipoDeSuelo = uow.TiposDeSuelo.ObtenerPorId( tipo => tipo.TipoDeSueloId == id);
             uow.TiposDeSuelo.Borrar(tipoDeSuelo);
             uow.SaveToDB();
             return RedirectToAction("Index");

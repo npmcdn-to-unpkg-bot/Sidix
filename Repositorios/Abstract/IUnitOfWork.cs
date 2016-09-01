@@ -24,5 +24,6 @@ namespace Dixus.Repositorios.Abstract
         IGisRepository Gis { get; }
         IVialidadRepository Vialidades { get; }
         int SaveToDB();
+        Task<int> SaveToDBAsync();
     }
 }

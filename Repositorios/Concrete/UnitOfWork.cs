@@ -62,5 +62,9 @@ namespace Dixus.Repositorios.Concrete
         {
             return _context.SaveChanges();
         }
+        public async Task<int> SaveToDBAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
     }
 }

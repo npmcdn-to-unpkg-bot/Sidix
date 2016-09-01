@@ -115,6 +115,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -168,6 +176,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -179,6 +191,10 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -1106,9 +1122,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\WebApi\ClientesController.cs" />
+    <Compile Include="Controllers\WebApi\FraccionesPruebaController.cs" />
+    <Compile Include="Controllers\WebApi\JuntasController.cs" />
     <Compile Include="Controllers\WebApi\TareasController.cs" />
-    <Compile Include="Controllers\WebApi\VialidadesApiController.cs" />
-    <Compile Include="Controllers\WebApi\FraccionesApiController.cs" />
+    <Compile Include="Controllers\WebApi\VialidadesController.cs" />
+    <Compile Include="Controllers\WebApi\FraccionesController.cs" />
     <Compile Include="Controllers\OperacionController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
@@ -1239,6 +1258,10 @@
     <ProjectReference Include="..\Dixus.BusinessRules\Dixus.BusinessRules.csproj">
       <Project>{909bcfac-10eb-4362-a137-98c456d3b6fc}</Project>
       <Name>Dixus.BusinessRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dixus.Domain\Dixus.Domain.csproj">
+      <Project>{b135beda-7a83-493b-9a58-403b6182ebc9}</Project>
+      <Name>Dixus.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Dixus.Entidades\Dixus.Entidades.csproj">
       <Project>{b6e6deed-aee6-4d3a-a11e-a3ac3ba76af9}</Project>

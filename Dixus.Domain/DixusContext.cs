@@ -68,7 +68,7 @@ namespace Dixus.Domain
             }
 
             // Marcar como descontinuadas y añadir fecha de descontinuación, en lugar de borrar de verdad, las entidades 'descontinuables' que quieran ser borradas
-            foreach ( var entry in ChangeTracker.Entries<EntidadDescontinuable>()
+            foreach ( var entry in ChangeTracker.Entries<Entidad>()
                 .Where( x =>
                     x.State == EntityState.Deleted &&
                     x.Entity.GetType().GetProperty("FechaDescontinuada") != null &&

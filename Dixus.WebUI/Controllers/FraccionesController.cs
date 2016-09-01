@@ -54,7 +54,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fraccion fraccion = uow.Fracciones.ObtenerPorId(id.Value);
+            Fraccion fraccion = uow.Fracciones.ObtenerPorId( fracc => fracc.FraccionId == id.Value);
             if (fraccion == null)
             {
                 return HttpNotFound();
@@ -68,7 +68,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fraccion fraccion = uow.Fracciones.ObtenerPorId(id.Value);
+            Fraccion fraccion = uow.Fracciones.ObtenerPorId(fracc => fracc.FraccionId == id.Value );
             if (fraccion == null)
             {
                 return HttpNotFound();
@@ -108,7 +108,7 @@ namespace Dixus.WebUI.Controllers
         public ActionResult RegistrarCompraDeFraccion(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Fraccion fraccion = uow.Fracciones.ObtenerPorId(id.Value);
+            Fraccion fraccion = uow.Fracciones.ObtenerPorId( fracc => fracc.FraccionId == id.Value );
             if (fraccion == null) return HttpNotFound();
 
             if (!(fraccion is FraccionVendible)) return RedirectToAction("Error", "Home", new { error = "La fracción que seleccionaste no se puede vender" });
@@ -199,7 +199,7 @@ namespace Dixus.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Fraccion fraccion = uow.Fracciones.ObtenerPorId(id);
+            Fraccion fraccion = uow.Fracciones.ObtenerPorId( fracc => fracc.FraccionId == id );
             uow.Fracciones.Borrar(fraccion);
             uow.SaveToDB();
             return RedirectToAction("Index");

@@ -17,8 +17,8 @@ namespace Dixus.Repositorios.Abstract
         // DINERO INVERTIDO
         Task<decimal> SumarMontoTotalDeInversiones();
         Task<decimal> SumarMontoTotalDeInversiones<TInversion>() where TInversion : Inversion;
-        Task<decimal> GetMontoAConsiderarAguaPotable();
-        Task<decimal> GetMontoAConsiderarSaneamiento();
+        //Task<decimal> GetMontoAConsiderarAguaPotable();
+        //Task<decimal> GetMontoAConsiderarSaneamiento();
 
         // INGRESOS
         Task<IEnumerable<Ingreso>> ObtenerIngresos();
@@ -54,17 +54,17 @@ namespace Dixus.Repositorios.Abstract
         /// Regresa la cantidad de MVAs usados en la formula para calcular el precio por MVA, que resultan de restar las obras hechas aparte (como la de Espacio y Derex) y los MVAs incobrables (como a Mascareñas y fracciones no vendibles), al total de MVAs
         /// </summary>
         /// <returns></returns>
-        Task<double> GetMVAsAConsiderar();
+        //Task<double> GetMVAsAConsiderar();
         /// <summary>
         /// Regresa la cantidad de Litros por segundo (LPS) usados en la formula para calcular el precio por LPS, que resultan de restar las obras hechas aparte (como la de Espacio y Derex) y los LPS incobrables (como a Mascareñas y fracciones no vendibles), al total de LPS del proyecto
         /// </summary>
         /// <returns>Mucho</returns>
-        Task<double> GetLPSAConsiderar();
+        //Task<double> GetLPSAConsiderar();
         /// <summary>
         /// Regresa la cantidad de Litros por segundo (LPS) destinados a saneamiento usados en la formula para calcular el precio por LPS, que resultan de restar las obras hechas aparte (como la de Espacio y Derex) y los LPS incobrables (como a Mascareñas y fracciones no vendibles), al total de LPS de saneamiento del proyecto
         /// </summary>
         /// <returns></returns>
-        Task<double> GetLPSSaneamientoAConsiderar();
+        //Task<double> GetLPSSaneamientoAConsiderar();
 
 
      

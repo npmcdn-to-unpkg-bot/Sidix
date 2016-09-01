@@ -60,7 +60,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = uow.Clientes.ObtenerPorId(id.Value);
+            Cliente cliente = uow.Clientes.ObtenerPorId( cli => cli.ClienteId == id.Value);
             if (cliente == null)
             {
                 return HttpNotFound();
@@ -87,7 +87,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = uow.Clientes.ObtenerPorId(id.Value);
+            Cliente cliente = uow.Clientes.ObtenerPorId( cli => cli.ClienteId == id );
             if (cliente == null)
             {
                 return HttpNotFound();
@@ -99,7 +99,7 @@ namespace Dixus.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cliente cliente = uow.Clientes.ObtenerPorId(id);
+            Cliente cliente = uow.Clientes.ObtenerPorId( cli => cli.ClienteId == id );
             uow.Clientes.Borrar(cliente);
             uow.SaveToDB();
             return RedirectToAction("Index");

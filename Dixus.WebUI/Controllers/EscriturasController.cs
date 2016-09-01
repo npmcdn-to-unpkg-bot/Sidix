@@ -26,7 +26,7 @@ namespace Dixus.WebUI.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             
-            EscrituraDeSubdivision escritura = uow.EscriturasDeSubdivision.ObtenerPorId(id.Value);
+            EscrituraDeSubdivision escritura = uow.EscriturasDeSubdivision.ObtenerPorId( esc => esc.EscrituraId == id.Value);
             if (escritura == null) return HttpNotFound();
             
             return View(escritura);
@@ -36,7 +36,7 @@ namespace Dixus.WebUI.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             
-            EscrituraDeTraspaso escritura = uow.EscriturasDeTraspaso.ObtenerPorId(id.Value);
+            EscrituraDeTraspaso escritura = uow.EscriturasDeTraspaso.ObtenerPorId( esc => esc.EscrituraId == id.Value );
             if (escritura == null) return HttpNotFound();
             
             return View(escritura);

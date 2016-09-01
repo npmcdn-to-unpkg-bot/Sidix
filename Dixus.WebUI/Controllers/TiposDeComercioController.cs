@@ -30,7 +30,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(id.Value);
+            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId( tipo => tipo.TipoDeComercioId == id.Value);
             if (tipoDeComercio == null)
             {
                 return HttpNotFound();
@@ -63,7 +63,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(id.Value);
+            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(tipo => tipo.TipoDeComercioId == id.Value);
             if (tipoDeComercio == null)
             {
                 return HttpNotFound();
@@ -90,7 +90,7 @@ namespace Dixus.WebUI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(id.Value);
+            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(tipo => tipo.TipoDeComercioId == id.Value);
             if (tipoDeComercio == null)
             {
                 return HttpNotFound();
@@ -102,7 +102,7 @@ namespace Dixus.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(id);
+            TipoDeComercio tipoDeComercio = uow.TiposDeComercio.ObtenerPorId(tipo => tipo.TipoDeComercioId == id);
             uow.TiposDeComercio.Borrar(tipoDeComercio);
             uow.SaveToDB();
             return RedirectToAction("Index");

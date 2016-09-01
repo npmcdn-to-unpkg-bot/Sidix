@@ -9,7 +9,6 @@ namespace Dixus.Repositorios.Concrete
 {
     public class TipoDeInversionRepository : Repository<TipoInversion>, ITipoDeInversionRepository
     {
-        public DixusContext DixusContext { get { return Context as DixusContext; } }
         public TipoDeInversionRepository(DixusContext context) : base(context)
         {
 

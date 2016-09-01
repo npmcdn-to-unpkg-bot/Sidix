@@ -18,10 +18,12 @@ namespace Dixus.WebUI
             );
 
             // Requerir que usuarios sean autenticados para usar WebApi
-            config.Filters.Add(new AuthorizeAttribute());
+            //config.Filters.Add(new AuthorizeAttribute());
 
-            // Ignorar referencias circulares al serializar y desactivar XML como formato disponible.
+            // Ignorar referencias circulares al serializar
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            // Desactivar XML como formato disponible
             config.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
             // Desactivar la siguiente linea si se desea que los valores "NULL" sean ignorados al serializar a Json

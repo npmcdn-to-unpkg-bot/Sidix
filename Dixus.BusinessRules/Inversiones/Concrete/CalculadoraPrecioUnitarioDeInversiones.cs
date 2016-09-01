@@ -44,24 +44,27 @@ namespace Dixus.BusinessRules.Inversiones
         }
         private async Task<decimal> CalcularPrecioPorLPS()
         {
-            var lpsConsiderables = await _unitofwork.Transacciones.GetLPSAConsiderar();
-            var montoTotalInvertidoEnAgua = await _unitofwork.Transacciones.SumarMontoTotalDeInversiones<InversionAguaPotable>();
+            //var lpsConsiderables = await _unitofwork.Transacciones.GetLPSAConsiderar();
+            //var montoTotalInvertidoEnAgua = await _unitofwork.Transacciones.SumarMontoTotalDeInversiones<InversionAguaPotable>();
 
-            return montoTotalInvertidoEnAgua / (decimal)lpsConsiderables;
+            //return montoTotalInvertidoEnAgua / (decimal)lpsConsiderables;
+            throw new NotImplementedException();
         }
         private async Task<decimal> CalcularPrecioPorLPSSaneamiento()
         {
-            var lpsSanemientoConsiderables = await _unitofwork.Transacciones.GetLPSSaneamientoAConsiderar();
-            var montoTotalInvertidoEnSaneamiento = await _unitofwork.Transacciones.SumarMontoTotalDeInversiones<InversionSaneamiento>();
+            //var lpsSanemientoConsiderables = await _unitofwork.Transacciones.GetLPSSaneamientoAConsiderar();
+            //var montoTotalInvertidoEnSaneamiento = await _unitofwork.Transacciones.SumarMontoTotalDeInversiones<InversionSaneamiento>();
 
-            return montoTotalInvertidoEnSaneamiento / (decimal)lpsSanemientoConsiderables;
+            //return montoTotalInvertidoEnSaneamiento / (decimal)lpsSanemientoConsiderables;
+            throw new NotImplementedException();
         }
         private async Task<decimal> CalcularPrecioPorMVA()
         {
-            var mvasConsiderables = await _unitofwork.Transacciones.GetMVAsAConsiderar();
-            var montoTotalInvertidoEnElectricidad = await _unitofwork.Transacciones.SumarMontoTotalDeInversiones<InversionElectricidad>();
+            //var mvasConsiderables = await _unitofwork.Transacciones.GetMVAsAConsiderar();
+            //var montoTotalInvertidoEnElectricidad = await _unitofwork.Transacciones.SumarMontoTotalDeInversiones<InversionElectricidad>();
 
-            return montoTotalInvertidoEnElectricidad / (decimal)mvasConsiderables;
+            //return montoTotalInvertidoEnElectricidad / (decimal)mvasConsiderables;
+            throw new NotImplementedException();
         }
     }
 }

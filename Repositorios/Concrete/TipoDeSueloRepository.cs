@@ -6,7 +6,6 @@ namespace Dixus.Repositorios.Concrete
 {
     public class TipoDeSueloRepository : Repository<TipoDeSuelo>, ITipoDeSueloRepository
     {
-        public DixusContext DixusContext { get { return Context as DixusContext; } }
         public TipoDeSueloRepository(DixusContext context) : base(context)
         {
 

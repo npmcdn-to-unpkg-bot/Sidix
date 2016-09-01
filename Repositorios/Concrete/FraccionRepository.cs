@@ -10,64 +10,12 @@ using System.Linq.Expressions;
 
 namespace Dixus.Repositorios.Concrete
 {
-    public class FraccionRepository : RepositoryBasic<Fraccion>, IFraccionRepository
+    public class FraccionRepository : Repository<Fraccion>, IFraccionRepository
     {
         protected IQueryable<Fraccion> Fracciones;
         public FraccionRepository(DixusContext context) : base(context)
         {
             Fracciones = context.Fracciones.Where(x => x.Descontinuada == false);
-        }
-
-        public Fraccion ObtenerPorId(int id)
-        {
-            return Fracciones.SingleOrDefault(x => x.FraccionId == id);
-        }
-        public Fraccion ObtenerPorId(Expression<Func<Fraccion, bool>> idexpression, params string[] propiedadesIncluidas)
-        {
-            var query = Fracciones;
-            foreach (var prop in propiedadesIncluidas)
-                query = query.Include(prop);
-            return query.SingleOrDefault(idexpression);
-        }
-        public IEnumerable<Fraccion> Obtener(params string[] propiedadesIncluidas)
-        {
-            var query = Fracciones;
-            foreach (var prop in propiedadesIncluidas)
-                query = query.Include(prop);
-            return query.ToList();
-        }
-        public IEnumerable<Fraccion> Filtrar(Expression<Func<Fraccion, bool>> filtros, params string[] propiedadesIncluidas)
-        {
-            var query = Fracciones.Where(filtros);
-            foreach (var prop in propiedadesIncluidas)
-                query.Include(prop);
-            return query.ToList();
-        }
-
-        public async Task<Fraccion> ObtenerPorIdAsync(int id)
-        {
-            return await Fracciones.SingleOrDefaultAsync(x => x.FraccionId == id);
-        }
-        public async Task<Fraccion> ObtenerPorIdAsync(Expression<Func<Fraccion, bool>> idexpression, params string[] propiedadesIncluidas)
-        {
-            var query = Fracciones;
-            foreach (var prop in propiedadesIncluidas)
-                query = query.Include(prop);
-            return await query.SingleOrDefaultAsync(idexpression);
-        }
-        public async Task<IEnumerable<Fraccion>> ObtenerAsync(params string[] propiedadesIncluidas)
-        {
-            var query = Fracciones;
-            foreach (var prop in propiedadesIncluidas)
-                query = query.Include(prop);
-            return await query.ToListAsync();
-        }
-        public async Task<IEnumerable<Fraccion>> FiltrarAsync(Expression<Func<Fraccion, bool>> filtros, params string[] propiedadesIncluidas)
-        {
-            var query = Fracciones.Where(filtros);
-            foreach (var prop in propiedadesIncluidas)
-                query = query.Include(prop);
-            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<Fraccion>> ObtenerComoEstabanEnFecha(DateTime fecha)
